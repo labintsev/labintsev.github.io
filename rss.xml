@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2023 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 16 Jun 2023 11:38:42 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>NLP за 90 минут</title><link>https://mldl.ru/posts/nlp-za-90-minut/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Основы обработки естественного языка&lt;/h2&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2023 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 16 Jun 2023 12:29:50 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>NLP за 90 минут</title><link>https://mldl.ru/posts/nlp-za-90-minut/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Основы обработки естественного языка&lt;/h2&gt;
 &lt;h4&gt;Вопросы:&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;Краткая история машинной обработки текстов (5 мин)&lt;/li&gt;
@@ -47,7 +47,7 @@
 - знаков препинания;&lt;br&gt;
 - управляющих символов.  &lt;/p&gt;
 &lt;p&gt;С математической точки зрения алфавит как множество символов обозначается символом $V$.&lt;br&gt;
-Множество $V^*$ включает в себя всевозможные комбинации символов, образующих конечные слова, в т.ч. состоящие из одного символа и бессмысленные комбинации. &lt;/p&gt;
+Всевозможные комбинации символов, образующих конечные слова, в т.ч. состоящие из одного символа и бессмысленные комбинации, образуют множество $V^*$. &lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Слово&lt;/strong&gt; - наименьшая единица языка, служащая для именования предметов, качеств, характеристик, взаимодействий, а также для служебных целей. 
 Например слово "Я" состоит всего из одного символа и в русском языке обозначает меня как субъект.&lt;br&gt;
 Большинство слов состоят из нескольких символов, связанных в последовательность по определенным правилам. &lt;/p&gt;
