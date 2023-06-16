@@ -7,7 +7,11 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://mldl.ru/</loc>
-  <lastmod>2023-06-16T12:47:00Z</lastmod>
+  <lastmod>2023-06-16T14:33:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/2022/</loc>
+  <lastmod>2023-06-16T14:33:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/2023/</loc>
@@ -15,7 +19,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/archive.html</loc>
-  <lastmod>2023-06-16T10:30:00Z</lastmod>
+  <lastmod>2023-06-16T14:40:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/</loc>
@@ -24,6 +28,10 @@
  <url>
   <loc>https://mldl.ru/categories/nlp/</loc>
   <lastmod>2023-06-16T09:03:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/eva-educators-voice-assistance/</loc>
+  <lastmod>2023-06-16T14:33:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/nlp-za-90-minut/</loc>
