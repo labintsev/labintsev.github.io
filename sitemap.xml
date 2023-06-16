@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+ <url>
+  <loc>https://mldl.ru/</loc>
+  <lastmod>2023-06-16T08:30:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/2023/</loc>
+  <lastmod>2023-06-16T08:30:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/archive.html</loc>
+  <lastmod>2023-06-16T10:30:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/categories/</loc>
+  <lastmod>2023-06-16T09:03:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/categories/nlp/</loc>
+  <lastmod>2023-06-16T09:03:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/galleries/</loc>
+  <lastmod>2023-06-16T08:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/listings/</loc>
+  <lastmod>2023-06-16T08:12:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/nlp-za-90-minut/</loc>
+  <lastmod>2023-06-16T09:03:00Z</lastmod>
+ </url>
+</urlset>

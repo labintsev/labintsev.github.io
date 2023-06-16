@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Заметки по machine learning, deep learning.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Заметки по ML, DL</title>
+<link href="assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="rss.xml">
+<link rel="canonical" href="https://mldl.ru/">
+<!--[if lt IE 9]><script src="assets/js/html5.js"></script><![endif]--><link rel="prefetch" href="posts/nlp-za-90-minut/" type="text/html">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href=".">
+
+            <span id="blog-title">Заметки по ML, DL</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav"></ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="archive.html" class="nav-link">Archive</a>
+                </li>
+<li class="nav-item">
+<a href="categories/" class="nav-link">Tags</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+    
+        
+
+    
+        
+    <div class="postindex">
+            <article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/nlp-za-90-minut/" class="u-url">NLP за 90 минут</a></h1>
+                <div class="metadata">
+                    <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
+                        Андрей Лабинцев
+                    </span></p>
+            <p class="dateline">
+            <a href="posts/nlp-za-90-minut/" rel="bookmark">
+            <time class="published dt-published" datetime="2023-06-16T11:44:44+03:00" itemprop="datePublished" title="2023-06-16 11:44">2023-06-16 11:44</time></a>
+            </p>
+                </div>
+            </header><div class="e-content entry-content">
+                    <h2>Основы обработки естественного языка</h2>
+<h4>Вопросы:</h4>
+<ol>
+<li>Краткая история машинной обработки текстов (5 мин)</li>
+<li>Основные определения (5 мин)</li>
+<li>Методы предварительной обработки текста (10 мин)</li>
+<li>Моделирование языка (языковые модели) (10 мин)</li>
+<li>Нейронные сети в NLP (30 мин)</li>
+<li>GPT модели (30 мин)</li>
+</ol>
+<h4>1. Краткая история машинной обработки текстов</h4>
+<p><strong>NLP (Natural Language Processing)</strong> - это область науки, которая изучает методы обработки текстов на естественных языках с помощью вычислительных машин. 
+Основной акцент в NLP делается на прикладные методы, которые можно реализовать на языке программирования. 
+Для вычислительно сложных методов используют языки низкого уровня (С, С++), потому что важна эффективность вычислений. 
+Для проведение экспериментов используют языки высокого уровня (python), потому что  для проверки гипотез важна скорость написания кода. 
+Сегодня исследователям доступно множество библиотек на python, которые служат оберткой для оптимизированного машинного кода.  </p>
+<p>В 1913 году русский математик Андрей Андреевич Марков провел эксперимент по оценке частоты появления разных букв в тексте. 
+Он выписал первые 20 000 букв поэмы А. С. Пушкина «Евгений Онегин» в одну длинную строчку из букв, опустив все пробелы и знаки пунктуации. 
+Затем он переставил эти буквы в 200 решёток (по 10х10 символов в каждой), и начал подсчитывать гласные звуки в каждой строке и столбце, записывая результаты. 
+Марков считал, что большинство явлений происходит по цепочке причинно-следственной связи и зависит от предыдущих результатов. 
+Он хотел найти способ моделировать эти события посредством вероятностного анализа. 
+Он обнаружил, что для любой буквы текста Пушкина выполнялось правило: если это была гласная, то скорее всего за ней будет стоять согласная, и наоборот.  </p>
+<p>В 1950 году в работе "Вычислительные машины и разум" ученый Алан Тьюринг предложил тест разумности для искуственного интеллекта.<br>
+Если компьютер сможет провести убедительную беседу с человеком в текстовом режиме, можно будет предположить, что он разумен. </p>
+<p>В 1954 году в штаб-квартире корпорации IBM состоялся Джорджтаунский эксперимент — демонстрация возможностей машинного перевода. 
+В ходе эксперимента был продемонстрирован полностью автоматический перевод более 60 предложений с русского языка на английский. 
+Программа выполнялась на мейнфрейме IBM 701. 
+В том же году первый эксперимент по машинному переводу был произведён в Институте точной механики и вычислительной техники АН СССР, на компьютере БЭСМ.  </p>
+<p>В 1966 году Джозеф Вейценбаум, работавший в лаборатории ИИ при MIT, разработал первый в мире чатбот "Элиза". 
+Пользователь мог ввести некое утверждение или набор утверждений на обычном языке, нажать «ввод», и получить от машины ответ.  </p>
+<p>В 1986 Давид Румельхарт разработал базовую концепцию рекуррентной нейросети (recurrent neural network, RNN). 
+Этот метод позволял решать такие задачи как распознавание речи и текста.  </p>
+<p>В 2017 году группа исследователей Google представила архитектуру трансформера (Transformer), которая позволяет обрабатывать тексты, в которых слова расположены в произвольном порядке. 
+В настоящее время трансформеры используются в сервисах многих компаний, включая Яндекс и Google, являются основой для самых современных моделей GPT, Bert и т.д.  </p>
+<p>В 2023 году OpenAI опубликовала языковую модель GPT-4, которая легко проходит тест Тьюринга и порождает споры об опасности искусственного интеллекта. </p>
+<h4>2. Основные определения</h4>
+<p><strong>Символ</strong> - это условный знак каких-либо понятий, идей, явлений. 
+Первые наскальные символы обозначали зверей, охоту, солнце и другие предметы, которые отражались в сознании первобытных людей. 
+Мы и сегодня часто используем символы эмоджи для отображения своих эмоций и скрытых смыслов. 
+У разных народов сформировались свои уникальные алфавиты, которы представляют собой множества допустимых символов для письма.   </p>
+<p>У компьютера тоже есть уникальный набор символов, определяемый кодировкой. 
+Например, кодировка ASCII (American standard code for information interchange) была стандартизована в 1963 году и определяет символы:<br>
+- десятичных цифр;<br>
+- латинского алфавита;<br>
+- национального алфавита;<br>
+- знаков препинания;<br>
+- управляющих символов.  </p>
+<p>С математической точки зрения алфавит как множество символов обозначается символом $V$.<br>
+Множество $V^*$ включает в себя всевозможные комбинации символов, образующих конечные слова, в т.ч. состоящие из одного символа и бессмысленные комбинации. </p>
+<p><strong>Слово</strong> - наименьшая единица языка, служащая для именования предметов, качеств, характеристик, взаимодействий, а также для служебных целей. 
+Например слово "Я" состоит всего из одного символа и в русском языке обозначает меня как субъект.<br>
+Большинство слов состоят из нескольких символов, связанных в последовательность по определенным правилам. </p>
+<p><strong>Язык</strong> - это множество слов, которые несут в себе хоть какой-то смысл. 
+Например, слово "тывщштс" не имеет смысла в русском языке, хоть и состоит из символов кириллицы. 
+А слово "дом", наоборот, является вполне известным и входит в множество слов русского языка. <br>
+Формально язык обозначается символом $L$. В алфавите $V$ язык является подмножеством всех конечных слов $$L \in V^*$$</p>
+<p><strong>Текст</strong> - это зафиксированая на материальном носителе человеческая мысль в виде последовательности символов. 
+Текст может состоять из одного или нескольких слов. </p>
+                </div>
+            </article>
+</div>
+    
+
+    
+    
+
+
+    
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    displayAlign: 'center', // Change this to 'left' if you want left-aligned equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script><!--End of body content--><footer id="footer">
+            Contents © 2023         <a href="mailto:andrej.labintsev@yandex.ru">Андрей Лабинцев</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+</body>
+</html>

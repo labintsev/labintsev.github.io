@@ -1,0 +1,4 @@
+Sitemap: https://mldl.ru/sitemapindex.xml
+
+User-Agent: *
+Host: mldl.ru
