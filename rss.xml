@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2023 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 16 Jun 2023 12:29:50 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>NLP за 90 минут</title><link>https://mldl.ru/posts/nlp-za-90-minut/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Основы обработки естественного языка&lt;/h2&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2023 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 16 Jun 2023 13:34:44 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>NLP за 90 минут</title><link>https://mldl.ru/posts/nlp-za-90-minut/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Основы обработки естественного языка&lt;/h2&gt;
 &lt;h4&gt;Вопросы:&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;Краткая история машинной обработки текстов (5 мин)&lt;/li&gt;
@@ -56,4 +56,68 @@
 А слово "дом", наоборот, является вполне известным и входит в множество слов русского языка. &lt;br&gt;
 Формально язык обозначается символом $L$. В алфавите $V$ язык является подмножеством всех конечных слов $$L \in V^*$$&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Текст&lt;/strong&gt; - это зафиксированая на материальном носителе человеческая мысль в виде последовательности символов. 
-Текст может состоять из одного или нескольких слов. &lt;/p&gt;</description><category>NLP</category><guid>https://mldl.ru/posts/nlp-za-90-minut/</guid><pubDate>Fri, 16 Jun 2023 08:44:44 GMT</pubDate></item></channel></rss>
+Текст может состоять из одного или нескольких слов. &lt;/p&gt;
+&lt;h5&gt;Представление текста в компьютере&lt;/h5&gt;
+&lt;p&gt;Для человека символы, слова и тексты несут в себе определенный смысл. 
+Компьютер же работает только с байтами. 
+Рассмотрим пример, как реализовано посимвольное кодирование алфавита в кодировке ASCII.&lt;/p&gt;
+&lt;style type="text/css"&gt;
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+&lt;/style&gt;
+&lt;table class="tg"&gt;
+&lt;thead&gt;
+  &lt;tr&gt;
+    &lt;th class="tg-0pky"&gt;bin&lt;/th&gt;
+    &lt;th class="tg-0pky"&gt;dec&lt;/th&gt;
+    &lt;th class="tg-0pky"&gt;hex&lt;/th&gt;
+    &lt;th class="tg-0pky"&gt;symbol&lt;/th&gt;
+  &lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-c3ow"&gt;110 0001&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;97&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;61&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;a&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-c3ow"&gt;110 0010&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;98&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;62&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;b&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-c3ow"&gt;110 0011&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;99&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;63&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;c&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-c3ow"&gt;110 1010&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;106&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;6A&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;j&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class="tg-c3ow"&gt;110 1011&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;107&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;6B&lt;/td&gt;
+    &lt;td class="tg-c3ow"&gt;k&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;bin&lt;/strong&gt; - двоичное представление символа,&lt;br&gt;
+&lt;strong&gt;dec&lt;/strong&gt; - представление в десятичной системе счисления,&lt;br&gt;
+&lt;strong&gt;hex&lt;/strong&gt; - представление в шестнадцатеричной системе счисления.&lt;br&gt;
+С полной таблицей кодировки ASCII можно ознакомиться по &lt;a href="https://en.wikipedia.org/wiki/ASCII#8-bit_codes"&gt;ссылке&lt;/a&gt;.&lt;br&gt;
+Для хранения одного символа латинского алфавита достаточно 7 бит. 
+Для хранения одного символа небольшого национального алфавита (например, кириллицы) достаточно 8 бит. 
+Для кодировки символов более объемных алфавитов (например, китайского) используют 16 бит или два байта.  &lt;br&gt;
+Слова, как и тексты, хранятся в компьютерной памяти в виде последовательности символов. &lt;/p&gt;</description><category>NLP</category><guid>https://mldl.ru/posts/nlp-za-90-minut/</guid><pubDate>Fri, 16 Jun 2023 08:44:44 GMT</pubDate></item></channel></rss>
