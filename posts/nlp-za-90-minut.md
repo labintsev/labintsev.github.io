@@ -84,4 +84,68 @@
 **Текст** - это зафиксированая на материальном носителе человеческая мысль в виде последовательности символов. 
 Текст может состоять из одного или нескольких слов. 
 
+#### Представление текста в компьютере
+Для человека символы, слова и тексты несут в себе определенный смысл. 
+Компьютер же работает только с байтами. 
+Рассмотрим пример, как реализовано посимвольное кодирование алфавита в кодировке ASCII.
 
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0pky">bin</th>
+    <th class="tg-0pky">dec</th>
+    <th class="tg-0pky">hex</th>
+    <th class="tg-0pky">symbol</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-c3ow">110 0001</td>
+    <td class="tg-c3ow">97</td>
+    <td class="tg-c3ow">61</td>
+    <td class="tg-c3ow">a</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">110 0010</td>
+    <td class="tg-c3ow">98</td>
+    <td class="tg-c3ow">62</td>
+    <td class="tg-c3ow">b</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">110 0011</td>
+    <td class="tg-c3ow">99</td>
+    <td class="tg-c3ow">63</td>
+    <td class="tg-c3ow">c</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">110 1010</td>
+    <td class="tg-c3ow">106</td>
+    <td class="tg-c3ow">6A</td>
+    <td class="tg-c3ow">j</td>
+  </tr>
+  <tr>
+    <td class="tg-c3ow">110 1011</td>
+    <td class="tg-c3ow">107</td>
+    <td class="tg-c3ow">6B</td>
+    <td class="tg-c3ow">k</td>
+  </tr>
+</tbody>
+</table>
+
+**bin** - двоичное представление символа,  
+**dec** - представление в десятичной системе счисления,  
+**hex** - представление в шестнадцатеричной системе счисления.  
+С полной таблицей кодировки ASCII можно ознакомиться по [ссылке](https://en.wikipedia.org/wiki/ASCII#8-bit_codes).  
+Для хранения одного символа латинского алфавита достаточно 7 бит. 
+Для хранения одного символа небольшого национального алфавита (например, кириллицы) достаточно 8 бит. 
+Для кодировки символов более объемных алфавитов (например, китайского) используют 16 бит или два байта.    
+Слова, как и тексты, хранятся в компьютерной памяти в виде последовательности символов. 
