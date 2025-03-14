@@ -1,7 +1,7 @@
 <!--
 .. title: Трансфер обучения
 .. slug: transfer-learning
-.. date: 2025-03-14 19:42:16 UTC+03:00
+.. date: 2025-02-14 19:42:16 UTC+03:00
 .. tags: 
 .. category: 
 .. link: 
