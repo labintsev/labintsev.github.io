@@ -56,7 +56,7 @@
 'robots_file:output\\robots.txt', (51200, 136)
 'copy_assets:output\\assets\\js\\luxon.min.js', (51712, 476)
 'copy_assets:output\\assets\\xml\\rss.xsl', (52224, 467)
-'copy_files:output\\README.md', (52736, 241)
+'copy_files:output\\README.md', (52736, 240)
 'render_sources:output\\posts\\template\\index.md', (53248, 242)
 'render_posts:cache\\posts\\template.html', (53760, 354)
 'render_taxonomies:output\\categories\\index.html', (54272, 1532)
