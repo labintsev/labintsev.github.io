@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Оптимизация | Заметки по ML, DL</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
+<link rel="canonical" href="https://mldl.ru/posts/optimization/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
+<link rel="prev" href="../linear-classifier/" title="Линейный классификатор " type="text/html">
+<link rel="next" href="../backpropagation/" title="Обратное распространение ошибки" type="text/html">
+<meta property="og:site_name" content="Заметки по ML, DL">
+<meta property="og:title" content="Оптимизация">
+<meta property="og:url" content="https://mldl.ru/posts/optimization/">
+<meta property="og:description" content="Оптимизация
+Содержание: 
+- Введение
+- Визуализация функции потерь
+- Оптимизация
+    - Стратегия #1: Случайный поиск
+    - Стратегия #2: Случайный локальный поиск
+    - Стратегия #3: Следование градиен">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-03-06T19:42:16+03:00">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href="../../">
+
+            <span id="blog-title">Заметки по ML, DL</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.md" id="sourcelink" class="nav-link">Источник</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="../../archive.html" class="nav-link">Archive</a>
+                </li>
+<li class="nav-item">
+<a href="../../categories/" class="nav-link">Tags</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Оптимизация</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Андрей Лабинцев
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-03-06T19:42:16+03:00" itemprop="datePublished" title="2025-03-06 19:42">2025-03-06 19:42</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <h2>Оптимизация</h2>
+<p>Содержание: 
+- <a href=".">Введение</a>
+- <a href=".">Визуализация функции потерь</a>
+- <a href=".">Оптимизация</a>
+    - <a href=".">Стратегия #1: Случайный поиск</a>
+    - <a href=".">Стратегия #2: Случайный локальный поиск</a>
+    - <a href=".">Стратегия #3: Следование градиенту</a>
+- <a href=".">Вычисление градиента</a>
+    - <a href=".">Численно с конечными разностями</a>
+    - <a href=".">Аналитически с помощью исчисления</a>
+- <a href=".">Градиентный спуск</a>
+- <a href=".">Краткая сводка</a></p>
+<h2>Введение #</h2>
+<p>В предыдущем разделе мы представили два ключевых компонента в контексте задачи классификации изображений:</p>
+<ol>
+<li>(Параметризованная) <strong>функция оценки</strong>, сопоставляющая пиксели необработанного изображения с оценками класса (например, линейная функция)</li>
+<li>
+<strong>Функция потерь</strong>, которая измеряет качество определенного набора параметров на основе того, насколько хорошо индуцированные оценки согласуются с метками основной истины в обучающих данных. Мы увидели, что существует множество способов и версий этого (например, Softmax/SVM).  </li>
+</ol>
+<p>В частности, вспомним, что линейная функция имела вид ( f(x_i, W) = W x_i \
+ и разработанная нами SVM была сформулирована следующим образом:  </p>
+<p>$$
+L = \frac{1}{N} \sum_i \sum_{j\neq y_i} \left[ \max(0, f(x_i; W)<em y_i>j - f(x_i; W)</em> + 1) \right] + \alpha R(W)
+$$</p>
+<p>Мы увидели, что настройка параметров <strong>\(W\)</strong>, которые выдавали прогнозы для примера <strong>\(x_i\)</strong>. В соответствии с их основными истинными метками <strong>\(y_i\)</strong> также будет иметь очень низкий убыток <strong>L</strong>. Теперь мы представим третий и последний ключевой компонент: <strong>оптимизацию</strong>. Оптимизация — это процесс нахождения набора параметров (W), которые минимизируют функцию потерь.</p>
+<p>Предчувствие: Как только мы поймем, как эти три основных компонента взаимодействуют, мы вернемся к первому компоненту (параметризованному отображению функций) и расширим его до функций, гораздо более сложных, чем линейное отображение: сначала целые нейронные сети, а затем сверточные нейронные сети. Функции потерь и процесс оптимизации останутся относительно неизменными.  </p>
+<h2>Визуализация функции потерь #</h2>
+<p>Функции потерь, которые мы рассмотрим в этом классе, обычно определяются в очень больших пространствах (например, в CIFAR-10 матрица весов линейного классификатора имеет размер [10 x 3073] для всего 30 730 параметров), что затрудняет их визуализацию. Тем не менее, мы все еще можем получить некоторые интуитивные представления об единице, разрезая пространство высокой размерности вдоль лучей (1 измерение) или вдоль плоскостей (2 измерения). Например, мы можем сгенерировать случайную матрицу весов <strong>\(W\)</strong>, (которая соответствует одной точке в пространстве), затем маршировать по лучу и записывать значение функции потерь по пути. То есть мы можем сгенерировать случайное направление <strong>\(W\)</strong> и рассчитать потери в этом направлении, оценив <strong>\( L(W + a W_1 + b W_2) \)</strong> для различных значений <strong>\(a\)</strong>. В результате этого процесса создается простой график со значением <strong>\(a\)</strong> в качестве оси <strong>(X)</strong> и значение функции потерь по оси <strong>\(Y\)</strong>. Мы также можем провести ту же процедуру с двумя измерениями, оценив потери <strong>\( L(W + a W_1 + b W_2) \)</strong> по мере того, как меняются значения <strong>\(a, b\)</strong>. На графике <strong>\(a, b\)</strong> могут соответствовать осям x и y, а значение функции потерь может быть отображено цветом:  </p>
+<hr>
+<p><img alt="" src="https://cs231n.github.io/assets/svm1d.png"><br><img alt="" src="https://cs231n.github.io/assets/svm_one.jpg"><br><img alt="" src="https://cs231n.github.io/assets/svm_all.jpg"><br>
+Ландшафт функций потерь для многоклассовой SVM (без регуляризации) для одного единственного примера (сверху, посередине) и для сотни примеров (снизу) в CIFAR-10. Сверху: одномерные потери при изменении только a. Посередине, снизу: двумерный срез потерь, <strong>синий = низкие потери, красный = высокие потери</strong>. Обратите внимание на кусочно-линейную структуру функции потерь. Потери для нескольких примеров сочетаются со средними, поэтому форма чаши снизу является средним значением многих кусочно-линейных чаш (например, та, что посередине).  </p>
+<hr>
+<p>Мы можем объяснить кусочно-линейную структуру функции потерь, изучив математические расчеты. В качестве единственного примера мы имеем:  </p>
+<p>$$
+L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + 1) \right]
+$$</p>
+<p>Из уравнения ясно, что потеря данных для каждого примера равна сумме (нулевой порог из-за <strong>\(\max(0,-)\</strong> функции) линейных функций <strong>\(W\)</strong>. Более того, каждый ряд <strong>\(W\)</strong> (т.е. <strong>\(w_j\)</strong>) иногда имеет перед собой положительный знак (когда он соответствует неправильному классу для примера), а иногда отрицательный знак (когда он соответствует правильному классу для этого примера). Чтобы сделать это более явным, рассмотрим простой набор данных, содержащий три одномерные точки и три класса. Полная потеря SVM (без регуляризации) становится следующей:  </p>
+<p>$$
+\begin{align}
+L_0 = &amp; \max(0, w_1^Tx_0 - w_0^Tx_0 + 1) + \max(0, w_2^Tx_0 - w_0^Tx_0 + 1) \\
+L_1 = &amp; \max(0, w_0^Tx_1 - w_1^Tx_1 + 1) + \max(0, w_2^Tx_1 - w_1^Tx_1 + 1) \\
+L_2 = &amp; \max(0, w_0^Tx_2 - w_2^Tx_2 + 1) + \max(0, w_1^Tx_2 - w_2^Tx_2 + 1) \\
+L = &amp; (L_0 + L_1 + L_2)/3
+\end{align}
+$$  </p>
+<p>Поскольку эти примеры являются одномерными, данные <strong>\(x_i\)</strong> и веса <strong>\(w_j\)</strong> -  это цифры. Глядя, например, на <strong>\(w_0\)</strong>, некоторые из приведенных выше членов являются линейными функциями <strong>\(w_0\)</strong>. И каждая из них зажата в точке ноль. Мы можем визуализировать это следующим образом:  </p>
+<hr>
+<p><img alt="" src="https://cs231n.github.io/assets/svmbowl.png"><br><strong>1</strong>-мерная иллюстрация потери данных:<br><strong>Ось x</strong> - это один груз<br><strong>ось y</strong> — потери.  </p>
+<hr>
+<p>В качестве отступления, вы, возможно, догадались по ее чашеобразному виду, что функция стоимости SVM является примером <a href="http://en.wikipedia.org/wiki/Convex_function">выпуклой функции</a>. Существует большое количество литературы, посвященной эффективной минимизации этих типов функций, и вы также можете пройти курс Стэнфорда по этой теме (<a href="http://stanford.edu/~boyd/cvxbook/">выпуклая оптимизация</a>). Как только мы расширим наши функции оценки <strong>f</strong> для нейронных сетей наши целевые функции станут невыпуклыми, и на приведенных выше визуализациях будут отображаться не чаши, а сложные, ухабистые местности.  </p>
+<p><em>Недифференцируемые функции потерь</em>. В качестве технического примечания вы также можете видеть, что изломы в функции потерь (из-за максимальной операции) технически делают функцию потерь недифференцируемой, потому что при этих изломах градиент не определен. Тем не менее, субградиент все еще существует и обычно используется вместо него. В этом классе термины «субградиент» и «градиент» будут использоваться как взаимозаменяемые.  </p>
+<p># Оптимизация  </p>
+<p>Повторимся, что функция потерь позволяет нам количественно оценить качество любого конкретного набора весов <strong>W</strong>. Цель оптимизации — найти <strong>W</strong>, которое минимизирует функцию потерь. Теперь мы будем мотивировать и постепенно развивать подход к оптимизации функции потерь. Для тех из вас, кто приходит на этот курс с предыдущим опытом, этот раздел может показаться странным, поскольку рабочий пример, который мы будем использовать (потери SVM), является выпуклой задачей, но имейте в виду, что наша цель состоит в том, чтобы в конечном итоге оптимизировать нейронные сети там, где мы не можем легко использовать ни один из инструментов, разработанных в литературе по выпуклой оптимизации.  </p>
+<h3>Стратегия #1: Первая очень плохая идея: Случайный поиск</h3>
+<p>Просто проверить, насколько хорош определенный набор параметров <strong>W</strong>,что очень просто, первая (очень плохая) идея, которая может прийти в голову, — это просто попробовать множество различных случайных весов и отслеживать, что работает лучше всего. Эта процедура может выглядеть следующим образом:  </p>
+<div class="code"><pre class="code literal-block"><span class="c1"># assume X_train is the data where each column is an example (e.g. 3073 x 50,000)</span>
+<span class="c1"># assume Y_train are the labels (e.g. 1D array of 50,000)</span>
+<span class="c1"># assume the function L evaluates the loss function</span>
+
+<span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">)</span> <span class="c1"># Python assigns the highest possible float value</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+  <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="c1"># generate random parameters</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span> <span class="c1"># get the loss over the entire training set</span>
+  <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span> <span class="c1"># keep track of the best solution</span>
+    <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span>
+    <span class="n">bestW</span> <span class="o">=</span> <span class="n">W</span>
+  <span class="nb">print</span> <span class="s1">'in attempt </span><span class="si">%d</span><span class="s1"> the loss was </span><span class="si">%f</span><span class="s1">, best </span><span class="si">%f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span>
+
+<span class="c1"># prints:</span>
+<span class="c1"># in attempt 0 the loss was 9.401632, best 9.401632</span>
+<span class="c1"># in attempt 1 the loss was 8.959668, best 8.959668</span>
+<span class="c1"># in attempt 2 the loss was 9.044034, best 8.959668</span>
+<span class="c1"># in attempt 3 the loss was 9.278948, best 8.959668</span>
+<span class="c1"># in attempt 4 the loss was 8.857370, best 8.857370</span>
+<span class="c1"># in attempt 5 the loss was 8.943151, best 8.857370</span>
+<span class="c1"># in attempt 6 the loss was 8.605604, best 8.605604</span>
+<span class="c1"># ... (trunctated: continues for 1000 lines)</span>
+</pre></div>
+
+<p>В приведенном выше коде мы видим, что мы опробовали несколько случайных векторов <strong>весов W</strong>, и некоторые из них работают лучше других. Мы можем взять лучшие веса <strong>W</strong>, найденные этим поиском, и опробовать их на тестовом наборе:  </p>
+<div class="code"><pre class="code literal-block"><span class="c1"># Assume X_test is [3073 x 10000], Y_test [10000 x 1]</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">Wbest</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Xte_cols</span><span class="p">)</span> <span class="c1"># 10 x 10000, the class scores for all test examples</span>
+<span class="c1"># find the index with max score in each column (the predicted class)</span>
+<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># and calculate accuracy (fraction of predictions that are correct)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span>
+<span class="c1"># returns 0.1555</span>
+</pre></div>
+
+<p>При наилучшем <strong>W</strong> это дает точность около <strong>15,5%</strong>. Учитывая, что угадывание классов полностью случайным образом дает только 10%, это не очень плохой результат для такого примитивного решения на основе случайного поиска!  </p>
+<p><strong>Основная идея: итеративное уточнение</strong>. Конечно, оказывается, что мы можем добиться гораздо большего. Основная идея заключается в том, что поиск наилучшего набора весов <strong>W</strong> является очень сложной или даже невозможной задачей (особенно когда W содержит веса для целых сложных нейронных сетей), но задача уточнения конкретного набора весов <strong>W</strong> для немного лучшего уровня значительно менее сложна. Другими словами, наш подход будет заключаться в том, чтобы начать со случайной <strong>W</strong>, а затем итеративно уточнять ее, делая ее немного лучше с каждым разом.  </p>
+<blockquote>
+<p>Наша стратегия будет заключаться в том, чтобы начать со случайных весовых коэффициентов и итеративно уточнять их с течением времени, чтобы получить меньшие потери.   </p>
+</blockquote>
+<p><strong>Аналогия с туристом с завязанными глазами</strong>. Одна из аналогий, которую вы можете найти полезной в будущем - представить, что Вы идете по холмистой местности с повязкой на глазах и пытаетесь добраться до самой низины. В примере с CIFAR-10 холмы имеют размерность 30 730, так как <strong>размеры W</strong> равны 10 x 3073. В каждой точке холма мы достигаем определенной потери (высоты над уровнем моря).  </p>
+<h3>Стратегия №2: Случайный локальный поиск</h3>
+<p>Первая стратегия, которая приходит на ум, — это попытаться вытянуть одну ногу в случайном направлении, а затем сделать шаг, только если он ведёт вниз по склону. Конкретно мы начнём со случайного <strong>W</strong>, генерирующего случайные возмущения <strong>δW</strong> к нему, и если потеря у возмущенного __W+δW__меньше, мы выполним обновление. Код для этой процедуры выглядит следующим образом:  </p>
+<div class="code"><pre class="code literal-block"><span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.001</span> <span class="c1"># generate random starting W</span>
+<span class="n">bestloss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+  <span class="n">step_size</span> <span class="o">=</span> <span class="mf">0.0001</span>
+  <span class="n">Wtry</span> <span class="o">=</span> <span class="n">W</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3073</span><span class="p">)</span> <span class="o">*</span> <span class="n">step_size</span>
+  <span class="n">loss</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">Xtr_cols</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Wtry</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">Wtry</span>
+    <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span>
+  <span class="nb">print</span> <span class="s1">'iter </span><span class="si">%d</span><span class="s1"> loss is </span><span class="si">%f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">bestloss</span><span class="p">)</span>
+</pre></div>
+
+<p>При использовании того же количества оценок функции потерь, что и раньше (1000), этот подход обеспечивает точность классификации тестового набора <strong>21,4%</strong>. Это лучше, но всё равно неэффективно и требует больших вычислительных мощностей.  </p>
+<h3>Стратегия №3: Следование градиенту</h3>
+<p>В предыдущем разделе мы пытались найти направление в пространстве весов, которое улучшило бы наш вектор весов (и снизило бы потери). Оказывается, нет необходимости случайным образом искать хорошее направление: мы можем вычислить <em>лучшее</em> направление, в котором нам следует изменить наш вектор весов, чтобы оно гарантированно было направлением наискорейшего спуска (по крайней мере, в пределе, когда размер шага стремится к нулю). Это направление будет связано с <strong>градиентом</strong> функции потерь. В нашей аналогии с походом этот подход примерно соответствует тому, чтобы почувствовать наклон холма под ногами и идти в направлении, которое кажется наиболее крутым.  </p>
+<p>В одномерных функциях наклон — это мгновенная скорость изменения функции в любой интересующей вас точке. Градиент — это обобщение наклона для функций, которые принимают не одно число, а вектор чисел. Кроме того, градиент — это просто вектор наклонов (более известных как <strong>производные</strong>) для каждого измерения во входном пространстве. Математическое выражение для производной одномерной функции по входным данным выглядит так:  </p>
+<p>$$
+\frac{df(x)}{dx} = \lim_{h\ \to 0} \frac{f(x + h) - f(x)}{h}
+$$  </p>
+<p>Когда интересующие нас функции принимают вектор чисел вместо одного числа, мы называем производные <strong>частными производными</strong>, а градиент — это просто вектор частных производных по каждому измерению. </p>
+<h2>Вычисление градиента</h2>
+<p>Существует два способа вычисления градиента: медленный, приблизительный, но простой (<strong>численный градиент</strong>) и быстрый, точный, но более подверженный ошибкам способ, требующий математических вычислений (<strong>аналитический градиент</strong>). Сейчас мы рассмотрим оба способа.  </p>
+<h3>Вычисление градиента численно с конечными разностями</h3>
+<p>Приведённая выше формула позволяет вычислить градиент численно. Вот универсальная функция, которая принимает градиент <code>f</code> и вектор <code>x</code> для вычисления функции и возвращает градиент <code>f</code> в точке <code>x</code>:</p>
+<div class="code"><pre class="code literal-block"><span class="k">def</span><span class="w"> </span><span class="nf">eval_numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">"""</span>
+<span class="sd">  a naive implementation of numerical gradient of f at x</span>
+<span class="sd">  - f should be a function that takes a single argument</span>
+<span class="sd">  - x is the point (numpy array) to evaluate the gradient at</span>
+<span class="sd">  """</span>
+
+  <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># evaluate function value at original point</span>
+  <span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="mf">0.00001</span>
+
+  <span class="c1"># iterate over all indexes in x</span>
+  <span class="n">it</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nditer</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="p">[</span><span class="s1">'multi_index'</span><span class="p">],</span> <span class="n">op_flags</span><span class="o">=</span><span class="p">[</span><span class="s1">'readwrite'</span><span class="p">])</span>
+  <span class="k">while</span> <span class="ow">not</span> <span class="n">it</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+
+    <span class="c1"># evaluate function at x+h</span>
+    <span class="n">ix</span> <span class="o">=</span> <span class="n">it</span><span class="o">.</span><span class="n">multi_index</span>
+    <span class="n">old_value</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="o">+</span> <span class="n">h</span> <span class="c1"># increment by h</span>
+    <span class="n">fxh</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># evalute f(x + h)</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_value</span> <span class="c1"># restore to previous value (very important!)</span>
+
+    <span class="c1"># compute the partial derivative</span>
+    <span class="n">grad</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh</span> <span class="o">-</span> <span class="n">fx</span><span class="p">)</span> <span class="o">/</span> <span class="n">h</span> <span class="c1"># the slope</span>
+    <span class="n">it</span><span class="o">.</span><span class="n">iternext</span><span class="p">()</span> <span class="c1"># step to next dimension</span>
+
+  <span class="k">return</span> <span class="n">grad</span>
+</pre></div>
+
+<p>В соответствии с формулой градиента, которую мы привели выше, приведённый код перебирает все параметры один за другим, вносит небольшое изменение <code>h</code> в этом параметре и вычисляет частную производную функции потерь по этому параметру, определяя, насколько изменилась функция. Переменная <code>grad</code> в итоге содержит полный градиент.  </p>
+<p><strong>Практические соображения</strong>. Обратите внимание, что в математической формулировке градиент определяется в пределе, когда <strong>h</strong> стремится к нулю, но на практике часто достаточно использовать очень маленькое значение (например, <strong>1e-5</strong>, как показано в примере). В идеале нужно использовать наименьший размер шага, который не приводит к численным проблемам. Кроме того, на практике часто лучше вычислять численный градиент с помощью <strong>формулы центрированной разности: [f(x+h)−f(x−h)]/2h</strong>. Смотрите <a href="http://en.wikipedia.org/wiki/Numerical_differentiation">wiki</a> для получения подробной информации.  </p>
+<p>Мы можем использовать приведённую выше функцию для вычисления градиента в любой точке и для любой функции. Давайте вычислим градиент функции потерь CIFAR-10 в некоторой случайной точке в пространстве весов:  </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> to use the generic code above we want a function that takes a single argument
+<span class="gh">#</span> (the weights in our case) so we close over X_train and Y_train
+def CIFAR10_loss_fun(W):
+  return L(X_train, Y_train, W)
+
+W = np.random.rand(10, 3073) * 0.001 # random weight vector
+df = eval_numerical_gradient(CIFAR10_loss_fun, W) # get the gradient
+</pre></div>
+
+<p>Градиент показывает наклон функции потерь по каждому измерению, и мы можем использовать его для обновления:  </p>
+<div class="code"><pre class="code literal-block">loss_original = CIFAR10_loss_fun(W) # the original loss
+print 'original loss: %f' % (loss_original, )
+
+<span class="gh">#</span> lets see the effect of multiple step sizes
+for step_size_log in [-10, -9, -8, -7, -6, -5,-4,-3,-2,-1]:
+  step_size = 10 ** step_size_log
+  W_new = W - step_size * df # new position in the weight space
+  loss_new = CIFAR10_loss_fun(W_new)
+  print 'for step size %f new loss: %f' % (step_size, loss_new)
+
+<span class="gh">#</span> prints:
+<span class="gh">#</span> original loss: 2.200718
+<span class="gh">#</span> for step size 1.000000e-10 new loss: 2.200652
+<span class="gh">#</span> for step size 1.000000e-09 new loss: 2.200057
+<span class="gh">#</span> for step size 1.000000e-08 new loss: 2.194116
+<span class="gh">#</span> for step size 1.000000e-07 new loss: 2.135493
+<span class="gh">#</span> for step size 1.000000e-06 new loss: 1.647802
+<span class="gh">#</span> for step size 1.000000e-05 new loss: 2.844355
+<span class="gh">#</span> for step size 1.000000e-04 new loss: 25.558142
+<span class="gh">#</span> for step size 1.000000e-03 new loss: 254.086573
+<span class="gh">#</span> for step size 1.000000e-02 new loss: 2539.370888
+<span class="gh">#</span> for step size 1.000000e-01 new loss: 25392.214036
+</pre></div>
+
+<p><strong>Обновление в направлении отрицательного градиента</strong>. В приведенном выше коде обратите внимание, что для вычисления <code>W_new</code> мы выполняем обновление в направлении отрицательного градиента <code>df</code>, поскольку хотим, чтобы наша функция потерь уменьшалась, а не увеличивалась.  </p>
+<p><strong>Влияние размера шага</strong>. Градиент показывает нам направление, в котором функция возрастает наиболее быстро, но не говорит нам, насколько далеко в этом направлении мы должны продвинуться. Как мы увидим далее в курсе, выбор размера шага (также называемого <em>скоростью обучения</em>) станет одним из самых важных (и самых сложных) параметров при обучении нейронной сети. В нашей аналогии со спуском с холма вслепую мы чувствуем, что склон под нашими ногами наклонён в каком-то направлении, но длина шага, который мы должны сделать, неизвестна. Если мы будем осторожно переставлять ноги, то сможем рассчитывать на последовательный, но очень медленный прогресс (это соответствует небольшому размеру шага). И наоборот, мы можем сделать большой уверенный шаг, чтобы спуститься быстрее, но это может не окупиться. Как вы можете видеть в примере кода выше, в какой-то момент более длинный шаг приведёт к большим потерям, так как мы «перешагнём».  </p>
+<hr>
+<p><img alt="" src="https://cs231n.github.io/assets/stepsize.jpg"><br>
+Визуализация влияния размера шага. Мы начинаем с какой-то конкретной точки <strong>W</strong> и вычисляем градиент (или, скорее, его отрицательную величину — белую стрелку), который указывает направление наиболее резкого снижения функции потерь. Маленькие шаги, скорее всего, приведут к стабильному, но медленному прогрессу. Большие шаги могут привести к более быстрому прогрессу, но они более рискованны. Обратите внимание, что в конечном итоге при большом размере шага мы совершим ошибку и увеличим потери. Размер шага (или, как мы позже назовём его, <strong>скорость обучения</strong>) станет одним из важнейших гиперпараметров, которые нам придётся тщательно настраивать.  </p>
+<hr>
+<p><strong>Проблема эффективности</strong>. Возможно, вы заметили, что вычисление численного градиента имеет сложность, линейную по отношению к количеству параметров. В нашем примере у нас было 30 730 параметров, и поэтому для вычисления градиента и обновления только одного параметра нам пришлось выполнить 30 731 вычисление функции потерь. Эта проблема усугубляется тем, что современные нейронные сети могут легко содержать десятки миллионов параметров. Очевидно, что эта стратегия не масштабируется, и нам нужно что-то получше.  </p>
+<h3>Вычисление градиента аналитически с помощью математического анализа</h3>
+<p>Численный градиент очень просто вычислить с помощью конечно-разностного приближения, но его недостатком является то, что он является приблизительным (поскольку нам нужно выбрать небольшое значение <em>h</em>, в то время как истинный градиент определяется как предел, когда <em>h</em> стремится к нулю), а также то, что его вычисление требует больших вычислительных мощностей. Второй способ вычисления градиента — аналитический, с использованием математического анализа, который позволяет вывести прямую формулу для градиента (без приближений), которая также очень быстро вычисляется. Однако, в отличие от численного градиента, его реализация может быть более подвержена ошибкам, поэтому на практике очень часто вычисляют аналитический градиент и сравнивают его с численным градиентом, чтобы проверить правильность реализации. Это называется <strong>проверкой градиента</strong>.  </p>
+<p>Давайте рассмотрим пример функции потерь SVM для одной точки данных:  </p>
+<p>$$
+L_i = \sum_{j\neq y_i} \left[ \max(0, w_j^Tx_i - w_{y_i}^Tx_i + \Delta) \right]
+$$  </p>
+<p>Мы можем дифференцировать функцию по весовым коэффициентам. Например, взяв градиент по <strong>\(w_{y_i}\)</strong> мы получаем:  </p>
+<p>$$
+\nabla_{w_{y_i}} L_i = - \left( \sum_{j\neq y_i} \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta &gt; 0) \right) x_i
+$$  </p>
+<p>где <strong>\(\mathbb{1}\)</strong>- это индикаторная функция, которая принимает значение 1, если условие внутри истинно, и 0 в противном случае. Хотя это выражение может показаться пугающим, когда вы записываете его, при реализации в коде вы просто подсчитываете количество классов, которые не соответствуют желаемой погрешности (и, следовательно, влияют на функцию потерь), а затем вектор данных <strong>\(x_i\)</strong>, умноженное на это число — это градиент. Обратите внимание, что это градиент только по отношению к строке <strong>W</strong>, а это соответствует правильному классу. Для других строк, где <strong>j≠\(y_i\)</strong> градиент равен:  </p>
+<p>$$
+\nabla_{w_j} L_i = \mathbb{1}(w_j^Tx_i - w_{y_i}^Tx_i + \Delta &gt; 0) x_i
+$$  </p>
+<p>Как только вы получите выражение для градиента, будет несложно реализовать эти выражения и использовать их для обновления градиента.  </p>
+<h2>Градиентный спуск</h2>
+<p>Теперь, когда мы можем вычислить градиент функции потерь, процедура многократного вычисления градиента, а затем обновления параметров, называется градиентным спуском. Его простая версия выглядит следующим образом: </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> Vanilla Gradient Descent
+
+while True:
+  weights_grad = evaluate_gradient(loss_fun, data, weights)
+  weights += - step_size * weights_grad # perform parameter update
+</pre></div>
+
+<p>Этот простой цикл лежит в основе всех библиотек нейронных сетей. Существуют и другие способы оптимизации (например, LBFGS), но градиентный спуск в настоящее время является наиболее распространённым и устоявшимся способом оптимизации функций потерь нейронных сетей. В ходе курса мы рассмотрим некоторые детали этого цикла (например, точное уравнение обновления), но основная идея следования за градиентом до тех пор, пока нас не удовлетворят результаты, останется прежней.  </p>
+<p><strong>Мини-пакетный градиентный спуск</strong>. В крупномасштабных приложениях (таких как ILSVRC) обучающие данные могут насчитывать миллионы примеров. Следовательно, вычисление полной функции потерь по всему обучающему набору данных для выполнения только одного обновления параметров кажется нецелесообразным. Очень распространённым подходом к решению этой проблемы является вычисление градиента по <strong>пакетам</strong> обучающих данных. Например, в современных сверточных нейронных сетях типичная партия содержит 256 примеров из всего обучающего набора, состоящего 1,2 миллиона примеров. Затем эта партия используется для обновления параметров:  </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> Vanilla Minibatch Gradient Descent
+
+while True:
+  data_batch = sample_training_data(data, 256) # sample 256 examples
+  weights_grad = evaluate_gradient(loss_fun, data_batch, weights)
+  weights += - step_size * weights_grad # perform parameter update
+</pre></div>
+
+<p>Причина, по которой это работает, заключается в том, что примеры в обучающих данных взаимосвязаны. Чтобы понять это, рассмотрим крайний случай, когда все 1,2 миллиона изображений в ILSVRC на самом деле являются точными дубликатами всего 1000 уникальных изображений (по одному для каждого класса, или, другими словами, 1200 идентичных копий каждого изображения). Тогда очевидно, что градиенты, которые мы вычислили бы для всех 1200 идентичных копий, были бы одинаковыми, и если бы мы усреднили потерю данных по всем 1,2 миллионам изображений, то получили бы точно такую же потерю, как если бы мы оценивали только небольшое подмножество из 1000 изображений. На практике, конечно, набор данных не содержит дубликатов изображений, и градиент от мини-пакета является хорошим приближением к градиенту полной задачи. Таким образом, на практике можно добиться гораздо более быстрой сходимости, оценивая градиенты мини-пакетов для более частого обновления параметров.</p>
+<p>Крайним случаем этого является ситуация, когда мини-пакет содержит только один пример. Этот процесс называется <strong>стохастическим градиентным спуском (SGD)</strong> (или иногда <strong>онлайн</strong>-градиентным спуском). Это относительно редкое явление, потому что на практике из-за оптимизации кода с помощью векторизации гораздо эффективнее вычислять градиент для 100 примеров, чем градиент для одного примера 100 раз. Несмотря на то, что SGD технически подразумевает использование одного примера для оценки градиента, вы услышите, как люди используют термин SGD даже при упоминании градиентного спуска с мини-пакетами (т. е. редко можно встретить упоминания MGD для «градиентного спуска с мини-пакетами» или BGD для «пакетного градиентного спуска»), где обычно предполагается использование мини-пакетов. Размер мини-пакета является гиперпараметром, но его нечасто проверяют на перекрёстной проверке. Обычно это зависит от ограничений памяти (если они есть) или устанавливается на какое-то значение, например 32, 64 или 128. На практике мы используем степени двойки, потому что многие реализации векторизованных операций работают быстрее, если размер входных данных равен степени двойки.  </p>
+<h2>Краткая сводка</h2>
+<hr>
+<p><img alt="" src="https://cs231n.github.io/assets/dataflow.jpeg"><br>
+Краткое описание информационного потока. Набор данных, состоящий из пар <strong>(x,y)</strong>, задан и неизменен. Веса изначально являются случайными числами и могут меняться. Во время прямого прохода функция оценки вычисляет оценки классов, которые сохраняются в векторе <strong>f</strong>. Функция потерь содержит два компонента: Функция потерь данных вычисляет соответствие между оценками <strong>f</strong> и метками <strong>y</strong>. Функция потерь регуляризации зависит только от весов. Во время градиентного спуска мы вычисляем градиент по весовым коэффициентам (и, при желании, по данным) и используем его для обновления параметров во время градиентного спуска.  </p>
+<hr>
+<p>В этом разделе: 
+- Мы представили функцию потерь как <strong>многомерный ландшафт оптимизации</strong>, в котором мы пытаемся достичь дна. Рабочая аналогия, которую мы разработали, — это турист с завязанными глазами, который хочет добраться до дна. В частности, мы увидели, что функция стоимости SVM является кусочно-линейной и имеет форму чаши.
+- Мы обосновали идею оптимизации функции потерь с помощью <strong>итеративного уточнения</strong>, при котором мы начинаем со случайного набора весовых коэффициентов и шаг за шагом уточняем их, пока потери не будут минимизированы.
+- Мы увидели, что <strong>градиент</strong> функции указывает направление наискорейшего подъёма, и обсудили простой, но неэффективный способ его численного вычисления с помощью конечно-разностной аппроксимации (конечно-разностная аппроксимация — это значение <em>h</em>, используемое при вычислении численного градиента).
+- Мы увидели, что для обновления параметров требуется сложная настройка <strong>размера шага</strong> (или <strong>скорости обучения</strong>), который должен быть установлен правильно: если он слишком мал, прогресс будет стабильным, но медленным. Если он слишком велик, прогресс может быть быстрее, но более рискованным. Мы рассмотрим этот компромисс более подробно в следующих разделах.
+- Мы обсудили компромиссы между вычислением <strong>численного</strong> и <strong>аналитического</strong> градиента. Численный градиент прост, но он приблизителен и требует больших вычислительных затрат. Аналитический градиент точен, быстро вычисляется, но более подвержен ошибкам, поскольку требует вычисления градиента с помощью математики. Поэтому на практике мы всегда используем аналитический градиент, а затем выполняем <strong>проверку градиента</strong>, в ходе которой его реализация сравнивается с численным градиентом.
+- Мы представили алгоритм <strong>градиентного спуска</strong>, который итеративно вычисляет градиент и выполняет обновление параметров в цикле.  </p>
+<p><strong>Далее</strong>: основной вывод из этого раздела заключается в том, что способность вычислять градиент функции потерь по отношению к её весовым коэффициентам (и иметь некоторое интуитивное представление об этом) — самый важный навык, необходимый для проектирования, обучения и понимания нейронных сетей. В следующем разделе мы научимся вычислять градиент аналитически с помощью правила дифференцирования сложной функции, также известного как <strong>обратное распространение ошибки</strong>. Это позволит нам эффективно оптимизировать относительно произвольные функции потерь, которые используются во всех видах нейронных сетей, включая свёрточные нейронные сети.</p>
+    </div>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="../linear-classifier/" rel="prev" title="Линейный классификатор ">Предыдущая запись</a>
+            </li>
+            <li class="next">
+                <a href="../backpropagation/" rel="next" title="Обратное распространение ошибки">Следующая запись</a>
+            </li>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    displayAlign: 'center', // Change this to 'left' if you want left-aligned equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script></article><!--End of body content--><footer id="footer">
+            Contents © 2025         <a href="mailto:andrej.labintsev@yandex.ru">Андрей Лабинцев</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+</body>
+</html>

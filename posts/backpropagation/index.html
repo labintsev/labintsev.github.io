@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Обратное распространение ошибки | Заметки по ML, DL</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
+<link rel="canonical" href="https://mldl.ru/posts/backpropagation/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
+<link rel="prev" href="../optimization/" title="Оптимизация" type="text/html">
+<link rel="next" href="../convnets-1/" title="Сверточные сети. Введение" type="text/html">
+<meta property="og:site_name" content="Заметки по ML, DL">
+<meta property="og:title" content="Обратное распространение ошибки">
+<meta property="og:url" content="https://mldl.ru/posts/backpropagation/">
+<meta property="og:description" content="Обратное распространение ошибки
+Содержание: 
+- Введение
+- Простые выражения, интерпретирующие градиент
+- Составные выражения, цепное правило, обратное распространение
+- Интуитивное понимание обратного">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-03-07T19:42:16+03:00">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href="../../">
+
+            <span id="blog-title">Заметки по ML, DL</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.md" id="sourcelink" class="nav-link">Источник</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="../../archive.html" class="nav-link">Archive</a>
+                </li>
+<li class="nav-item">
+<a href="../../categories/" class="nav-link">Tags</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Обратное распространение ошибки</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Андрей Лабинцев
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-03-07T19:42:16+03:00" itemprop="datePublished" title="2025-03-07 19:42">2025-03-07 19:42</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <h2>Обратное распространение ошибки</h2>
+<p>Содержание: 
+- <a href=".">Введение</a>
+- <a href=".">Простые выражения, интерпретирующие градиент</a>
+- <a href=".">Составные выражения, цепное правило, обратное распространение</a>
+- <a href=".">Интуитивное понимание обратного распространения</a>
+- <a href=".">Модульность: Пример сигмовидной активации</a>
+- <a href=".">Бэкпроп на практике: Поэтапное вычисление</a>
+- <a href=".">Закономерности в обратном потоке</a>
+- <a href=".">Градиенты для векторизованных операций</a>
+- <a href=".">Краткая сводка</a>  </p>
+<h2>Введение</h2>
+<p><strong>Мотивация</strong>. В этом разделе мы углубимся в интуитивное понимание <strong>обратного распространения ошибки</strong>, которое представляет собой способ вычисления градиентов выражений с помощью рекурсивного применения <strong>правила дифференцирования сложной функции</strong>. Понимание этого процесса и его тонкостей крайне важно для эффективного проектирования, разработки и отладки нейронных сетей.  </p>
+<p><strong>Постановка задачи</strong>. Основная задача, рассматриваемая в этом разделе, заключается в следующем: нам дана некоторая функция <strong>f(x)</strong>,где <strong>x</strong> является вектором входных данных, и мы заинтересованы в вычислении градиента <strong>f</strong> в <strong>x</strong> (т.е. <strong>∇f(x)</strong>).  </p>
+<p><strong>Мотивация</strong>. Напомним, что основная причина, по которой мы интересуемся этой проблемой, заключается в том, что в конкретном случае нейронных сетей <strong>f</strong> будет соответствовать функции потерь ( <strong>L</strong> ) и входные данные <strong>x</strong> будет состоять из обучающих данных и весовых коэффициентов нейронной сети. Например, в качестве функции потерь может использоваться функция потерь SVM, а в качестве входных данных — обучающие данные <strong>\((x_i,y_i), i=1 \ldots N\)</strong>, а также веса и предубеждения <strong>W,b</strong>. Обратите внимание, что (как это обычно бывает в машинном обучении) мы рассматриваем обучающие данные как заданные и фиксированные, а весовые коэффициенты — как переменные, которыми мы можем управлять. Следовательно, даже если мы можем легко использовать обратное распространение ошибки для вычисления градиента по входным примерам <strong>\(x_i\)</strong>. На практике мы обычно вычисляем градиент только для параметров (например, <strong>W,b</strong>), чтобы мы могли использовать его для обновления параметров. Однако, как мы увидим позже, градиент по <strong>\(x_i\)</strong>, например, может быть полезен для визуализации и интерпретации того, что может делать нейронная сеть.  </p>
+<p>Если вы пришли на этот курс и вам удобно вычислять градиенты с помощью правила дифференцирования сложной функции, мы всё равно рекомендуем вам хотя бы бегло просмотреть этот раздел, поскольку в нём представлен редко встречающийся взгляд на обратное распространение ошибки как на обратный поток в схемах с вещественными значениями, и любые полученные вами знания могут пригодиться вам на протяжении всего курса.  </p>
+<h2>Простые выражения и интерпретация градиента</h2>
+<p>Давайте начнём с простого, чтобы разработать обозначения и соглашения для более сложных выражений. Рассмотрим простую функцию умножения двух чисел <strong>f(x,y)=xy</strong>. Чтобы вычислить частную производную для любого из входных параметров, достаточно воспользоваться простым математическим расчётом:  </p>
+<p>$$
+f(x,y) = x y \hspace{0.5in} \rightarrow \hspace{0.5in} \frac{\partial f}{\partial x} = y \hspace{0.5in} \frac{\partial f}{\partial y} = x 
+$$  </p>
+<p><strong>Интерпретация</strong>. Помните, что показывают производные: они указывают на скорость изменения функции по отношению к переменной, окружающей бесконечно малую область вблизи определённой точки:  </p>
+<p>$$
+\frac{df(x)}{dx} = \lim_{h\ \to 0} \frac{f(x + h) - f(x)}{h}
+$$  </p>
+<p>Технически примечательно, что знак деления в левой части, в отличие от знака деления в правой части, не является делением. Вместо этого эта запись указывает на то, что оператор <strong>\(  \frac{d}{dx} \)</strong> применяется к функции <strong>f</strong> и возвращает другую функцию (производную). Можно представить, что приведённое выше выражение означает, что <strong>h</strong> очень мало, а значит функция хорошо аппроксимируется прямой линией, а производная — это её наклон. Другими словами, производная от каждой переменной показывает чувствительность всего выражения к её значению. Например, если <strong>x=4,y=−3</strong> тогда <strong>f(x,y)=−12</strong> и производная от <strong>\(x\) \(\frac{\partial f}{\partial x} = -3\)3</strong>. Это говорит нам о том, что если мы увеличим значение этой переменной на небольшую величину, то всё выражение уменьшится (из-за отрицательного знака) в три раза. Это можно увидеть, если переставить слагаемые в приведённом выше уравнении ( <strong>\( f(x + h) = f(x) + h \frac{df(x)}{dx} \)</strong> ). Аналогично, поскольку <strong>\(\frac{\partial f}{\partial y} = 4\)</strong>, мы ожидаем, что увеличение стоимости <strong>y</strong> на какую-то очень небольшую сумму <strong>h</strong> также увеличит результат функции (из-за положительного знака) и <strong>4h</strong>.  </p>
+<blockquote>
+<p>Производная по каждой переменной показывает, насколько чувствительно всё выражение к изменению её значения.</p>
+</blockquote>
+<p>Как уже упоминалось, градиент <strong>∇f</strong> является вектором частных производных, поэтому мы имеем, что <strong>\(\nabla f = [\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}] = [y, x]\)</strong>. Несмотря на то, что градиент технически является вектором, для простоты мы часто используем такие термины, как <em>«градиент по x»</em>, вместо технически корректного выражения <em>«частная производная по x»</em>.  </p>
+<p>Мы также можем вывести производные для операции сложения:  </p>
+<p>$$
+f(x,y) = x + y \hspace{0.5in} \rightarrow \hspace{0.5in} \frac{\partial f}{\partial x} = 1 \hspace{0.5in} \frac{\partial f}{\partial y} = 1
+$$  </p>
+<p>то есть производная по обоим <strong>x,y</strong> является единым, независимо от того, какими значения <strong>x,y</strong> являются. Это имеет смысл, поскольку увеличение <strong>x или y</strong> увеличило бы выпуск продукции <strong>f</strong>. И скорость этого увеличения будет зависеть от фактических значений <strong>x,y</strong> (в отличие от случая с умножением выше). Последняя функция, которую мы будем часто использовать в этом классе, — это операция <em>max</em>:  </p>
+<p>$$
+f(x,y) = \max(x, y) \hspace{0.5in} \rightarrow \hspace{0.5in} \frac{\partial f}{\partial x} = \mathbb{1}(x &gt;= y) \hspace{0.5in} \frac{\partial f}{\partial y} = \mathbb{1}(y &gt;= x)
+$$  </p>
+<p>То есть (суб)градиент равен <strong>1</strong> для большего входного значения и <strong>0</strong> для другого входного значения. Интуитивно понятно, что если входные значения <strong>x=4,y=2</strong>тогда максимальное значение равно <strong>4</strong>, и функция не чувствительна к настройке <strong>y</strong>. То есть, если бы мы увеличили его на крошечную величину <strong>h</strong> функция бы продолжила выводить <strong>4</strong>, и поэтому градиент равен нулю: эффекта нет. Конечно, если бы мы изменили <strong>y</strong> на большую величину (например, больше <strong>2</strong>), то значение <strong>f</strong> изменилось бы, но производные ничего не говорят нам о влиянии таких больших изменений на входные данные функции. Они информативны только для крошечных, бесконечно малых изменений входных данных, как показано на <strong>\(\lim_{h \rightarrow 0}\)</strong> в его определении.  </p>
+<h2>Составные выражения с правилом цепочки</h2>
+<p>Теперь давайте рассмотрим более сложные выражения, включающие несколько составных функций, например <strong>f(x,y,z)=(x+y)z</strong>. Это выражение по-прежнему достаточно простое, чтобы дифференцировать его напрямую, но мы подойдём к нему с особой стороны, которая поможет понять принцип обратного распространения ошибки. В частности, обратите внимание, что это выражение можно разбить на два: <strong>q=x+y</strong> и <strong>f=qz</strong>. Более того, мы знаем, как вычислить производные обоих выражений по отдельности, как показано в предыдущем разделе. <strong>f</strong> это просто умножение <strong>q</strong> и <strong>z</strong>, так что <strong>\(\frac{\partial f}{\partial q} = z, \frac{\partial f}{\partial z} = q\)</strong>, и <strong>q</strong> является добавлением <strong>x</strong> и <strong>y</strong>, итак <strong>\( \frac{\partial q}{\partial x} = 1, \frac{\partial q}{\partial y} = 1 \)</strong>. Однако нам необязательно знать градиент для промежуточного значения <strong>q</strong> - ценность <strong>\(\frac{\partial f}{\partial q}\)</strong> нивелируется. Вместо этого нас, в конечном счете, интересует градиент <strong>f</strong> в отношении его вклада <strong>x,y,z</strong>. <strong>Правило цепочки</strong> говорит нам о том, что правильный способ «объединить» эти выражения градиента в цепочку — это умножение. Например, <strong>\(\frac{\partial f}{\partial x} = \frac{\partial f}{\partial q} \frac{\partial q}{\partial x} \)</strong>. На практике это просто умножение двух чисел, обозначающих два градиента. Давайте рассмотрим это на примере:  </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> set some inputs
+x = -2; y = 5; z = -4
+
+<span class="gh">#</span> perform the forward pass
+q = x + y # q becomes 3
+f = q <span class="gs">* z # f becomes -12</span>
+
+<span class="gs"># perform the backward pass (backpropagation) in reverse order:</span>
+<span class="gs"># first backprop through f = q *</span> z
+dfdz = q # df/dz = q, so gradient on z becomes 3
+dfdq = z # df/dq = z, so gradient on q becomes -4
+dqdx = 1.0
+dqdy = 1.0
+<span class="gh">#</span> now backprop through q = x + y
+dfdx = dfdq <span class="gs">* dqdx  # The multiplication here is the chain rule!</span>
+<span class="gs">dfdy = dfdq *</span> dqdy  
+</pre></div>
+
+<p>У нас остаётся градиент в переменных <code>[dfdx,dfdy,dfdz]</code>, который показывает чувствительность переменных <code>x,y,z</code> к <code>f</code>!. Это самый простой пример обратного распространения ошибки. Далее мы будем использовать более лаконичную запись, в которой отсутствует префикс <code>df</code>! Например, мы будем просто писать <code>dq</code> вместо <code>dfdq</code> и всегда предполагать, что градиент вычисляется для конечного результата.  </p>
+<p>Это вычисление также можно хорошо визуализировать с помощью принципиальной схемы:  </p>
+<hr>
+<div class="fig figleft fighighlight">
+<svg style="max-width: 420px" viewbox="0 0 420 220"><defs><marker id="arrowhead" refx="6" refy="2" markerwidth="6" markerheight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><line x1="40" y1="30" x2="110" y2="30" stroke="black" stroke-width="1"></line><text x="45" y="24" font-size="16" fill="green">-2</text><text x="45" y="47" font-size="16" fill="red">-4</text><text x="35" y="24" font-size="16" text-anchor="end" fill="black">x</text><line x1="40" y1="100" x2="110" y2="100" stroke="black" stroke-width="1"></line><text x="45" y="94" font-size="16" fill="green">5</text><text x="45" y="117" font-size="16" fill="red">-4</text><text x="35" y="94" font-size="16" text-anchor="end" fill="black">y</text><line x1="40" y1="170" x2="110" y2="170" stroke="black" stroke-width="1"></line><text x="45" y="164" font-size="16" fill="green">-4</text><text x="45" y="187" font-size="16" fill="red">3</text><text x="35" y="164" font-size="16" text-anchor="end" fill="black">z</text><line x1="210" y1="65" x2="280" y2="65" stroke="black" stroke-width="1"></line><text x="215" y="59" font-size="16" fill="green">3</text><text x="215" y="82" font-size="16" fill="red">-4</text><text x="205" y="59" font-size="16" text-anchor="end" fill="black">q</text><circle cx="170" cy="65" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="170" y="70" font-size="20" fill="black" text-anchor="middle">+</text><line x1="110" y1="30" x2="150" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="110" y1="100" x2="150" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="190" y1="65" x2="210" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="380" y1="117" x2="450" y2="117" stroke="black" stroke-width="1"></line><text x="385" y="111" font-size="16" fill="green">-12</text><text x="385" y="134" font-size="16" fill="red">1</text><text x="375" y="111" font-size="16" text-anchor="end" fill="black">f</text><circle cx="340" cy="117" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="340" y="127" font-size="20" fill="black" text-anchor="middle">*</text><line x1="280" y1="65" x2="320" y2="117" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="110" y1="170" x2="320" y2="117" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="360" y1="117" x2="380" y2="117" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line></svg><div class="figcaption">
+</div>
+<div style="clear:both;"></div>
+</div>
+
+<p><a name="intuitive"></a> 
+Реальная <em>"схема"</em> слева показывает визуальное представление вычислений. <strong>Прямой проход</strong> вычисляет значения от входных данных до выходных (показано зелёным цветом).<strong>Обратный проход</strong>, затем выполняет обратное распространение ошибки, которое начинается с конца и рекурсивно применяет правило цепочки для вычисления градиентов (показано красным цветом) вплоть до входных данных схемы. Градиенты можно представить как текущие в обратном направлении по схеме.</p>
+<hr>
+<h2>Интуитивное понимание обратного распространения</h2>
+<p>Обратите внимание, что обратное распространение ошибки — это локальный процесс. Каждый элемент в схеме получает входные данные и может сразу вычислить две вещи:
+ 1. выходное значение 
+ 2. <em>локальный</em> градиент выходного значения по отношению к входным данным.  </p>
+<p>Обратите внимание, что элементы могут делать это совершенно независимо, не зная ни о каких деталях всей схемы, в которую они встроены. Однако после завершения прямого прохода во время обратного распространения ошибки элемент в конечном итоге узнает о градиенте выходного значения по отношению к конечному результату всей схемы. Правило цепочки гласит, что функция должна взять этот градиент и умножить его на каждый градиент, который она обычно вычисляет для всех своих входных данных.  </p>
+<blockquote>
+<p>Это дополнительное умножение (для каждого входа) благодаря правилу цепочки может превратить один относительно бесполезный элемент в деталь сложной схемы, такой как целая нейронная сеть.  </p>
+</blockquote>
+<p>Давайте разберёмся, как это работает, на примере. Сложение получило на вход <strong>[-2, 5]</strong> и выдало на выходе <strong>3</strong>. Поскольку сложение вычисляет операцию сложения, его локальный градиент для обоих входных значений равен <strong>+1</strong>. Остальная часть схемы вычислила итоговое значение, равное <strong>-12</strong>. Во время обратного прохода, при котором правило цепочки рекурсивно применяется в обратном направлении, сложение (которое является входом для умножения) узнаёт, что градиент его выходного значения равен <strong>-4</strong>. Если мы представим, что схема <em>«хочет»</em> вывести более высокое значение (что может помочь с интуитивным пониманием), то мы можем представить, что схема <em>«хочет»</em>, чтобы выходное значение логического элемента <strong>«и»</strong> было ниже (из-за отрицательного знака) и с <em>силой</em> <strong>4</strong>. Чтобы продолжить рекурсию и вычислить градиент, логический элемент <strong>«и»</strong> берёт этот градиент и умножает его на все локальные градиенты для своих входов (делая градиент для <strong>x</strong> и <strong>y</strong> равным <strong>1 * -4 = -4</strong>). Обратите внимание, что это даёт желаемый эффект: если <strong>x, y</strong> уменьшатся (в соответствии с их отрицательным градиентом), то выходное значение сумматора уменьшится, что, в свою очередь, приведёт к увеличению выходного значения умножителя.  </p>
+<p>Таким образом, обратное распространение ошибки можно представить как взаимодействие элементов (через сигнал градиента), которые сообщают друг другу, хотят ли они, чтобы их выходные данные увеличивались или уменьшались (и насколько сильно), чтобы итоговое значение было выше.  </p>
+<h2>Модульность: Пример сигмовидной активации</h2>
+<p>Введённые нами выше элементы являются относительно произвольными. В качестве элемента может выступать любая дифференцируемая функция, и мы можем объединять несколько элементов в один или разбивать функцию на несколько элементов, когда это удобно. Давайте рассмотрим другое выражение, которое иллюстрирует этот момент:  </p>
+<p>$$
+f(w,x) = \frac{1}{1+e^{-(w_0x_0 + w_1x_1 + w_2)}}
+$$  </p>
+<p>как мы увидим позже на занятии, это выражение описывает двумерный нейрон (с входными данными <strong>x</strong> и весами <strong>w</strong>), который использует функцию <em>сигмоидальной активации</em>. Но пока давайте рассматривать это очень просто как функцию, которая преобразует входные данные <em>w,x</em> в одно число. Функция состоит из нескольких логических элементов. Помимо тех, что описаны выше (сложение, умножение, максимальное значение), есть ещё четыре:  </p>
+<p>$$
+f(x) = \frac{1}{x} 
+\hspace{1in} \rightarrow \hspace{1in} 
+\frac{df}{dx} = -1/x^2 
+\\
+f_c(x) = c + x
+\hspace{1in} \rightarrow \hspace{1in} 
+\frac{df}{dx} = 1 
+\\
+f(x) = e^x
+\hspace{1in} \rightarrow \hspace{1in} 
+\frac{df}{dx} = e^x
+\\
+f_a(x) = ax
+\hspace{1in} \rightarrow \hspace{1in} 
+\frac{df}{dx} = a
+$$  </p>
+<p>Где функции <strong>\(f_c, f_a\)</strong> преобразуйте входные данные в константу, равную <strong>c</strong> и масштабируйте входные данные на константу, равную <strong>a</strong>, соответственно. Технически это частные случаи сложения и умножения, но мы вводим их как (новые) унарные операции, поскольку нам не нужны градиенты для констант <strong>c,a</strong>. Тогда полная схема выглядит следующим образом:  </p>
+<div class="fig figleft fighighlight">
+<svg style="max-width: 799px" viewbox="0 0 799 306"><g transform="scale(0.8)"><defs><marker id="arrowhead" refx="6" refy="2" markerwidth="6" markerheight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><line x1="50" y1="30" x2="90" y2="30" stroke="black" stroke-width="1"></line><text x="55" y="24" font-size="16" fill="green">2.00</text><text x="55" y="47" font-size="16" fill="red">-0.20</text><text x="45" y="24" font-size="16" text-anchor="end" fill="black">w0</text><line x1="50" y1="100" x2="90" y2="100" stroke="black" stroke-width="1"></line><text x="55" y="94" font-size="16" fill="green">-1.00</text><text x="55" y="117" font-size="16" fill="red">0.39</text><text x="45" y="94" font-size="16" text-anchor="end" fill="black">x0</text><line x1="50" y1="170" x2="90" y2="170" stroke="black" stroke-width="1"></line><text x="55" y="164" font-size="16" fill="green">-3.00</text><text x="55" y="187" font-size="16" fill="red">-0.39</text><text x="45" y="164" font-size="16" text-anchor="end" fill="black">w1</text><line x1="50" y1="240" x2="90" y2="240" stroke="black" stroke-width="1"></line><text x="55" y="234" font-size="16" fill="green">-2.00</text><text x="55" y="257" font-size="16" fill="red">-0.59</text><text x="45" y="234" font-size="16" text-anchor="end" fill="black">x1</text><line x1="50" y1="310" x2="90" y2="310" stroke="black" stroke-width="1"></line><text x="55" y="304" font-size="16" fill="green">-3.00</text><text x="55" y="327" font-size="16" fill="red">0.20</text><text x="45" y="304" font-size="16" text-anchor="end" fill="black">w2</text><line x1="170" y1="65" x2="210" y2="65" stroke="black" stroke-width="1"></line><text x="175" y="59" font-size="16" fill="green">-2.00</text><text x="175" y="82" font-size="16" fill="red">0.20</text><circle cx="130" cy="65" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="75" font-size="20" fill="black" text-anchor="middle">*</text><line x1="90" y1="30" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="100" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="65" x2="170" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="170" y1="205" x2="210" y2="205" stroke="black" stroke-width="1"></line><text x="175" y="199" font-size="16" fill="green">6.00</text><text x="175" y="222" font-size="16" fill="red">0.20</text><circle cx="130" cy="205" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="215" font-size="20" fill="black" text-anchor="middle">*</text><line x1="90" y1="170" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="240" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="205" x2="170" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="290" y1="135" x2="330" y2="135" stroke="black" stroke-width="1"></line><text x="295" y="129" font-size="16" fill="green">4.00</text><text x="295" y="152" font-size="16" fill="red">0.20</text><circle cx="250" cy="135" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="250" y="140" font-size="20" fill="black" text-anchor="middle">+</text><line x1="210" y1="65" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="210" y1="205" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="270" y1="135" x2="290" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="410" y1="222" x2="450" y2="222" stroke="black" stroke-width="1"></line><text x="415" y="216" font-size="16" fill="green">1.00</text><text x="415" y="239" font-size="16" fill="red">0.20</text><circle cx="370" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="370" y="227" font-size="20" fill="black" text-anchor="middle">+</text><line x1="330" y1="135" x2="350" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="310" x2="350" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="390" y1="222" x2="410" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="530" y1="222" x2="570" y2="222" stroke="black" stroke-width="1"></line><text x="535" y="216" font-size="16" fill="green">-1.00</text><text x="535" y="239" font-size="16" fill="red">-0.20</text><circle cx="490" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="490" y="227" font-size="20" fill="black" text-anchor="middle">*-1</text><line x1="450" y1="222" x2="470" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="510" y1="222" x2="530" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="650" y1="222" x2="690" y2="222" stroke="black" stroke-width="1"></line><text x="655" y="216" font-size="16" fill="green">0.37</text><text x="655" y="239" font-size="16" fill="red">-0.53</text><circle cx="610" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="610" y="227" font-size="20" fill="black" text-anchor="middle">exp</text><line x1="570" y1="222" x2="590" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="630" y1="222" x2="650" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="770" y1="222" x2="810" y2="222" stroke="black" stroke-width="1"></line><text x="775" y="216" font-size="16" fill="green">1.37</text><text x="775" y="239" font-size="16" fill="red">-0.53</text><circle cx="730" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="730" y="227" font-size="20" fill="black" text-anchor="middle">+1</text><line x1="690" y1="222" x2="710" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="750" y1="222" x2="770" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="890" y1="222" x2="930" y2="222" stroke="black" stroke-width="1"></line><text x="895" y="216" font-size="16" fill="green">0.73</text><text x="895" y="239" font-size="16" fill="red">1.00</text><circle cx="850" cy="222" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="850" y="227" font-size="20" fill="black" text-anchor="middle">1/x</text><line x1="810" y1="222" x2="830" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="870" y1="222" x2="890" y2="222" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line></g></svg><div class="figcaption">
+  Пример схемы для двумерного нейрона с сигмоидальной функцией активации. Входные данные — [x0, x1], а (обучаемые) весовые коэффициенты нейрона — [w0, w1, w2]. Как мы увидим позже, нейрон вычисляет скалярное произведение входных данных, а затем его активация мягко сжимается сигмоидальной функцией до диапазона от 0 до 1.
+</div>
+<div style="clear:both;"></div>
+</div>
+
+<hr>
+<p>В приведённом выше примере мы видим длинную цепочку вызовов функций, которые работают с результатом скалярного произведения <strong>w,x.</strong> Функция, которую реализуют эти операции, называется <em>сигмоидальной функцией</em> <strong>σ(x)</strong>. Оказывается, производная сигмоидальной функции по входным данным упрощается, если выполнить дифференцирование (после забавной сложной части, где мы добавляем и вычитаем <strong>1</strong> в числителе):  </p>
+<p>$$
+\sigma(x) = \frac{1}{1+e^{-x}} \\
+\rightarrow \hspace{0.3in} \frac{d\sigma(x)}{dx} = \frac{e^{-x}}{(1+e^{-x})^2} = \left( \frac{1 + e^{-x} - 1}{1 + e^{-x}} \right) \left( \frac{1}{1+e^{-x}} \right) 
+= \left( 1 - \sigma(x) \right) \sigma(x)
+$$  </p>
+<p>Как мы видим, градиент упрощается и становится на удивление простым. Например, сигмоидальное выражение получает на вход <strong>1,0</strong> и вычисляет на выходе <strong>0,73</strong> во время прямого прохода. Приведённый выше вывод показывает, что <em>локальный градиент</em> будет <strong>равен (1 — 0,73) * 0,73 ~= 0,2</strong>, как и в случае с предыдущей схемой (см. изображение выше), за исключением того, что в этом случае это будет сделано с помощью одного простого и эффективного выражения (и с меньшим количеством численных проблем). Таким образом, в любом реальном практическом применении было бы очень полезно объединить эти операции в один элемент управления. Давайте рассмотрим обратное распространение ошибки для этого нейрона в коде:  </p>
+<div class="code"><pre class="code literal-block"><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="c1"># assume some random weights and data</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># forward pass</span>
+<span class="n">dot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">dot</span><span class="p">))</span><span class="w"> </span><span class="c1"># sigmoid function</span>
+
+<span class="c1"># backward pass through the neuron (backpropagation)</span>
+<span class="n">ddot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">f</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="c1"># gradient on dot variable, using the sigmoid gradient derivation</span>
+<span class="n">dx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddot</span><span class="p">,</span><span class="w"> </span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddot</span><span class="p">]</span><span class="w"> </span><span class="c1"># backprop into x</span>
+<span class="n">dw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddot</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddot</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ddot</span><span class="p">]</span><span class="w"> </span><span class="c1"># backprop into w</span>
+<span class="c1"># we're done! we have the gradients on the inputs to the circuit</span>
+</pre></div>
+
+<p><strong>Совет по реализации: поэтапное обратное распространение ошибки</strong>. Как показано в приведенном выше коде, на практике всегда полезно разбивать прямой проход на этапы, которые легко поддаются обратному распространению ошибки. Например, здесь мы создали промежуточную переменную <code>dot</code>, которая содержит результат скалярного произведения <code>w</code> и <code>x</code>. Затем во время обратного прохода мы последовательно вычисляем (в обратном порядке) соответствующие переменные (например, <code>ddot</code> и, в конечном итоге, <code>dw, dx</code>), которые содержат градиенты этих переменных.  </p>
+<p>Смысл этого раздела в том, что детали того, как выполняется обратное распространение ошибки и какие части прямой функции мы считаем логическими элементами, — это вопрос удобства. Полезно знать, какие части выражения имеют простые локальные градиенты, чтобы их можно было объединить в цепочку с наименьшим количеством кода и усилий.  </p>
+<h2>Бэкпроп на практике: Поэтапное вычисление</h2>
+<p>Давайте рассмотрим это на другом примере. Предположим, что у нас есть функция следующего вида:  </p>
+<p>$$
+f(x,y) = \frac{x + \sigma(y)}{\sigma(x) + (x+y)^2}
+$$  </p>
+<p>Для ясности: эта функция совершенно бесполезна, и неясно, зачем вам вообще понадобилось вычислять её градиент, за исключением того, что это хороший пример обратного распространения ошибки на практике. Очень важно подчеркнуть, что если бы вы начали вычислять производную по любому из <strong>x</strong> или <strong>y</strong>, то в результате вы получили бы очень большие и сложные выражения. Однако оказывается, что в этом нет необходимости, потому что нам не нужно записывать явную функцию, которая вычисляет градиент. Нам нужно только знать, как его вычислить. Вот как мы бы структурировали прямой проход для такого выражения:  </p>
+<div class="code"><pre class="code literal-block">x = 3 # example values
+y = -4
+
+<span class="gh">#</span> forward pass
+sigy = 1.0 / (1 + math.exp(-y)) # sigmoid in numerator   #(1)
+num = x + sigy # numerator                               #(2)
+sigx = 1.0 / (1 + math.exp(-x)) # sigmoid in denominator #(3)
+xpy = x + y                                              #(4)
+xpysqr = xpy**2                                          #(5)
+den = sigx + xpysqr # denominator                        #(6)
+invden = 1.0 / den                                       #(7)
+f = num * invden # done!                                 #(8)
+</pre></div>
+
+<p>Фух, к концу выражения мы вычислили прямой проход. Обратите внимание, что мы структурировали код таким образом, что он содержит несколько промежуточных переменных, каждая из которых представляет собой простое выражение, для которого мы уже знаем локальные градиенты. Поэтому вычислить обратный путь легко: мы пойдём в обратном направлении, и для каждой переменной на пути прямого прохода (<code>sigy, num, sigx, xpy, xpysqr, den, invden</code>) у нас будет та же переменная, но начинающаяся с <code>d</code>, которая будет содержать градиент выходного сигнала схемы по отношению к этой переменной. Кроме того, обратите внимание, что каждый элемент в нашем обратном распространении ошибки будет включать вычисление локального градиента этого выражения и объединение его с градиентом этого выражения путём умножения. Для каждой строки мы также указываем, к какой части прямого прохода она относится:  </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> backprop f = num * invden
+dnum = invden # gradient on numerator                             #(8)
+dinvden = num                                                     #(8)
+<span class="gh">#</span> backprop invden = 1.0 / den 
+dden = (-1.0 / (den**2)) <span class="gs">* dinvden                                #(7)</span>
+<span class="gs"># backprop den = sigx + xpysqr</span>
+<span class="gs">dsigx = (1) *</span> dden                                                #(6)
+dxpysqr = (1) <span class="gs">* dden                                              #(6)</span>
+<span class="gs"># backprop xpysqr = xpy*</span>*2
+dxpy = (2 <span class="gs">* xpy) *</span> dxpysqr                                        #(5)
+<span class="gh">#</span> backprop xpy = x + y
+dx = (1) <span class="gs">* dxpy                                                   #(4)</span>
+<span class="gs">dy = (1) *</span> dxpy                                                   #(4)
+<span class="gh">#</span> backprop sigx = 1.0 / (1 + math.exp(-x))
+dx += ((1 - sigx) <span class="gs">* sigx) *</span> dsigx # Notice += !! See notes below  #(3)
+<span class="gh">#</span> backprop num = x + sigy
+dx += (1) <span class="gs">* dnum                                                  #(2)</span>
+<span class="gs">dsigy = (1) *</span> dnum                                                #(2)
+<span class="gh">#</span> backprop sigy = 1.0 / (1 + math.exp(-y))
+dy += ((1 - sigy) <span class="gs">* sigy) *</span> dsigy                                 #(1)
+<span class="gh">#</span> done! phew
+</pre></div>
+
+<p>Обратите внимание на несколько вещей:  </p>
+<p><strong>Кэшируйте переменные прямого пути</strong>. Для вычисления обратного пути очень полезно иметь некоторые переменные, которые использовались при прямом пути. На практике вы хотите структурировать свой код таким образом, чтобы кэшировать эти переменные и чтобы они были доступны во время обратного распространения. Если это слишком сложно, можно (но нерационально) пересчитать их.</p>
+<p><strong>Градиенты суммируются в точках разветвления</strong>. В прямом выражении переменные <strong>x, y</strong> встречаются несколько раз, поэтому при обратном распространении ошибки мы должны быть внимательны и использовать <code>+=</code> вместо <code>=</code> для накопления градиента по этим переменным (иначе мы перезапишем его). Это соответствует <code>правилу дифференцирования сложной функции</code> в математическом анализе, которое гласит, что если переменная разветвляется на разные части схемы, то градиенты, которые возвращаются к ней, суммируются.  </p>
+<h2>Закономерности в обратном потоке</h2>
+<p>Интересно отметить, что во многих случаях обратный градиент можно интерпретировать интуитивно. Например, три наиболее часто используемых элемента в нейронных сетях (<em>сложение, умножение, максимальное значение</em>) имеют очень простую интерпретацию с точки зрения того, как они действуют во время обратного распространения ошибки. Рассмотрим этот пример схемы:  </p>
+<hr>
+<div class="fig figleft fighighlight">
+<svg style="max-width: 460px" viewbox="0 0 460 290"><g transform="scale(1)"><defs><marker id="arrowhead" refx="6" refy="2" markerwidth="6" markerheight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><line x1="50" y1="30" x2="90" y2="30" stroke="black" stroke-width="1"></line><text x="55" y="24" font-size="16" fill="green">3.00</text><text x="55" y="47" font-size="16" fill="red">-8.00</text><text x="45" y="24" font-size="16" text-anchor="end" fill="black">x</text><line x1="50" y1="100" x2="90" y2="100" stroke="black" stroke-width="1"></line><text x="55" y="94" font-size="16" fill="green">-4.00</text><text x="55" y="117" font-size="16" fill="red">6.00</text><text x="45" y="94" font-size="16" text-anchor="end" fill="black">y</text><line x1="50" y1="170" x2="90" y2="170" stroke="black" stroke-width="1"></line><text x="55" y="164" font-size="16" fill="green">2.00</text><text x="55" y="187" font-size="16" fill="red">2.00</text><text x="45" y="164" font-size="16" text-anchor="end" fill="black">z</text><line x1="50" y1="240" x2="90" y2="240" stroke="black" stroke-width="1"></line><text x="55" y="234" font-size="16" fill="green">-1.00</text><text x="55" y="257" font-size="16" fill="red">0.00</text><text x="45" y="234" font-size="16" text-anchor="end" fill="black">w</text><line x1="170" y1="65" x2="210" y2="65" stroke="black" stroke-width="1"></line><text x="175" y="59" font-size="16" fill="green">-12.00</text><text x="175" y="82" font-size="16" fill="red">2.00</text><circle cx="130" cy="65" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="75" font-size="20" fill="black" text-anchor="middle">*</text><line x1="90" y1="30" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="100" x2="110" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="65" x2="170" y2="65" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="170" y1="205" x2="210" y2="205" stroke="black" stroke-width="1"></line><text x="175" y="199" font-size="16" fill="green">2.00</text><text x="175" y="222" font-size="16" fill="red">2.00</text><circle cx="130" cy="205" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="130" y="210" font-size="20" fill="black" text-anchor="middle">max</text><line x1="90" y1="170" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="90" y1="240" x2="110" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="150" y1="205" x2="170" y2="205" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="290" y1="135" x2="330" y2="135" stroke="black" stroke-width="1"></line><text x="295" y="129" font-size="16" fill="green">-10.00</text><text x="295" y="152" font-size="16" fill="red">2.00</text><circle cx="250" cy="135" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="250" y="140" font-size="20" fill="black" text-anchor="middle">+</text><line x1="210" y1="65" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="210" y1="205" x2="230" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="270" y1="135" x2="290" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="410" y1="135" x2="450" y2="135" stroke="black" stroke-width="1"></line><text x="415" y="129" font-size="16" fill="green">-20.00</text><text x="415" y="152" font-size="16" fill="red">1.00</text><circle cx="370" cy="135" fill="white" stroke="black" stroke-width="1" r="20"></circle><text x="370" y="140" font-size="20" fill="black" text-anchor="middle">*2</text><line x1="330" y1="135" x2="350" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line><line x1="390" y1="135" x2="410" y2="135" stroke="black" stroke-width="1" marker-end="url(#arrowhead)"></line></g></svg><div class="figcaption">
+  Пример схемы, демонстрирующей интуитивное понимание операций, которые выполняет обратное распространение ошибки во время обратного прохода для вычисления градиентов по входным данным. Операция суммирования равномерно распределяет градиенты по всем своим входам. Операция максимального значения направляет градиент на вход с наибольшим значением. Операция умножения принимает входные значения, меняет их местами и умножает на градиент.
+</div>
+<div style="clear:both;"></div>
+</div>
+
+<hr>
+<p>Рассматривая приведенную выше диаграмму в качестве примера, мы можем видеть, что:  </p>
+<p><strong>Сложение</strong> всегда берёт градиент на выходе и распределяет его поровну между всеми входами, независимо от того, какими были их значения во время прямого прохода. Это следует из того, что локальный градиент для операции сложения равен <strong>+1,0</strong>, поэтому градиенты на всех входах будут в точности равны градиентам на выходе, потому что они будут умножены на <strong>x1,0</strong> (и останутся неизменными). В приведённом выше примере обратите внимание, что сумматор направил градиент<strong> 2,00</strong> на оба входа, разделив его поровну и оставив без изменений.  </p>
+<p><strong>Макс-сглаживатель</strong> направляет градиент. В отличие от сумматора, который распределяет градиент без изменений по всем своим входам, макс-сглаживатель распределяет градиент (без изменений) только по одному из своих входов (по входу, который имел наибольшее значение во время прямого прохода). Это связано с тем, что локальный градиент для макс-сглаживателя равен <strong>1,0</strong> для наибольшего значения и <strong>0,0</strong> для всех остальных значений. В приведённом выше примере функция max направила градиент <strong>2,00</strong> на переменную <strong>z</strong>, которая имела более высокое значение, чем <strong>w</strong>, а градиент <strong>w</strong> остался равным нулю.  </p>
+<p><strong>Умножитель</strong> немного сложнее в интерпретации. Его локальные градиенты — это входные значения (кроме переключаемых), которые умножаются на градиент выходного значения в соответствии с правилом цепочки. В приведённом выше примере градиент <strong>x</strong> равен <strong>-8,00</strong>, что составляет <strong>-4,00 x 2,00</strong>.  </p>
+<p><em>Неинтуитивные эффекты и их последствия</em>. Обратите внимание, что если один из входов умножителя очень мал, а другой очень велик, то умножитель сделает что-то немного неинтуитивное: он присвоит относительно большой градиент малому входу и крошечный градиент большому входу. Обратите внимание, что в линейных классификаторах, где веса умножаются на скалярное произведение, <strong>\(w^Tx_i\)</strong> (умноженные) на входные данные, это означает, что масштаб данных влияет на величину градиента весовых коэффициентов. Например, если вы умножите все примеры входных данных <strong>\(x_i\)</strong>. Если во время предварительной обработки умножить на 1000, то градиент по весам будет <strong>в 1000 раз больше</strong>, и вам придётся уменьшить скорость обучения на этот коэффициент, чтобы компенсировать разницу. <strong>Вот почему предварительная обработка так важна, иногда даже в мелочах!</strong> Интуитивное понимание того, как распределяются градиенты, может помочь вам отладить некоторые из этих случаев.  </p>
+<h2>Градиенты для векторизованных операций</h2>
+<p>В предыдущих разделах речь шла об отдельных переменных, но все концепции напрямую применимы к матричным и векторным операциям. Однако необходимо уделять больше внимания размерностям и транспонированию.  </p>
+<p><strong>Градиент при умножении матриц</strong>. Возможно, самая сложная операция — это умножение матриц (которое обобщает все операции умножения матриц на векторы и векторов на векторы):  </p>
+<div class="code"><pre class="code literal-block"><span class="gh">#</span> forward pass
+W = np.random.randn(5, 10)
+X = np.random.randn(10, 3)
+D = W.dot(X)
+
+<span class="gh">#</span> now suppose we had the gradient on D from above in the circuit
+dD = np.random.randn(*D.shape) # same shape as D
+dW = dD.dot(X.T) #.T gives the transpose of the matrix
+dX = W.T.dot(dD)
+</pre></div>
+
+<p><em>Совет: используйте анализ измерений!</em> Обратите внимание, что вам не нужно запоминать выражения для <code>dW</code> и <code>dX</code>, поскольку их легко повторно вывести на основе измерений. Например, мы знаем, что градиент весов <code>dW</code> должен быть того же размера, что и <code>W</code> после его вычисления, и что он должен зависеть от матричного умножения <code>X</code> и <code>dD</code> (как в случае, когда оба <code>X,W</code> являются одиночными числами, а не матрицами). Всегда есть только один способ достичь этого, чтобы размеры соответствовали друг другу. Например, <code>X</code> имеет размер <strong>[10 x 3]</strong>, а <code>dD</code> — размер <strong>[5 x 3]</strong>, поэтому, если мы хотим, чтобы <code>dW</code> и <code>W</code> имели форму <strong>[5 x 10]</strong>, то единственный способ добиться этого — использовать <code>dD.dot(X.T)</code>, как показано выше.  </p>
+<p><strong>Работайте с небольшими, понятными примерами</strong>. Некоторым людям поначалу может быть сложно вывести градиентные обновления для некоторых векторизованных выражений. Мы рекомендуем явно записать минимальный векторизованный пример, вывести градиент на бумаге, а затем обобщить шаблон до эффективной векторизованной формы.  </p>
+<p>Эрик Леарнед-Миллер также написал более подробный документ о вычислении матричных/векторных производных, который может оказаться вам полезным. <a href="http://cs231n.stanford.edu/vecDerivs.pdf">Найдите его здесь</a>.  </p>
+<h2>Краткая сводка</h2>
+<ul>
+<li>Мы интуитивно понимаем, что означают градиенты, как они распространяются по цепи и как они сообщают, какую часть цепи следует увеличить или уменьшить и с какой силой, чтобы повысить конечный результат.</li>
+<li>Мы обсудили важность <strong>поэтапных вычислений</strong> для практической реализации обратного распространения ошибки. Вы всегда хотите разбить свою функцию на модули, для которых можно легко вычислить локальные градиенты, а затем объединить их с помощью правила дифференцирования сложной функции. Важно отметить, что вы почти никогда не захотите записывать эти выражения на бумаге и дифференцировать их в полной форме, потому что вам никогда не понадобится явное математическое уравнение для градиента входных переменных. Таким образом, разбейте свои выражения на этапы так, чтобы вы могли дифференцировать каждый этап независимо (этапами будут умножение матриц, операции с максимумом, операции с суммой и т. д.), а затем выполняйте обратное распространение по переменным шаг за шагом.  </li>
+</ul>
+<p>В следующем разделе мы начнём определять нейронные сети, а обратное распространение ошибки позволит нам эффективно вычислять градиент функции потерь по отношению к её параметрам. Другими словами, теперь мы готовы к обучению нейронных сетей, и самая сложная с концептуальной точки зрения часть этого курса осталась позади! До ConvNets останется совсем немного.  </p>
+<h3>Ссылки</h3>
+<ul>
+<li><a href="http://arxiv.org/abs/1502.05767">Автоматическая дифференциация в машинном обучении: опрос</a></li>
+</ul>
+</div>
+    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+<li class="previous">
+                <a href="../optimization/" rel="prev" title="Оптимизация">Предыдущая запись</a>
+            </li>
+            <li class="next">
+                <a href="../convnets-1/" rel="next" title="Сверточные сети. Введение">Следующая запись</a>
+            </li>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true
+    },
+    displayAlign: 'center', // Change this to 'left' if you want left-aligned equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script></article><!--End of body content--><footer id="footer">
+            Contents © 2025         <a href="mailto:andrej.labintsev@yandex.ru">Андрей Лабинцев</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+</body>
+</html>
