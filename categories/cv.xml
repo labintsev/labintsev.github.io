@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 14 Mar 2025 12:41:58 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Классификация изображений </title><link>https://mldl.ru/posts/image-classification/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Классификация изображений&lt;/h2&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Fri, 14 Mar 2025 12:43:40 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Классификация изображений </title><link>https://mldl.ru/posts/image-classification/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h2&gt;Классификация изображений&lt;/h2&gt;
 &lt;p&gt;В этой вводной лекции мы познакомимся с проблемой классификации изображений. 
 Решение этой проблемы заключается в подходе, основанном на большом объеме размеченных данных.   &lt;/p&gt;
-&lt;p&gt;Содержание:
-- Введение в классификацию изображений 
-- Классификатор ближайшего соседа 
-- Классификатор k - ближайших соседей&lt;br&gt;
-- Наборы данных для настройки гиперпараметров 
-- Применение kNN на практике 
-- Дополнительные материалы &lt;/p&gt;
+&lt;p&gt;Содержание:&lt;br&gt;
+- Введение в классификацию изображений&lt;br&gt;
+- Классификатор ближайшего соседа&lt;br&gt;
+- Классификатор k - ближайших соседей &lt;br&gt;
+- Наборы данных для настройки гиперпараметров&lt;br&gt;
+- Применение kNN на практике&lt;br&gt;
+- Дополнительные материалы  &lt;/p&gt;
 &lt;h3&gt;Введение в классификацию изображений&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Мотивация&lt;/strong&gt;. 
 В этом разделе мы рассмотрим задачу классификации изображений. 
