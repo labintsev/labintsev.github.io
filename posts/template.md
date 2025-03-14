@@ -7,6 +7,7 @@
 .. link: 
 .. description: 
 .. type: text
+.. has_math: true
 -->
 
 # Заготовка для создания новых постов
