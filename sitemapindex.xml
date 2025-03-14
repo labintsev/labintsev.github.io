@@ -6,15 +6,19 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
+  <loc>https://mldl.ru/categories/cv.xml</loc>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
+ </sitemap>
+ <sitemap>
   <loc>https://mldl.ru/categories/nlp.xml</loc>
   <lastmod>2025-03-14T12:36:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://mldl.ru/rss.xml</loc>
-  <lastmod>2025-03-14T12:36:00Z</lastmod>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://mldl.ru/sitemap.xml</loc>
-  <lastmod>2025-03-14T12:36:00Z</lastmod>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </sitemap>
 </sitemapindex>

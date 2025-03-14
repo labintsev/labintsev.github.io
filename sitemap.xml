@@ -23,11 +23,15 @@
  </url>
  <url>
   <loc>https://mldl.ru/archive.html</loc>
-  <lastmod>2025-03-14T12:36:00Z</lastmod>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/</loc>
-  <lastmod>2025-03-14T12:36:00Z</lastmod>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/categories/cv/</loc>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/nlp/</loc>
@@ -35,7 +39,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/index-1.html</loc>
-  <lastmod>2025-03-14T12:36:00Z</lastmod>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/architecture/</loc>
@@ -60,6 +64,10 @@
  <url>
   <loc>https://mldl.ru/posts/convnets-4/</loc>
   <lastmod>2025-03-14T12:36:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/image-classification/</loc>
+  <lastmod>2025-03-14T12:41:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/linear-classifier/</loc>
