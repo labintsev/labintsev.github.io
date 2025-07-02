@@ -42,7 +42,7 @@
 'render_pages:output\\posts\\nlp-za-90-minut\\index.html', (316416, 6819)
 'render_sources:output\\posts\\nlp-za-90-minut\\index.md', (43008, 257)
 '_scan_locs:sitemap', (146432, 2029)
-'sitemap:output\\sitemap.xml', (431104, 3820)
+'sitemap:output\\sitemap.xml', (431104, 3819)
 'copy_assets:output\\assets\\css\\code.css', (46080, 141)
 'copy_assets:output\\assets\\css\\ipython.min.css', (381440, 692)
 'copy_assets:output\\assets\\css\\html4css1.css', (235008, 680)
