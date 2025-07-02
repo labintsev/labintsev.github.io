@@ -77,11 +77,11 @@
             </p>
                 </div>
             </header><div class="e-content entry-content">
-                    <h2>Туториал python Numpy (с Jupyter и Colab)</h2>
+                    <h2>Tutorial Python Numpy (с Jupyter и Colab)</h2>
 <p><a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb">Блокнот Colab</a></p>
 <p>Этот урок был первоначально предоставлен <a href="http://cs.stanford.edu/people/jcjohns/">Джастином Джонсоном</a>.  </p>
-<p>Мы будем использовать язык программирования <em>python</em> для всех заданий этого курса. <em>Python</em> сам по себе является отличным языком программирования общего назначения, но с помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощной средой для научных вычислений.</p>
-<p>Мы ожидаем, что многие из вас имеют некоторый опыт работы с <em>python</em> и <em>numpy</em>; Для остальных из вас этот раздел послужит кратким ускоренным курсом по обоим направлениям языка программирования <em>python</em> и его использованию для научных исследований и вычислений. Мы также познакомим вас с блокнотами, которые являются очень удобным способом работы с кодом на <em>python</em>. Некоторые из вас, возможно, уже знакомы с другими языками, и в этом случае мы также рекомендуем ссылаться <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">на NumPy для пользователей Matlab</a>, <a href="http://www.data-analysis-in-python.org/python_for_r.html">python для пользователей R</a> и/или <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/pythonForSASUsers/tree/master/">python для пользователей SAS</a>.  </p>
+<p>Мы будем использовать язык программирования <em>Python</em> для всех заданий этого курса. <em>Python</em> сам по себе является отличным языком программирования общего назначения, но с С помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощным среда для научных вычислений.</p>
+<p>Мы ожидаем, что многие из вас будут иметь некоторый опыт работы с <em>Python</em> и <em>numpy</em>; Для остальных из вас этот раздел послужит кратким ускоренным курсом по обоим направлениям язык программирования <em>Python</em> и его использование для научных исследований вычисление. Мы также познакомим вас с блокнотами, которые являются очень удобным способом возни с кодом на <em>Python</em>. Некоторые из вас, возможно, уже знакомы с другой язык, и в этом случае мы также рекомендуем ссылаться <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">на NumPy для пользователей Matlab</a>, <a href="http://www.data-analysis-in-python.org/python_for_r.html">Python для пользователей R</a> и/или <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/PythonForSASUsers/tree/master/">Python для пользователей SAS</a>.  </p>
 <p>Содержание
 - <a href="posts/numpy-tutorial/">Блокноты Jupyter и Colab</a>
 - <a href="posts/numpy-tutorial/">Питон</a>
@@ -110,29 +110,28 @@
     - <a href="posts/numpy-tutorial/">Побочные сюжеты</a>
     - <a href="posts/numpy-tutorial/">Изображения</a>  </p>
 <h2>Блокноты Jupyter и Colab</h2>
-<p>Прежде чем мы углубимся в <em>python</em>, мы хотели бы кратко поговорить о <em>блокнотах</em>. Блокнот <em>Jupyter</em> позволяет писать и выполнять код <em>python</em> <em>локально</em> в вашем веб-браузере. <em>Jupyter notebooks</em> yпрощает работу с кодом и выполняет его битами и сегментами; По этой причине он широко используется в научных вычислениях. <em>Colab</em>, с другой стороны, является разновидностью <em>Google-блокнота</em> <em>Jupyter</em>, который особенно подходит для машинных алгоритмов обучения и анализа данных, которые сохраняют функционал в <em>облаке</em>. <em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, поставляется с предустановленными пакетами, им легко поделиться со всем миром, присутствуют преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
-<p><strong>Запустите Tutorial в Colab (рекомендуется)</strong>. Если вы хотите выполнить это руководство полностью в <em>Colab</em>, нажмите на значок <code>Open in Colab</code> в самом верху этой страницы.</p>
-<p><strong>Запустите Tutorial в блокноте Jupyter</strong>. Если вы хотите запустить блокнот локально с помощью <em>Jupyter</em>, убедитесь, что ваша виртуальная среда установлена правильно (в соответствии с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a>), активируйте ее, а затем запустите <code>pip install notebook</code> для установки блокнота <em>Jupyter</em>. Затем <a href="https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb">откройте блокнот</a> и загрузите его в каталог по вашему выбору, щелкнув правой кнопкой мыши по странице и выбрав <code>Save Page As</code>. Затем <code>cd</code> в этот каталог и запустите <code>jupyter notebook</code>.     </p>
+<p>Прежде чем мы углубимся в Python, мы хотели бы кратко поговорить о <em>блокнотах</em>. Записная книжка Jupyter позволяет писать и выполнять Код Python <em>локально</em> в вашем веб-браузере. <em>Jupyter notebooks</em>: yпростите работу с кодом и выполняйте его битами и кусочки; По этой причине они широко используются в научных вычисление. <em>Colab</em>, с другой стороны, является разновидностью <em>Google</em> Блокноты <em>Jupyter</em>, которые особенно подходят для машинных машин обучение и анализ данных, и это полностью работает в <em>облаке</em>. <em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, Поставляется с предустановленными пакетами, его легко поделиться со всем миром, и преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
+<p><strong>Запустите Tutorial в Colab (рекомендуется)</strong>. Если вы хотите выполнить это руководство полностью в <em>Colab</em>, нажмите на значок в самом верху этой страницы.<code>Open in Colab</code></p>
+<p><strong>Запустите Tutorial в записной книжке Jupyter</strong>. Если вы хотите запустить записную книжку локально с помощью <em>Jupyter</em>, убедитесь, что ваша виртуальная среда установлена правильно (в соответствии с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a>), активируйте ее, а затем запустите для установки записной книжки Jupyter. Затем <a href="https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb">откройте блокнот</a> и загрузите его в каталог по вашему выбору, щелкнув правой кнопкой мыши по странице и выбрав . Затем в этот каталог и запустите .<code>pip install notebook</code> <code>Save Page As</code> <code>cd</code> <code>jupyter notebook</code>  </p>
 <p><img alt="" src="https://cs231n.github.io/assets/ipython-tutorial/file-browser.png"></p>
-<p>Это должно автоматически запустить сервер блокнотов по адресу <code>http://localhost:8888</code>. Если все работало правильно, вы должны увидеть такой экран, показывающий все доступные записные книжки в текущем каталоге. Нажмите <code>jupyter-notebook-tutorial.ipynb</code> и следуйте инструкциям в блокноте. В противном случае вы можете продолжить чтение туториала с фрагментами кода ниже.   </p>
+<p>Это должно автоматически запустить сервер записных книжек в положении . Если все работало правильно, вы должны увидеть такой экран, показывающий все Доступные записные книжки в текущем каталоге. Нажмите и следуйте инструкциям в записной книжке. В противном случае вы можете продолжить чтение Туториал с фрагментами кода ниже.<code>http://localhost:8888</code> <code>jupyter-notebook-tutorial.ipynb</code>  </p>
 <h2>Python</h2>
-<p><strong>Python</strong> — это высокоуровневый, динамически типизированный мультипарадигмальный язык программирования. О коде на <em>python</em> часто говорят, что он похож на псевдокод, поскольку он позволяет вам выражать очень мощные идеи в очень немногих строках кода, оставаясь при этом очень удобочитаемый. В качестве примера приведем реализацию алгоритма классической быстрой сортировки на <em>python</em>:  </p>
-<div class="code"><pre class="code literal-block"><span class="k">def</span><span class="w"> </span><span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">arr</span>
-    <span class="n">pivot</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span>
-    <span class="n">left</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">]</span>
-    <span class="n">middle</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">pivot</span><span class="p">]</span>
-    <span class="n">right</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">left</span><span class="p">)</span> <span class="o">+</span> <span class="n">middle</span> <span class="o">+</span> <span class="n">quicksort</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+<p><strong>Python</strong> — это высокоуровневый, динамически типизированный мультипарадигмальный язык программирования. О коде на <em>Python</em> часто говорят, что он похож на псевдокод, поскольку он позволяет вам выражать очень мощные идеи в очень немногих строках кода, оставаясь при этом очень удобочитаемый. В качестве примера приведем реализацию классической быстрой сортировки алгоритм на <em>Python</em>:  </p>
+<div class="code"><pre class="code literal-block"><span class="nv">def</span><span class="w"> </span><span class="nv">quicksort</span><span class="ss">(</span><span class="nv">arr</span><span class="ss">)</span>:
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="nv">len</span><span class="ss">(</span><span class="nv">arr</span><span class="ss">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span>:
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nv">arr</span>
+<span class="w">    </span><span class="nv">pivot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">arr</span>[<span class="nv">len</span><span class="ss">(</span><span class="nv">arr</span><span class="ss">)</span><span class="w"> </span><span class="o">//</span><span class="w"> </span><span class="mi">2</span>]
+<span class="w">    </span><span class="nv">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="nv">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">arr</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nv">pivot</span>]
+<span class="w">    </span><span class="nv">middle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="nv">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">arr</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nv">pivot</span>]
+<span class="w">    </span><span class="nv">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>[<span class="nv">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">arr</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">x</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nv">pivot</span>]
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nv">quicksort</span><span class="ss">(</span><span class="nv">left</span><span class="ss">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">middle</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">quicksort</span><span class="ss">(</span><span class="nv">right</span><span class="ss">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">quicksort</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
-<span class="c1"># Prints "[1, 1, 2, 3, 6, 8, 10]"</span>
+<span class="nv">print</span><span class="ss">(</span><span class="nv">quicksort</span><span class="ss">(</span>[<span class="mi">3</span>,<span class="mi">6</span>,<span class="mi">8</span>,<span class="mi">10</span>,<span class="mi">1</span>,<span class="mi">2</span>,<span class="mi">1</span>]<span class="ss">))</span>
+#<span class="w"> </span><span class="nv">Prints</span><span class="w"> </span><span class="s2">"[1, 1, 2, 3, 6, 8, 10]"</span>
 </pre></div>
 
-<h3>Версии python</h3>
-<p>С 1 января 2020 года python <a href="https://www.python.org/doc/sunset-python-2/">официально прекратил поддержку</a> второй версии. 
-<strong>Поэтому во всех примерах код написан на python 3.7</strong>. Убедитесь, что вы правильно установили виртуальную среду, прежде чем продолжить работу с этим руководством. Вы можете проверить свою версию в командной строке после активации среды, запустив команду: <code>python --version</code>  </p>
+<h3>Версии Python</h3>
+<p>С 1 января 2020 года Python <a href="https://www.python.org/doc/sunset-python-2/">официально прекратил поддержку</a> домена . <strong>Для этого класса весь код будет использовать Python 3.7</strong>. Убедитесь, что вы ознакомились с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a> и правильно установили виртуальную среду, прежде чем продолжить работу с этим руководством. Вы можете перепроверить свою версию <em>Python</em> в командной строке после активации среды запустив .<code>python2</code> <code>python3</code> <code>python --version</code>  </p>
 <h3>Основные типы данных</h3>
 <p>Как и большинство языков, <em>python</em> имеет ряд основных типов: <em>int</em>, <em>floats</em>, <em>booleans</em> и <em>strings</em>. 
 Эти типы данных ведут себя так же, как и в большинстве других языков программирования.  </p>
@@ -153,17 +152,16 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Prints "2.5 3.5 5.0 6.25"</span>
 </pre></div>
 
-<p>Обратите внимание, что в отличие от многих языков, в python нет унарного инкремента (<code>x++</code>) или декремента (<code>x--</code>).   </p>
-<p><em>Python</em> также имеет встроенные типы для комплексных чисел; 
-Все подробности можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#numeric-types-int-float-complex">в документации</a>.</p>
-<p><strong>Логический тип данных</strong>: <em>python</em> реализует все обычные операторы для булевой логики, но использует английские слова, а не символы (<code>&amp;&amp;</code>, <code>||</code> , и т. д.):   </p>
-<div class="code"><pre class="code literal-block"><span class="n">t</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">f</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="c1"># Prints "&lt;class 'bool'&gt;"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t</span> <span class="ow">and</span> <span class="n">f</span><span class="p">)</span> <span class="c1"># Logical AND; prints "False"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t</span> <span class="ow">or</span> <span class="n">f</span><span class="p">)</span>  <span class="c1"># Logical OR; prints "True"</span>
-<span class="nb">print</span><span class="p">(</span><span class="ow">not</span> <span class="n">t</span><span class="p">)</span>   <span class="c1"># Logical NOT; prints "False"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t</span> <span class="o">!=</span> <span class="n">f</span><span class="p">)</span>  <span class="c1"># Logical XOR; prints "True"</span>
+<p>Обратите внимание, что в отличие от многих языков, в Python нет унарного инкремента (<code>x++</code>) или decrement (<code>x--</code>).   </p>
+<p><em>Python</em> также имеет встроенные типы для комплексных чисел; Все подробности можно найти <a href="https://docs.python.org/3.5/library/stdtypes.html#numeric-types-int-float-complex">в документации</a>.</p>
+<p><strong>Булевые слова</strong>: <em>Python</em> реализует все обычные операторы для булевой логики, но использует английские слова, а не символы (<code>&amp;&amp;</code>, <code>||</code> , и т. д.):   </p>
+<div class="code"><pre class="code literal-block"><span class="nx">t</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">True</span>
+<span class="nx">f</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">False</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">type</span><span class="p">(</span><span class="nx">t</span><span class="p">))</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Prints</span><span class="w"> </span><span class="s">"&lt;class 'bool'&gt;"</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">f</span><span class="p">)</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Logical</span><span class="w"> </span><span class="nx">AND</span><span class="p">;</span><span class="w"> </span><span class="nx">prints</span><span class="w"> </span><span class="s">"False"</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">f</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Logical</span><span class="w"> </span><span class="nx">OR</span><span class="p">;</span><span class="w"> </span><span class="nx">prints</span><span class="w"> </span><span class="s">"True"</span>
+<span class="nx">print</span><span class="p">(</span><span class="k">not</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="nx">Logical</span><span class="w"> </span><span class="nx">NOT</span><span class="p">;</span><span class="w"> </span><span class="nx">prints</span><span class="w"> </span><span class="s">"False"</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nx">f</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Logical</span><span class="w"> </span><span class="nx">XOR</span><span class="p">;</span><span class="w"> </span><span class="nx">prints</span><span class="w"> </span><span class="s">"True"</span>
 </pre></div>
 
 <p><strong>Строки</strong>: <em>python</em> имеет отличную поддержку строк:  </p>
@@ -191,17 +189,17 @@
 <p>Список всех строковых методов можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#string-methods">в документации</a>.</p>
 <h3>Контейнеры</h3>
 <p>Python включает в себя несколько встроенных типов контейнеров: списки, словари, наборы и кортежи.</p>
-<h4>Списки</h4>
-<p>Список в <em>python</em> является эквивалентом массива, но его размер можно изменять и он можетё содержать элементы разных типов:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>    <span class="c1"># Create a list</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># Prints "[3, 1, 2] 2"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># Negative indices count from the end of the list; prints "2"</span>
-<span class="n">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'foo'</span>     <span class="c1"># Lists can contain elements of different types</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>         <span class="c1"># Prints "[3, 1, 'foo']"</span>
-<span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)</span>  <span class="c1"># Add a new element to the end of the list</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>         <span class="c1"># Prints "[3, 1, 'foo', 'bar']"</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>      <span class="c1"># Remove and return the last element of the list</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span>      <span class="c1"># Prints "bar [3, 1, 'foo']"  </span>
+<h3>Списки</h3>
+<p>Список является эквивалентом массива в <em>Python</em>, но его размер можно изменять и может содержать элементы разных типов:  </p>
+<div class="code"><pre class="code literal-block"><span class="nx">xs</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">list</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">xs</span><span class="p">,</span><span class="w"> </span><span class="nx">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Prints</span><span class="w"> </span><span class="s">"[3, 1, 2] 2"</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nx">Negative</span><span class="w"> </span><span class="nx">indices</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">list</span><span class="p">;</span><span class="w"> </span><span class="nx">prints</span><span class="w"> </span><span class="s">"2"</span>
+<span class="nx">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="err">'</span><span class="nx">foo</span><span class="err">'</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nx">Lists</span><span class="w"> </span><span class="nx">can</span><span class="w"> </span><span class="nx">contain</span><span class="w"> </span><span class="nx">elements</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">different</span><span class="w"> </span><span class="nx">types</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nx">Prints</span><span class="w"> </span><span class="s">"[3, 1, 'foo']"</span>
+<span class="nx">xs</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="err">'</span><span class="nx">bar</span><span class="err">'</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Add</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">new</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">end</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">list</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">xs</span><span class="p">)</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nx">Prints</span><span class="w"> </span><span class="s">"[3, 1, 'foo', 'bar']"</span>
+<span class="nx">x</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nx">xs</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nx">Remove</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">last</span><span class="w"> </span><span class="nx">element</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">list</span>
+<span class="nx">print</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="w"> </span><span class="nx">xs</span><span class="p">)</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nx">Prints</span><span class="w"> </span><span class="s">"bar [3, 1, 'foo']"</span><span class="w">  </span>
 </pre></div>
 
 <p>Как обычно, вы можете найти подробности о <a href="https://docs.python.org/3.9/tutorial/datastructures.html#more-on-lists">списках в документации</a>.  </p>
@@ -225,19 +223,19 @@
 <span class="c1"># Prints "cat", "dog", "monkey", each on its own line.</span>
 </pre></div>
 
-<p>Если вы хотите получить доступ к индексу каждого элемента в теле цикла, воспользуйтесь встроенной функцией:<code>enumerate</code>  </p>
-<div class="code"><pre class="code literal-block"><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">,</span> <span class="s1">'monkey'</span><span class="p">]</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">animal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">animals</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'#</span><span class="si">%d</span><span class="s1">: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">animal</span><span class="p">))</span>
+<p>Если вы хотите получить доступ к индексу каждого элемента в теле цикла, Воспользуйтесь встроенной функцией:<code>enumerate</code>  </p>
+<div class="code"><pre class="code literal-block"><span class="n">animals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s1">'cat'</span><span class="p">,</span><span class="w"> </span><span class="s1">'dog'</span><span class="p">,</span><span class="w"> </span><span class="s1">'monkey'</span><span class="p">]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">animal</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">animals</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s1">'#</span><span class="si">%d</span><span class="s1">: </span><span class="si">%s</span><span class="s1">'</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">animal</span><span class="p">))</span>
 <span class="c1"># Prints "#1: cat", "#2: dog", "#3: monkey", each on its own line  </span>
 </pre></div>
 
-<p><strong>Список включений</strong>: при программировании мы часто хотим преобразовать один тип данных в другой. В качестве простого примера рассмотрим следующий код, который вычисляет квадратные числа:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
-    <span class="n">squares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span>   <span class="c1"># Prints [0, 1, 4, 9, 16]</span>
+<p><strong>Список включений</strong>: При программировании мы часто хотим преобразовать один тип данных в другой. В качестве простого примера рассмотрим следующий код, который вычисляет квадратные числа:  </p>
+<div class="code"><pre class="code literal-block">nums = [0, 1, 2, 3, 4]
+squares = []
+for x in nums:
+    squares.append(x ** 2)
+print(squares)   # Prints [0, 1, 4, 9, 16]
 </pre></div>
 
 <p>Вы можете упростить этот код с помощью <strong>спискового понимания</strong>:  </p>
@@ -253,17 +251,17 @@
 </pre></div>
 
 <h4>Словари</h4>
-<p>Словарь хранит пары (ключ, значение), аналогично <code>Map</code> в <em>Java</em> или объекту в <em>Javascript</em>. Вы можете использовать его следующим образом:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'cat'</span><span class="p">:</span> <span class="s1">'cute'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">:</span> <span class="s1">'furry'</span><span class="p">}</span>  <span class="c1"># Create a new dictionary with some data</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'cat'</span><span class="p">])</span>       <span class="c1"># Get an entry from a dictionary; prints "cute"</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'cat'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>     <span class="c1"># Check if a dictionary has a given key; prints "True"</span>
-<span class="n">d</span><span class="p">[</span><span class="s1">'fish'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'wet'</span>     <span class="c1"># Set an entry in a dictionary</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'fish'</span><span class="p">])</span>      <span class="c1"># Prints "wet"</span>
-<span class="c1"># print(d['monkey'])  # KeyError: 'monkey' not a key of d</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'monkey'</span><span class="p">,</span> <span class="s1">'N/A'</span><span class="p">))</span>  <span class="c1"># Get an element with a default; prints "N/A"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'fish'</span><span class="p">,</span> <span class="s1">'N/A'</span><span class="p">))</span>    <span class="c1"># Get an element with a default; prints "wet"</span>
-<span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s1">'fish'</span><span class="p">]</span>         <span class="c1"># Remove an element from a dictionary</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'fish'</span><span class="p">,</span> <span class="s1">'N/A'</span><span class="p">))</span> <span class="c1"># "fish" is no longer a key; prints "N/A"</span>
+<p>Словарь хранит пары (ключ, значение), аналогично?, a в <strong>i</strong> или объект в <em>Javascript</em>. Вы можете использовать его следующим образом:<code>Map</code>  </p>
+<div class="code"><pre class="code literal-block"><span class="nt">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="err">'cat':</span><span class="w"> </span><span class="err">'cute',</span><span class="w"> </span><span class="err">'dog':</span><span class="w"> </span><span class="err">'furry'</span><span class="p">}</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nt">Create</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">new</span><span class="w"> </span><span class="nt">dictionary</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">some</span><span class="w"> </span><span class="nt">data</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="cp">[</span><span class="s1">'cat'</span><span class="cp">]</span><span class="o">)</span><span class="w">       </span><span class="err">#</span><span class="w"> </span><span class="nt">Get</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">entry</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">dictionary</span><span class="o">;</span><span class="w"> </span><span class="nt">prints</span><span class="w"> </span><span class="s2">"cute"</span>
+<span class="nt">print</span><span class="o">(</span><span class="s1">'cat'</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">d</span><span class="o">)</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nt">Check</span><span class="w"> </span><span class="nt">if</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">dictionary</span><span class="w"> </span><span class="nt">has</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">given</span><span class="w"> </span><span class="nt">key</span><span class="o">;</span><span class="w"> </span><span class="nt">prints</span><span class="w"> </span><span class="s2">"True"</span>
+<span class="nt">d</span><span class="cp">[</span><span class="s1">'fish'</span><span class="cp">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'wet'</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nt">Set</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">entry</span><span class="w"> </span><span class="nt">in</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">dictionary</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="cp">[</span><span class="s1">'fish'</span><span class="cp">]</span><span class="o">)</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nt">Prints</span><span class="w"> </span><span class="s2">"wet"</span>
+<span class="err">#</span><span class="w"> </span><span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="cp">[</span><span class="s1">'monkey'</span><span class="cp">]</span><span class="o">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nt">KeyError</span><span class="o">:</span><span class="w"> </span><span class="s1">'monkey'</span><span class="w"> </span><span class="nt">not</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">key</span><span class="w"> </span><span class="nt">of</span><span class="w"> </span><span class="nt">d</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="p">.</span><span class="nc">get</span><span class="o">(</span><span class="s1">'monkey'</span><span class="o">,</span><span class="w"> </span><span class="s1">'N/A'</span><span class="o">))</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nt">Get</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">element</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">default</span><span class="o">;</span><span class="w"> </span><span class="nt">prints</span><span class="w"> </span><span class="s2">"N/A"</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="p">.</span><span class="nc">get</span><span class="o">(</span><span class="s1">'fish'</span><span class="o">,</span><span class="w"> </span><span class="s1">'N/A'</span><span class="o">))</span><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nt">Get</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">element</span><span class="w"> </span><span class="nt">with</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">default</span><span class="o">;</span><span class="w"> </span><span class="nt">prints</span><span class="w"> </span><span class="s2">"wet"</span>
+<span class="nt">del</span><span class="w"> </span><span class="nt">d</span><span class="cp">[</span><span class="s1">'fish'</span><span class="cp">]</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nt">Remove</span><span class="w"> </span><span class="nt">an</span><span class="w"> </span><span class="nt">element</span><span class="w"> </span><span class="nt">from</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">dictionary</span>
+<span class="nt">print</span><span class="o">(</span><span class="nt">d</span><span class="p">.</span><span class="nc">get</span><span class="o">(</span><span class="s1">'fish'</span><span class="o">,</span><span class="w"> </span><span class="s1">'N/A'</span><span class="o">))</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="s2">"fish"</span><span class="w"> </span><span class="nt">is</span><span class="w"> </span><span class="nt">no</span><span class="w"> </span><span class="nt">longer</span><span class="w"> </span><span class="nt">a</span><span class="w"> </span><span class="nt">key</span><span class="o">;</span><span class="w"> </span><span class="nt">prints</span><span class="w"> </span><span class="s2">"N/A"</span>
 </pre></div>
 
 <p>Все, что вам нужно знать о словарях, вы можете найти <a href="https://docs.python.org/3.9/library/stdtypes.html#dict">в документации</a>.  </p>
@@ -282,24 +280,24 @@
 <span class="c1"># Prints "A person has 2 legs", "A cat has 4 legs", "A spider has 8 legs"</span>
 </pre></div>
 
-<p><strong>Словарное понимание</strong>: Они похожи на включения списков, но позволяют легко создавать cловари. Например:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">even_num_to_square</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">even_num_to_square</span><span class="p">)</span>  <span class="c1"># Prints "{0: 0, 2: 4, 4: 16}"</span>
+<p><strong>Словарное понимание</strong>: Они похожи на включения списков, но позволяют легко создавать Словари. Например:  </p>
+<div class="code"><pre class="code literal-block">nums = [0, 1, 2, 3, 4]
+even_num_to_square = {x: x ** 2 for x in nums if x % 2 == 0}
+print(even_num_to_square)  # Prints "{0: 0, 2: 4, 4: 16}"
 </pre></div>
 
-<h4>Наборы</h4>
-<p>Наборы — это неупорядоченное множество отдельных элементов. В качестве простого примера рассмотрим следующее:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">animals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'cat'</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">)</span>   <span class="c1"># Check if an element is in a set; prints "True"</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'fish'</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">)</span>  <span class="c1"># prints "False"</span>
-<span class="n">animals</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'fish'</span><span class="p">)</span>       <span class="c1"># Add an element to a set</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'fish'</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">)</span>  <span class="c1"># Prints "True"</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>       <span class="c1"># Number of elements in a set; prints "3"</span>
-<span class="n">animals</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'cat'</span><span class="p">)</span>        <span class="c1"># Adding an element that is already in the set does nothing</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>       <span class="c1"># Prints "3"</span>
-<span class="n">animals</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'cat'</span><span class="p">)</span>     <span class="c1"># Remove an element from a set</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">animals</span><span class="p">))</span>       <span class="c1"># Prints "2"</span>
+<h4>Множество</h4>
+<p>Множество — это неупорядоченный набор отдельных элементов. В качестве простого примера рассмотрим следующее:  </p>
+<div class="code"><pre class="code literal-block"><span class="nv">animals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>{<span class="s1">'cat'</span>,<span class="w"> </span><span class="s1">'dog'</span>}
+<span class="nv">print</span><span class="ss">(</span><span class="s1">'cat'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">animals</span><span class="ss">)</span><span class="w">   </span>#<span class="w"> </span><span class="nv">Check</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">element</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">set</span><span class="c1">; prints "True"</span>
+<span class="nv">print</span><span class="ss">(</span><span class="s1">'fish'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">animals</span><span class="ss">)</span><span class="w">  </span>#<span class="w"> </span><span class="nv">prints</span><span class="w"> </span><span class="s2">"False"</span>
+<span class="nv">animals</span>.<span class="nv">add</span><span class="ss">(</span><span class="s1">'fish'</span><span class="ss">)</span><span class="w">       </span>#<span class="w"> </span><span class="nv">Add</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">element</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">set</span>
+<span class="nv">print</span><span class="ss">(</span><span class="s1">'fish'</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">animals</span><span class="ss">)</span><span class="w">  </span>#<span class="w"> </span><span class="nv">Prints</span><span class="w"> </span><span class="s2">"True"</span>
+<span class="nv">print</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">animals</span><span class="ss">))</span><span class="w">       </span>#<span class="w"> </span><span class="nv">Number</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">elements</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">set</span><span class="c1">; prints "3"</span>
+<span class="nv">animals</span>.<span class="nv">add</span><span class="ss">(</span><span class="s1">'cat'</span><span class="ss">)</span><span class="w">        </span>#<span class="w"> </span><span class="nv">Adding</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">element</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">is</span><span class="w"> </span><span class="nv">already</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">set</span><span class="w"> </span><span class="nv">does</span><span class="w"> </span><span class="nv">nothing</span>
+<span class="nv">print</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">animals</span><span class="ss">))</span><span class="w">       </span>#<span class="w"> </span><span class="nv">Prints</span><span class="w"> </span><span class="s2">"3"</span>
+<span class="nv">animals</span>.<span class="nv">remove</span><span class="ss">(</span><span class="s1">'cat'</span><span class="ss">)</span><span class="w">     </span>#<span class="w"> </span><span class="nv">Remove</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">element</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">set</span>
+<span class="nv">print</span><span class="ss">(</span><span class="nv">len</span><span class="ss">(</span><span class="nv">animals</span><span class="ss">))</span><span class="w">       </span>#<span class="w"> </span><span class="nv">Prints</span><span class="w"> </span><span class="s2">"2"</span>
 </pre></div>
 
 <p>Как обычно, все, что вы хотите знать о множествах, можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#set">в документации</a>.  </p>
@@ -318,12 +316,12 @@
 </pre></div>
 
 <h4>Кортежи</h4>
-<p>Кортеж — это (<em>неизменяемый</em>) упорядоченный список значений. Кортеж во многом похож на список; Одним из наиболее важных отличий является то, что кортежи можно использовать как ключи в словарях и как элементы множеств, а списки — нет. Вот банальный пример:  </p>
-<div class="code"><pre class="code literal-block"><span class="n">d</span> <span class="o">=</span> <span class="p">{(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)}</span>  <span class="c1"># Create a dictionary with tuple keys</span>
-<span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>        <span class="c1"># Create a tuple</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>    <span class="c1"># Prints "&lt;class 'tuple'&gt;"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>       <span class="c1"># Prints "5"</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>  <span class="c1"># Prints "1"</span>
+<p>Кортеж — это (<em>неизменяемый</em>) упорядоченный список значений. Кортеж во многом похож на список; Одним из наиболее важных отличий является то, что Кортежи можно использовать как ключи в словарях и как элементы множеств, а списки — нет. Вот банальный пример:  </p>
+<div class="code"><pre class="code literal-block"><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="err">:</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="err">}</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">dictionary</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">tuple</span><span class="w"> </span><span class="n">keys</span>
+<span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="k">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">tuple</span>
+<span class="k">print</span><span class="p">(</span><span class="n">type</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">Prints</span><span class="w"> </span><span class="ss">"&lt;class 'tuple'&gt;"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">[</span><span class="n">t</span><span class="o">]</span><span class="p">)</span><span class="w">       </span><span class="err">#</span><span class="w"> </span><span class="n">Prints</span><span class="w"> </span><span class="ss">"5"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="o">[</span><span class="n">(1, 2)</span><span class="o">]</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">Prints</span><span class="w"> </span><span class="ss">"1"</span>
 </pre></div>
 
 <p><a href="https://docs.python.org/3.9/tutorial/datastructures.html#tuples-and-sequences">В документации</a> есть больше информации о кортежах.  </p>
@@ -376,10 +374,10 @@
 
 <p>Вы можете прочитать гораздо больше о классах <em>python</em> <a href="https://docs.python.org/3.9/tutorial/classes.html">в документации</a>.  </p>
 <h2>Numpy</h2>
-<p><a href="http://www.numpy.org/">Numpy</a> — это основная библиотека для научных вычислений на языке <em>python</em>. Она предоставляет высокопроизводительный многомерный массив объектов и инструменты для работы с ними Массивы. Если вы уже знакомы с <em>MATLAB</em>, <a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html">то этот урок может быть вам полезен</a> для начала работы с <em>Numpy</em>.  </p>
+<p><a href="http://www.numpy.org/">Numpy</a> — это основная библиотека для научных вычислений на языке <em>Python</em>. Он предоставляет высокопроизводительный многомерный массив объектов и инструменты для работы с ними Массивы. Если вы уже знакомы с <em>MATLAB</em>, <a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html">то этот урок может быть вам полезен</a> для начала работы с <em>Numpy</em>.  </p>
 <h3>Массивы</h3>
-<p>Массив numpy представляет собой сетку значений одного и того же типа, индексирующую кортежем неотрицательные целые числа. Количество измерений — это ранг массива; Форма массива представляет собой кортеж целых чисел, задающий размер массива вдоль каждого измерения.  </p>
-<p>Мы можем инициализировать массивы <em>numpy</em> из вложенных списков <em>python</em>, и получить доступ к элементам с помощью квадратных скобок:  </p>
+<p>Массив numpy представляет собой сетку значений одного и того же типа, индексируемую кортежем неотрицательные целые числа. Количество измерений — это ранг массива; Форма массива представляет собой кортеж целых чисел, задающий размер массива вдоль каждого измерения.  </p>
+<p>Мы можем инициализировать массивы numpy из вложенных списков <em>Python</em>, и получить доступ к элементам с помощью квадратных скобок:  </p>
 <div class="code"><pre class="code literal-block"> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>   <span class="c1"># Create a rank 1 array</span>
@@ -420,7 +418,7 @@
 <p><strong>О других способах создания массивов вы можете прочитать</strong> <a href="http://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation">в документации</a>.</p>
 <h3>Индексация массивов</h3>
 <p><em>Numpy</em> предлагает несколько способов индексации в массивы.  </p>
-<p><strong>Разрезание на ломтики</strong>: как и в случае со списками <em>python</em>, массивы numpy могут быть разделены на срезы. Поскольку массивы могут быть многомерными, необходимо указать срез для каждого измерения массива:  </p>
+<p><strong>Разрезание на ломтики</strong>: Как и в случае со списками <em>Python</em>, массивы numpy могут быть разделены на срезы. Поскольку массивы могут быть многомерными, необходимо указать срез для каждого измерения массива:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Create the following rank 2 array with shape (3, 4)</span>
@@ -665,7 +663,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> 
 </pre></div>
 
-<p>Это работает, однако, когда матрица <code>x</code> очень большая, вычисление явного цикла в <em>python</em> может быть медленным. Обратите внимание, что добавление вектора <code>v</code> к каждой строке матрицы <code>x</code> эквивалентно формированию матрицы <code>vv</code> путем наложения нескольких копий <code>v</code> по вертикали, затем выполнение поэлементного суммирования <code>x</code> и <code>vv</code> мы могли бы реализовать этот подход следующим образом:        </p>
+<p>Это работает, однако, когда матрица очень большая, вычисление явного цикла в <em>Python</em> может быть медленным. Обратите внимание, что добавление вектора к каждой строке матрицы эквивалентно формированию матрицы путем наложения нескольких копий по вертикали, затем выполнение поэлементного суммирования и мы могли бы это реализовать. Подход таков:<code>x</code> <code>v</code> <code>x</code> <code>vv</code> <code>v</code> <code>x</code> <code>vv</code>  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># We will add the vector v to each row of the matrix x,</span>
@@ -756,14 +754,10 @@
 <h3>Документация Numpy</h3>
 <p>Этот краткий обзор затронул многие важные вещи, которые вам необходимо знать о <em>numpy</em>, но далеко не полны. Ознакомьтесь <a href="http://docs.scipy.org/doc/numpy/reference/">со справочником numpy</a>, чтобы узнать больше о numpy.</p>
 <h2>SciPy</h2>
-<p><em>Numpy</em> предоставляет высокопроизводительный многомерный массив и основные инструменты для выполняйте вычисления с помощью этих массивов и управляйте ими. 
-<a href="http://docs.scipy.org/doc/scipy/reference/">SciPy</a> опирается на это и предоставляет большое количество функций, которые работают с массивами <em>numpy</em> и полезны для различных видов научных и инженерных приложений.  </p>
-<p>Лучший способ познакомиться с <em>SciPy</em> - <a href="http://docs.scipy.org/doc/scipy/reference/index.html">это просмотреть документацию</a>. 
-Мы выделим некоторые части <em>SciPy</em>, которые могут быть вам полезны для этого класса.</p>
+<p><em>Numpy</em> предоставляет высокопроизводительный многомерный массив и основные инструменты для Выполняйте вычисления с помощью этих массивов и управляйте ими. <a href="http://docs.scipy.org/doc/scipy/reference/">SciPy</a> опирается на это и предоставляет большое количество функций, которые работают с массивами numpy и полезны для различные виды научных и инженерных приложений.  </p>
+<p>Лучший способ познакомиться с <em>SciPy</em> - <a href="http://docs.scipy.org/doc/scipy/reference/index.html">это просмотреть документацию</a>. Мы выделим некоторые части SciPy, которые могут быть вам полезны для этого класса.</p>
 <h3>Операции с изображениями</h3>
-<p><em>SciPy</em> предоставляет некоторые основные функции для работы с изображениями. 
-Например, в нем есть функции чтения изображений с диска в массивы <em>numpy</em>, для записи массивов <em>numpy</em> на диск в виде изображений, а также для изменения размера изображений. 
-Вот простой пример, демонстрирующий эти функции:  </p>
+<p><em>SciPy</em> предоставляет некоторые основные функции для работы с изображениями. Например, в нем есть функции чтения образов с диска в массивы numpy, для записи массивов numpy на диск в виде образов, а также для изменения размера образов. Вот простой пример, демонстрирующий эти функции:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imsave</span><span class="p">,</span> <span class="n">imresize</span>
 
 <span class="c1"># Read an JPEG image into a numpy array</span>
@@ -785,7 +779,9 @@
 <span class="n">imsave</span><span class="p">(</span><span class="s1">'assets/cat_tinted.jpg'</span><span class="p">,</span> <span class="n">img_tinted</span><span class="p">)</span>
 </pre></div>
 
+<hr>
 <p><img alt="" src="https://cs231n.github.io/assets/cat.jpg"><br><img alt="" src="https://cs231n.github.io/assets/cat_tinted.jpg"><br><strong>Сверху</strong>: исходное изображение. <strong>Снизу</strong>: Затемненное изображение с измененным размером.  </p>
+<hr>
 <h3>Файлы MATLAB</h3>
 <p>Функции <code>scipy.io.loadmat</code> и <code>scipy.io.savemat</code> позволяют считывать и писать файлы <em>MATLAB</em>. О них можно прочитать в <a href="http://docs.scipy.org/doc/scipy/reference/io.html">документации</a>.</p>
 <h3>Расстояние между точками</h3>
@@ -814,9 +810,9 @@
 <p>Все подробности об этой функции вы можете прочитать в <a href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html">документации</a>.  </p>
 <p>Аналогичная функция (<code>scipy.spatial.distance.cdist</code>) вычисляет расстояние между всеми парами по двум группам точек; Вы можете прочитать об этом <a href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html">в документации</a> .</p>
 <h2>Matplotlib</h2>
-<p><a href="http://matplotlib.org/">Matplotlib</a> — библиотека для построения графиков. В этом разделе дается краткое введение в модуль <code>matplotlib.pyplot</code>, который обеспечивает систему построения графиков, аналогичную системе <em>MATLAB</em>.</p>
-<h3>Постоение графиков</h3>
-<p>Наиболее важной функцией в <em>matplotlib</em> является <code>plot</code>, что позволяет строить графики <em>2D</em> данных. Вот простой пример:  </p>
+<p><a href="http://matplotlib.org/">Matplotlib</a> — библиотека для построения графиков. В этом разделе дается краткое введение в модуль, который обеспечивает систему построения графиков, аналогичную системе <em>MATLAB</em>.<code>matplotlib.pyplot</code></p>
+<h3>Постоение кривой</h3>
+<p>Наиболее важной функцией в <em>matplotlib</em> является , что позволяет строить графики <em>2D</em> данных. Вот простой пример:<code>plot</code>  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -830,8 +826,10 @@
 </pre></div>
 
 <p>Выполнение этого кода создает следующий график:  </p>
+<hr>
 <p><img alt="" src="https://cs231n.github.io/assets/sine.png"></p>
-<p>Приложив немного дополнительной работы, мы можем легко построить несколько линий и добавить заголовок, легенду и подписи осям:  </p>
+<hr>
+<p>Приложив немного дополнительной работы, мы можем легко построить несколько линий и добавьте заголовок, легенду и подписи оси:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -850,10 +848,12 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<hr>
 <p><img alt="" src="https://cs231n.github.io/assets/sine_cosine.png"></p>
-<p>Гораздо больше о функции <code>plot</code> вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">в документации</a>.</p>
-<h3>Подзаголовки</h3>
-<p>С помощью <code>subplot</code> функции на одном и том же рисунке можно изобразить разные объекты. Вот пример:  </p>
+<hr>
+<p>Гораздо больше о функции вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">в документации</a>.<code>plot</code></p>
+<h3>Побочные сюжеты</h3>
+<p>С помощью этой функции на одном и том же рисунке можно изобразить разные объекты. Вот пример:<code>subplot</code>  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -879,8 +879,10 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<hr>
 <p><img alt="" src="https://cs231n.github.io/assets/sine_cosine_subplot.png"></p>
-<p>Гораздо больше о функции <code>subplot</code> вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot">в документации</a>.</p>
+<hr>
+<p>Гораздо больше о функции вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot">в документации</a>.<code>subplot</code></p>
 <h3>Изображения</h3>
 <p>Вы можете использовать функцию <code>imshow</code> для показа изображений. Вот пример:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -904,8 +906,10 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<hr>
 <p><img alt="" src="https://cs231n.github.io/assets/cat_tinted_imshow.png"></p>
-                </div>
+<hr>
+</div>
             </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/software-setup/" class="u-url">Настройка программного обеспечения </a></h1>
                 <div class="metadata">
                     <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
@@ -981,56 +985,7 @@
 Для этого выполните команду:</p>
 <div class="code"><pre class="code literal-block">pip install -r requirements.txt  
 </pre></div>
-
-<h3>Python IDE</h3>
-<p>Использование Ide для работы над проектами очень упрощает создание и настройку python. 
-Кроме того, интеграция с Git и другие полезные утилиты позволяют повысить эффективность разработки, не отвлекаясь на рутинные операции. 
-Используйте PyCharm, VsCode или любую другую IDE на ваш вкус. 
-Мой выбор - VsCode с расширениями (Extentions): Python (Microsoft), Black Formatter, JetBrains IDE KeyMapping. </p>
                 </div>
-            </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/transfer-learning/" class="u-url">Трансфер обучения</a></h1>
-                <div class="metadata">
-                    <p class="byline author vcard"><span class="byline-name fn" itemprop="author">
-                        Андрей Лабинцев
-                    </span></p>
-            <p class="dateline">
-            <a href="posts/transfer-learning/" rel="bookmark">
-            <time class="published dt-published" datetime="2025-02-14T19:42:16+03:00" itemprop="datePublished" title="2025-02-14 19:42">2025-02-14 19:42</time></a>
-            </p>
-                </div>
-            </header><div class="e-content entry-content">
-                    <h2>Трансфер обучения</h2>
-<p><strong><em>(Эти заметки в настоящее время находятся в черновой форме и находятся в разработке)</em></strong></p>
-<p>Содержание:
-- <a href="posts/transfer-learning/">Трансферное обучение</a>
-- <a href="posts/transfer-learning/">Дополнительные примечания</a></p>
-<h3>Трансферное обучение</h3>
-<p>На практике очень немногие обучают всю сверточную сеть с нуля (со случайной инициализацией), потому что относительно редко удается иметь набор данных достаточного размера. Вместо этого обычно предварительно обучают <em>ConvNet</em> на очень большом наборе данных (например, <em>ImageNet</em>, который содержит 1,2 миллиона изображений с 1000 категориями), а затем используют ConvNet либо в качестве инициализации, либо в качестве фиксированного экстрактора признаков для интересующей задачи. Три основных сценария трансферного обучения выглядят следующим образом:
-- <strong>ConvNet в качестве фиксированного экстрактора признаков</strong>. Возьмите предварительно обученный <em>ConvNet</em> на <em>ImageNet</em>, удалите последний полностью подключенный слой (выходные данные этого слоя представляют собой 1000 баллов класса для другой задачи, такой как <em>ImageNet</em>), а затем обрабатывайте остальную часть <em>ConvNet</em> как фиксированный экстрактор признаков для нового набора данных. В <em>AlexNet</em> это позволило бы вычислить вектор <strong>4096-D</strong> для каждого изображения, содержащего активации скрытого слоя непосредственно перед классификатором. Мы называем эти функции <strong>кодами CNN</strong>. Для производительности важно, чтобы эти коды были <em>ReLUd</em> (т.е. пороговыми на нуле), если они также были пороговыми во время обучения <em>ConvNet</em> на <em>ImageNet</em> (как это обычно бывает). После извлечения кодов <strong>4096-D</strong> для всех изображений обучите линейный классификатор (например, Linear <em>SVM</em> или классификатор Softmax) для нового набора данных.
-- <strong>Тонкая настройка ConvNet</strong>. Вторая стратегия заключается не только в замене и переобучении классификатора поверх <em>ConvNet</em> на новом наборе данных, но и в тонкой настройке весов предварительно обученной сети путем продолжения обратного распространения. Можно тонко настроить все уровни <em>ConvNet</em>, или можно оставить некоторые из более ранних уровней фиксированными (из-за опасений переобучения) и выполнить тонкую настройку только некоторой части сети более высокого уровня. Это мотивировано наблюдением, что более ранние функции <em>ConvNet</em> содержат более общие функции (например, детекторы краев или детекторы цветных пятен), которые должны быть полезны для многих задач, но более поздние уровни <em>ConvNet</em> становятся все более специфичными для деталей классов, содержащихся в исходном наборе данных. Например, в случае <em>ImageNet</em>, который содержит множество пород собак, значительная часть репрезентативной мощности <em>ConvNet</em> может быть направлена на функции, специфичные для дифференциации между породами собак.
-- <strong>Предварительно обученные модели</strong>. Поскольку обучение современных <em>ConvNet</em> на нескольких графических процессорах <em>ImageNet</em> занимает 2–3 недели, часто можно увидеть, как люди выпускают свои окончательные контрольные точки <em>ConvNet</em> в пользу других пользователей, которые могут использовать сети для тонкой настройки. Например, в библиотеке <em>Caffe</em> есть <a href="https://github.com/BVLC/caffe/wiki/Model-Zoo">Model Zoo</a>, где люди делятся своими сетевыми весами.  </p>
-<p><strong>Когда и как проводить тонкую настройку?</strong> Как вы решаете, какой тип переносного обучения вы должны выполнять на новом наборе данных? Это зависит от нескольких факторов, но два наиболее важных из них — это размер нового набора данных (маленький или большой) и его сходство с исходным набором данных (например, похожий на ImageNet с точки зрения содержимого изображений и классов, или сильно отличающийся, например, изображения микроскопа). Помня о том, что объекты <em>ConvNet</em> более универсальны в ранних слоях и более специфичны для исходного набора данных в более поздних слоях, вот некоторые общие эмпирические правила для навигации по <em>4</em> основным сценариям:<br>
-1. <em>Новый набор данных имеет небольшой размер и похож на исходный набор данных</em>. Поскольку объем данных невелик, тонкая настройка <em>ConvNet</em> не является хорошей идеей из-за проблем с переобучением. Поскольку данные аналогичны исходным данным, мы ожидаем, что функции более высокого уровня в <em>ConvNet</em> также будут иметь отношение к этому набору данных. Следовательно, лучшей идеей может быть обучение линейного классификатора на кодах <em>CNN</em>.
-2. <em>Новый набор данных имеет большой размер и похож на исходный набор данных</em>. Поскольку у нас больше данных, мы можем быть уверены в том, что не переучимся, если попытаемся выполнить тонкую настройку через всю сеть.
-3. <em>Новый набор данных небольшой, но сильно отличается от исходного</em>. Поскольку данные невелики, вероятно, лучше всего обучить только линейный классификатор. Поскольку набор данных сильно отличается, возможно, не стоит обучать классификатор с вершины сети, которая содержит больше функций, специфичных для набора данных. Вместо этого, возможно, лучше обучить классификатор <em>SVM</em> от активаций где-то раньше в сети.
-4. <em>Новый набор данных имеет большой размер и сильно отличается от исходного набора данных</em>. Поскольку набор данных очень большой, можно ожидать, что мы сможем позволить себе обучить <em>ConvNet</em> с нуля. Однако на практике очень часто все же полезно инициализировать весами из предварительно обученной модели. В этом случае у нас было бы достаточно данных и уверенности для тонкой настройки по всей сети.  </p>
-<p><strong>Практические советы</strong>. Есть несколько дополнительных моментов, о которых следует помнить при выполнении <em>Transfer Learning</em>:</p>
-<ul>
-<li>
-<em>Ограничения из предварительно обученных моделей</em>. Обратите внимание, что если вы хотите использовать предварительно обученную сеть, вы можете быть немного ограничены с точки зрения архитектуры, которую вы можете использовать для вашего нового набора данных. Например, вы не можете произвольно удалять слои Conv из предварительно обученной сети. Тем не менее, некоторые изменения просты: благодаря совместному использованию параметров вы можете легко запустить предварительно обученную сеть на изображениях разного пространственного размера. Это ясно видно в случае слоев Conv/Pool, потому что их прямая функция не зависит от пространственного размера входного объема (до тех пор, пока шаги «подходят»). В случае слоев FC это по-прежнему верно, потому что слои FC могут быть преобразованы в сверточный слой: например, в AlexNet окончательный объем пула перед первым слоем <em>FC</em> имеет размер <strong>[6x6x512]</strong>. Следовательно, слой <em>FC</em>, рассматривающий этот объем, эквивалентен наличию сверточного слоя, который имеет размер рецептивного поля 6x6 и применяется с отступом <strong>0</strong>.</li>
-<li>
-<em>Скорость обучения</em>. Обычно для тонко настраиваемых весов <em>ConvNet</em> используется меньшая скорость обучения по сравнению с весами (случайно инициализированными) для нового линейного классификатора, который вычисляет баллы классов нового набора данных. Это связано с тем, что мы ожидаем, что веса <em>ConvNet</em> относительно хороши, поэтому мы не хотим искажать их слишком быстро и слишком сильно (особенно когда новый линейный классификатор над ними обучается на основе случайной инициализации).  </li>
-</ul>
-<h3>Дополнительные примечания</h3>
-<ul>
-<li>
-<a href="http://arxiv.org/abs/1403.6382">Готовые функции CNN: A Astounding Baseline for Recognition</a> обучает <em>SVM</em> функциям из предварительно обученного <em>ImageNet</em> <em>ConvNet</em> и сообщает о нескольких современных результатах.</li>
-<li>
-<a href="http://arxiv.org/abs/1310.1531">DeCAF</a> сообщал об аналогичных выводах в 2013 году. Фреймворк в этой статье (<em>DeCAF</em>) был предшественником библиотеки <em>C++</em> <em>Caffe</em> на основе <em>Python</em>.</li>
-<li>
-<a href="http://arxiv.org/abs/1411.1792">Насколько переносимы функции в глубоких нейронных сетях?</a> Подробно изучает эффективность обучения переносу, включая некоторые неинтуитивные выводы о коадаптациях слоев.</li>
-</ul>
-</div>
             </article><article class="h-entry post-text" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title"><a href="posts/nlp-za-90-minut/" class="u-url">NLP за 90 минут</a></h1>
                 <div class="metadata">
                     <p class="byline author vcard"><span class="byline-name fn" itemprop="author">

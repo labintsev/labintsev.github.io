@@ -16,7 +16,11 @@
 <meta property="og:site_name" content="Заметки по ML, DL">
 <meta property="og:title" content="Tutorial python Numpy">
 <meta property="og:url" content="https://mldl.ru/posts/numpy-tutorial/">
+<<<<<<< HEAD
 <meta property="og:description" content="Туториал python Numpy (с Jupyter и Colab)
+=======
+<meta property="og:description" content="Tutorial python Numpy (с Jupyter и Colab)
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 Блокнот Colab
 Этот урок был первоначально предоставлен Джастином Джонсоном.  
 Мы будем использовать язык программирования python для всех заданий этого курса.">
@@ -93,11 +97,19 @@
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
+<<<<<<< HEAD
     <h2>Туториал python Numpy (с Jupyter и Colab)</h2>
 <p><a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb">Блокнот Colab</a></p>
 <p>Этот урок был первоначально предоставлен <a href="http://cs.stanford.edu/people/jcjohns/">Джастином Джонсоном</a>.  </p>
 <p>Мы будем использовать язык программирования <em>python</em> для всех заданий этого курса. <em>Python</em> сам по себе является отличным языком программирования общего назначения, но с помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощной средой для научных вычислений.</p>
 <p>Мы ожидаем, что многие из вас имеют некоторый опыт работы с <em>python</em> и <em>numpy</em>; Для остальных из вас этот раздел послужит кратким ускоренным курсом по обоим направлениям языка программирования <em>python</em> и его использованию для научных исследований и вычислений. Мы также познакомим вас с блокнотами, которые являются очень удобным способом работы с кодом на <em>python</em>. Некоторые из вас, возможно, уже знакомы с другими языками, и в этом случае мы также рекомендуем ссылаться <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">на NumPy для пользователей Matlab</a>, <a href="http://www.data-analysis-in-python.org/python_for_r.html">python для пользователей R</a> и/или <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/pythonForSASUsers/tree/master/">python для пользователей SAS</a>.  </p>
+=======
+    <h2>Tutorial python Numpy (с Jupyter и Colab)</h2>
+<p><a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb">Блокнот Colab</a></p>
+<p>Этот урок был первоначально предоставлен <a href="http://cs.stanford.edu/people/jcjohns/">Джастином Джонсоном</a>.  </p>
+<p>Мы будем использовать язык программирования <em>python</em> для всех заданий этого курса. <em>python</em> сам по себе является отличным языком программирования общего назначения, но с С помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощным среда для научных вычислений.</p>
+<p>Мы ожидаем, что многие из вас будут иметь некоторый опыт работы с <em>python</em> и <em>numpy</em>; Для остальных из вас этот раздел послужит кратким ускоренным курсом по обоим направлениям язык программирования <em>python</em> и его использование для научных исследований вычисление. Мы также познакомим вас с блокнотами, которые являются очень удобным способом возни с кодом на <em>python</em>. Некоторые из вас, возможно, уже знакомы с другой язык, и в этом случае мы также рекомендуем ссылаться <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">на NumPy для пользователей Matlab</a>, <a href="http://www.data-analysis-in-python.org/python_for_r.html">python для пользователей R</a> и/или <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/pythonForSASUsers/tree/master/">python для пользователей SAS</a>.  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <p>Содержание
 - <a href=".">Блокноты Jupyter и Colab</a>
 - <a href=".">Питон</a>
@@ -126,6 +138,7 @@
     - <a href=".">Побочные сюжеты</a>
     - <a href=".">Изображения</a>  </p>
 <h2>Блокноты Jupyter и Colab</h2>
+<<<<<<< HEAD
 <p>Прежде чем мы углубимся в <em>python</em>, мы хотели бы кратко поговорить о <em>блокнотах</em>. Блокнот <em>Jupyter</em> позволяет писать и выполнять код <em>python</em> <em>локально</em> в вашем веб-браузере. <em>Jupyter notebooks</em> yпрощает работу с кодом и выполняет его битами и сегментами; По этой причине он широко используется в научных вычислениях. <em>Colab</em>, с другой стороны, является разновидностью <em>Google-блокнота</em> <em>Jupyter</em>, который особенно подходит для машинных алгоритмов обучения и анализа данных, которые сохраняют функционал в <em>облаке</em>. <em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, поставляется с предустановленными пакетами, им легко поделиться со всем миром, присутствуют преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
 <p><strong>Запустите Tutorial в Colab (рекомендуется)</strong>. Если вы хотите выполнить это руководство полностью в <em>Colab</em>, нажмите на значок <code>Open in Colab</code> в самом верху этой страницы.</p>
 <p><strong>Запустите Tutorial в блокноте Jupyter</strong>. Если вы хотите запустить блокнот локально с помощью <em>Jupyter</em>, убедитесь, что ваша виртуальная среда установлена правильно (в соответствии с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a>), активируйте ее, а затем запустите <code>pip install notebook</code> для установки блокнота <em>Jupyter</em>. Затем <a href="https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb">откройте блокнот</a> и загрузите его в каталог по вашему выбору, щелкнув правой кнопкой мыши по странице и выбрав <code>Save Page As</code>. Затем <code>cd</code> в этот каталог и запустите <code>jupyter notebook</code>.     </p>
@@ -133,6 +146,15 @@
 <p>Это должно автоматически запустить сервер блокнотов по адресу <code>http://localhost:8888</code>. Если все работало правильно, вы должны увидеть такой экран, показывающий все доступные записные книжки в текущем каталоге. Нажмите <code>jupyter-notebook-tutorial.ipynb</code> и следуйте инструкциям в блокноте. В противном случае вы можете продолжить чтение туториала с фрагментами кода ниже.   </p>
 <h2>Python</h2>
 <p><strong>Python</strong> — это высокоуровневый, динамически типизированный мультипарадигмальный язык программирования. О коде на <em>python</em> часто говорят, что он похож на псевдокод, поскольку он позволяет вам выражать очень мощные идеи в очень немногих строках кода, оставаясь при этом очень удобочитаемый. В качестве примера приведем реализацию алгоритма классической быстрой сортировки на <em>python</em>:  </p>
+=======
+<p>Прежде чем мы углубимся в python, мы хотели бы кратко поговорить о <em>блокнотах</em>. Записная книжка Jupyter позволяет писать и выполнять Код python <em>локально</em> в вашем веб-браузере. <em>Jupyter notebooks</em>: yпростите работу с кодом и выполняйте его битами и кусочки; По этой причине они широко используются в научных вычисление. <em>Colab</em>, с другой стороны, является разновидностью <em>Google</em> Блокноты <em>Jupyter</em>, которые особенно подходят для машинных машин обучение и анализ данных, и это полностью работает в <em>облаке</em>. <em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, Поставляется с предустановленными пакетами, его легко поделиться со всем миром, и преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
+<p><strong>Запустите Tutorial в Colab (рекомендуется)</strong>. Если вы хотите выполнить это руководство полностью в <em>Colab</em>, нажмите на значок в самом верху этой страницы.<code>Open in Colab</code></p>
+<p><strong>Запустите Tutorial в записной книжке Jupyter</strong>. Если вы хотите запустить записную книжку локально с помощью <em>Jupyter</em>, убедитесь, что ваша виртуальная среда установлена правильно (в соответствии с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a>), активируйте ее, а затем запустите для установки записной книжки Jupyter. Затем <a href="https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb">откройте блокнот</a> и загрузите его в каталог по вашему выбору, щелкнув правой кнопкой мыши по странице и выбрав . Затем в этот каталог и запустите .<code>pip install notebook</code> <code>Save Page As</code> <code>cd</code> <code>jupyter notebook</code>  </p>
+<p><img alt="" src="https://cs231n.github.io/assets/ipython-tutorial/file-browser.png"></p>
+<p>Это должно автоматически запустить сервер записных книжек в положении . Если все работало правильно, вы должны увидеть такой экран, показывающий все Доступные записные книжки в текущем каталоге. Нажмите и следуйте инструкциям в записной книжке. В противном случае вы можете продолжить чтение Туториал с фрагментами кода ниже.<code>http://localhost:8888</code> <code>jupyter-notebook-tutorial.ipynb</code>  </p>
+<h2>python</h2>
+<p><strong>python</strong> — это высокоуровневый, динамически типизированный мультипарадигмальный язык программирования. О коде на <em>python</em> часто говорят, что он похож на псевдокод, поскольку он позволяет вам выражать очень мощные идеи в очень немногих строках кода, оставаясь при этом очень удобочитаемый. В качестве примера приведем реализацию алгоритма классической быстрой сортировки на <em>python</em>:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="k">def</span><span class="w"> </span><span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">arr</span>
@@ -148,7 +170,13 @@
 
 <h3>Версии python</h3>
 <p>С 1 января 2020 года python <a href="https://www.python.org/doc/sunset-python-2/">официально прекратил поддержку</a> второй версии. 
+<<<<<<< HEAD
 <strong>Поэтому во всех примерах код написан на python 3.7</strong>. Убедитесь, что вы правильно установили виртуальную среду, прежде чем продолжить работу с этим руководством. Вы можете проверить свою версию в командной строке после активации среды, запустив команду: <code>python --version</code>  </p>
+=======
+<strong>Для современных приложений должен использоваться python &gt;= 3.9</strong>. 
+Убедитесь, что вы правильно установили виртуальную среду, прежде чем продолжить работу с этим руководством. 
+Вы можете проверить свою версию в командной строке после активации среды запустив команду: <code>python --version</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <h3>Основные типы данных</h3>
 <p>Как и большинство языков, <em>python</em> имеет ряд основных типов: <em>int</em>, <em>floats</em>, <em>booleans</em> и <em>strings</em>. 
 Эти типы данных ведут себя так же, как и в большинстве других языков программирования.  </p>
@@ -169,10 +197,17 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># Prints "2.5 3.5 5.0 6.25"</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p>Обратите внимание, что в отличие от многих языков, в python нет унарного инкремента (<code>x++</code>) или декремента (<code>x--</code>).   </p>
 <p><em>Python</em> также имеет встроенные типы для комплексных чисел; 
 Все подробности можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#numeric-types-int-float-complex">в документации</a>.</p>
 <p><strong>Логический тип данных</strong>: <em>python</em> реализует все обычные операторы для булевой логики, но использует английские слова, а не символы (<code>&amp;&amp;</code>, <code>||</code> , и т. д.):   </p>
+=======
+<p>Обратите внимание, что в отличие от многих языков, в python нет унарного инкремента (<code>x++</code>) или decrement (<code>x--</code>).   </p>
+<p><em>python</em> также имеет встроенные типы для комплексных чисел; 
+Все подробности можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#numeric-types-int-float-complex">в документации</a>.</p>
+<p><strong>Булевы</strong>: <em>python</em> реализует все обычные операторы для булевой логики, но использует английские слова, а не символы (<code>&amp;&amp;</code>, <code>||</code> , и т. д.):   </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">t</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">f</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="c1"># Prints "&lt;class 'bool'&gt;"</span>
@@ -206,9 +241,15 @@
 
 <p>Список всех строковых методов можно найти <a href="https://docs.python.org/3.9/library/stdtypes.html#string-methods">в документации</a>.</p>
 <h3>Контейнеры</h3>
+<<<<<<< HEAD
 <p>Python включает в себя несколько встроенных типов контейнеров: списки, словари, наборы и кортежи.</p>
 <h4>Списки</h4>
 <p>Список в <em>python</em> является эквивалентом массива, но его размер можно изменять и он можетё содержать элементы разных типов:  </p>
+=======
+<p>python включает в себя несколько встроенных типов контейнеров: списки, словари, наборы и кортежи.</p>
+<h3>Списки</h3>
+<p>Список является эквивалентом массива в <em>python</em>, но его размер можно изменять и может содержать элементы разных типов:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>    <span class="c1"># Create a list</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">xs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># Prints "[3, 1, 2] 2"</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>     <span class="c1"># Negative indices count from the end of the list; prints "2"</span>
@@ -241,14 +282,22 @@
 <span class="c1"># Prints "cat", "dog", "monkey", each on its own line.</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p>Если вы хотите получить доступ к индексу каждого элемента в теле цикла, воспользуйтесь встроенной функцией:<code>enumerate</code>  </p>
+=======
+<p>Если вы хотите получить доступ к индексу каждого элемента в теле цикла, Воспользуйтесь встроенной функцией:<code>enumerate</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">animals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">,</span> <span class="s1">'monkey'</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">animal</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">animals</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'#</span><span class="si">%d</span><span class="s1">: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">animal</span><span class="p">))</span>
 <span class="c1"># Prints "#1: cat", "#2: dog", "#3: monkey", each on its own line  </span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><strong>Список включений</strong>: при программировании мы часто хотим преобразовать один тип данных в другой. В качестве простого примера рассмотрим следующий код, который вычисляет квадратные числа:  </p>
+=======
+<p><strong>Список включений</strong>: При программировании мы часто хотим преобразовать один тип данных в другой. В качестве простого примера рассмотрим следующий код, который вычисляет квадратные числа:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">squares</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
@@ -269,7 +318,11 @@
 </pre></div>
 
 <h4>Словари</h4>
+<<<<<<< HEAD
 <p>Словарь хранит пары (ключ, значение), аналогично <code>Map</code> в <em>Java</em> или объекту в <em>Javascript</em>. Вы можете использовать его следующим образом:  </p>
+=======
+<p>Словарь хранит пары (ключ, значение), аналогично?, a в <strong>i</strong> или объект в <em>Javascript</em>. Вы можете использовать его следующим образом:<code>Map</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'cat'</span><span class="p">:</span> <span class="s1">'cute'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">:</span> <span class="s1">'furry'</span><span class="p">}</span>  <span class="c1"># Create a new dictionary with some data</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">'cat'</span><span class="p">])</span>       <span class="c1"># Get an entry from a dictionary; prints "cute"</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'cat'</span> <span class="ow">in</span> <span class="n">d</span><span class="p">)</span>     <span class="c1"># Check if a dictionary has a given key; prints "True"</span>
@@ -298,14 +351,23 @@
 <span class="c1"># Prints "A person has 2 legs", "A cat has 4 legs", "A spider has 8 legs"</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><strong>Словарное понимание</strong>: Они похожи на включения списков, но позволяют легко создавать cловари. Например:  </p>
+=======
+<p><strong>Словарное понимание</strong>: Они похожи на включения списков, но позволяют легко создавать Словари. Например:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 <span class="n">even_num_to_square</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">}</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">even_num_to_square</span><span class="p">)</span>  <span class="c1"># Prints "{0: 0, 2: 4, 4: 16}"</span>
 </pre></div>
 
+<<<<<<< HEAD
 <h4>Наборы</h4>
 <p>Наборы — это неупорядоченное множество отдельных элементов. В качестве простого примера рассмотрим следующее:  </p>
+=======
+<h4>Множество</h4>
+<p>Множество — это неупорядоченный набор отдельных элементов. В качестве простого примера рассмотрим следующее:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">animals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'cat'</span><span class="p">,</span> <span class="s1">'dog'</span><span class="p">}</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'cat'</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">)</span>   <span class="c1"># Check if an element is in a set; prints "True"</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">'fish'</span> <span class="ow">in</span> <span class="n">animals</span><span class="p">)</span>  <span class="c1"># prints "False"</span>
@@ -334,7 +396,11 @@
 </pre></div>
 
 <h4>Кортежи</h4>
+<<<<<<< HEAD
 <p>Кортеж — это (<em>неизменяемый</em>) упорядоченный список значений. Кортеж во многом похож на список; Одним из наиболее важных отличий является то, что кортежи можно использовать как ключи в словарях и как элементы множеств, а списки — нет. Вот банальный пример:  </p>
+=======
+<p>Кортеж — это (<em>неизменяемый</em>) упорядоченный список значений. Кортеж во многом похож на список; Одним из наиболее важных отличий является то, что Кортежи можно использовать как ключи в словарях и как элементы множеств, а списки — нет. Вот банальный пример:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="n">d</span> <span class="o">=</span> <span class="p">{(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)}</span>  <span class="c1"># Create a dictionary with tuple keys</span>
 <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>        <span class="c1"># Create a tuple</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>    <span class="c1"># Prints "&lt;class 'tuple'&gt;"</span>
@@ -392,10 +458,17 @@
 
 <p>Вы можете прочитать гораздо больше о классах <em>python</em> <a href="https://docs.python.org/3.9/tutorial/classes.html">в документации</a>.  </p>
 <h2>Numpy</h2>
+<<<<<<< HEAD
 <p><a href="http://www.numpy.org/">Numpy</a> — это основная библиотека для научных вычислений на языке <em>python</em>. Она предоставляет высокопроизводительный многомерный массив объектов и инструменты для работы с ними Массивы. Если вы уже знакомы с <em>MATLAB</em>, <a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html">то этот урок может быть вам полезен</a> для начала работы с <em>Numpy</em>.  </p>
 <h3>Массивы</h3>
 <p>Массив numpy представляет собой сетку значений одного и того же типа, индексирующую кортежем неотрицательные целые числа. Количество измерений — это ранг массива; Форма массива представляет собой кортеж целых чисел, задающий размер массива вдоль каждого измерения.  </p>
 <p>Мы можем инициализировать массивы <em>numpy</em> из вложенных списков <em>python</em>, и получить доступ к элементам с помощью квадратных скобок:  </p>
+=======
+<p><a href="http://www.numpy.org/">Numpy</a> — это основная библиотека для научных вычислений на языке <em>python</em>. Он предоставляет высокопроизводительный многомерный массив объектов и инструменты для работы с ними Массивы. Если вы уже знакомы с <em>MATLAB</em>, <a href="https://docs.scipy.org/doc/numpy/user/numpy-for-matlab-users.html">то этот урок может быть вам полезен</a> для начала работы с <em>Numpy</em>.  </p>
+<h3>Массивы</h3>
+<p>Массив numpy представляет собой сетку значений одного и того же типа, индексируемую кортежем неотрицательные целые числа. Количество измерений — это ранг массива; Форма массива представляет собой кортеж целых чисел, задающий размер массива вдоль каждого измерения.  </p>
+<p>Мы можем инициализировать массивы numpy из вложенных списков <em>python</em>, и получить доступ к элементам с помощью квадратных скобок:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>   <span class="c1"># Create a rank 1 array</span>
@@ -436,7 +509,11 @@
 <p><strong>О других способах создания массивов вы можете прочитать</strong> <a href="http://docs.scipy.org/doc/numpy/user/basics.creation.html#arrays-creation">в документации</a>.</p>
 <h3>Индексация массивов</h3>
 <p><em>Numpy</em> предлагает несколько способов индексации в массивы.  </p>
+<<<<<<< HEAD
 <p><strong>Разрезание на ломтики</strong>: как и в случае со списками <em>python</em>, массивы numpy могут быть разделены на срезы. Поскольку массивы могут быть многомерными, необходимо указать срез для каждого измерения массива:  </p>
+=======
+<p><strong>Разрезание на ломтики</strong>: Как и в случае со списками <em>python</em>, массивы numpy могут быть разделены на срезы. Поскольку массивы могут быть многомерными, необходимо указать срез для каждого измерения массива:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># Create the following rank 2 array with shape (3, 4)</span>
@@ -681,7 +758,11 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> 
 </pre></div>
 
+<<<<<<< HEAD
 <p>Это работает, однако, когда матрица <code>x</code> очень большая, вычисление явного цикла в <em>python</em> может быть медленным. Обратите внимание, что добавление вектора <code>v</code> к каждой строке матрицы <code>x</code> эквивалентно формированию матрицы <code>vv</code> путем наложения нескольких копий <code>v</code> по вертикали, затем выполнение поэлементного суммирования <code>x</code> и <code>vv</code> мы могли бы реализовать этот подход следующим образом:        </p>
+=======
+<p>Это работает, однако, когда матрица очень большая, вычисление явного цикла в <em>python</em> может быть медленным. Обратите внимание, что добавление вектора к каждой строке матрицы эквивалентно формированию матрицы путем наложения нескольких копий по вертикали, затем выполнение поэлементного суммирования и мы могли бы это реализовать. Подход таков:<code>x</code> <code>v</code> <code>x</code> <code>vv</code> <code>v</code> <code>x</code> <code>vv</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="c1"># We will add the vector v to each row of the matrix x,</span>
@@ -772,6 +853,7 @@
 <h3>Документация Numpy</h3>
 <p>Этот краткий обзор затронул многие важные вещи, которые вам необходимо знать о <em>numpy</em>, но далеко не полны. Ознакомьтесь <a href="http://docs.scipy.org/doc/numpy/reference/">со справочником numpy</a>, чтобы узнать больше о numpy.</p>
 <h2>SciPy</h2>
+<<<<<<< HEAD
 <p><em>Numpy</em> предоставляет высокопроизводительный многомерный массив и основные инструменты для выполняйте вычисления с помощью этих массивов и управляйте ими. 
 <a href="http://docs.scipy.org/doc/scipy/reference/">SciPy</a> опирается на это и предоставляет большое количество функций, которые работают с массивами <em>numpy</em> и полезны для различных видов научных и инженерных приложений.  </p>
 <p>Лучший способ познакомиться с <em>SciPy</em> - <a href="http://docs.scipy.org/doc/scipy/reference/index.html">это просмотреть документацию</a>. 
@@ -779,6 +861,15 @@
 <h3>Операции с изображениями</h3>
 <p><em>SciPy</em> предоставляет некоторые основные функции для работы с изображениями. 
 Например, в нем есть функции чтения изображений с диска в массивы <em>numpy</em>, для записи массивов <em>numpy</em> на диск в виде изображений, а также для изменения размера изображений. 
+=======
+<p><em>Numpy</em> предоставляет высокопроизводительный многомерный массив и основные инструменты для Выполняйте вычисления с помощью этих массивов и управляйте ими. 
+<a href="http://docs.scipy.org/doc/scipy/reference/">SciPy</a> опирается на это и предоставляет большое количество функций, которые работают с массивами numpy и полезны для различные виды научных и инженерных приложений.  </p>
+<p>Лучший способ познакомиться с <em>SciPy</em> - <a href="http://docs.scipy.org/doc/scipy/reference/index.html">это просмотреть документацию</a>. 
+Мы выделим некоторые части SciPy, которые могут быть вам полезны для этого класса.</p>
+<h3>Операции с изображениями</h3>
+<p><em>SciPy</em> предоставляет некоторые основные функции для работы с изображениями. 
+Например, в нем есть функции чтения изображений с диска в массивы numpy, для записи массивов numpy на диск в виде изображений, а также для изменения размера изображений. 
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 Вот простой пример, демонстрирующий эти функции:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.misc</span><span class="w"> </span><span class="kn">import</span> <span class="n">imread</span><span class="p">,</span> <span class="n">imsave</span><span class="p">,</span> <span class="n">imresize</span>
 
@@ -801,7 +892,11 @@
 <span class="n">imsave</span><span class="p">(</span><span class="s1">'assets/cat_tinted.jpg'</span><span class="p">,</span> <span class="n">img_tinted</span><span class="p">)</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><img alt="" src="https://cs231n.github.io/assets/cat.jpg"><br><img alt="" src="https://cs231n.github.io/assets/cat_tinted.jpg"><br><strong>Сверху</strong>: исходное изображение. <strong>Снизу</strong>: Затемненное изображение с измененным размером.  </p>
+=======
+<p><strong>_<br><img alt="" src="https://cs231n.github.io/assets/cat.jpg"><br><img alt="" src="https://cs231n.github.io/assets/cat_tinted.jpg"><br></strong>Сверху<strong>: исходное изображение. </strong>Снизу<strong>: Затемненное изображение с измененным размером.<br></strong>_  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <h3>Файлы MATLAB</h3>
 <p>Функции <code>scipy.io.loadmat</code> и <code>scipy.io.savemat</code> позволяют считывать и писать файлы <em>MATLAB</em>. О них можно прочитать в <a href="http://docs.scipy.org/doc/scipy/reference/io.html">документации</a>.</p>
 <h3>Расстояние между точками</h3>
@@ -830,9 +925,15 @@
 <p>Все подробности об этой функции вы можете прочитать в <a href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.pdist.html">документации</a>.  </p>
 <p>Аналогичная функция (<code>scipy.spatial.distance.cdist</code>) вычисляет расстояние между всеми парами по двум группам точек; Вы можете прочитать об этом <a href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html">в документации</a> .</p>
 <h2>Matplotlib</h2>
+<<<<<<< HEAD
 <p><a href="http://matplotlib.org/">Matplotlib</a> — библиотека для построения графиков. В этом разделе дается краткое введение в модуль <code>matplotlib.pyplot</code>, который обеспечивает систему построения графиков, аналогичную системе <em>MATLAB</em>.</p>
 <h3>Постоение графиков</h3>
 <p>Наиболее важной функцией в <em>matplotlib</em> является <code>plot</code>, что позволяет строить графики <em>2D</em> данных. Вот простой пример:  </p>
+=======
+<p><a href="http://matplotlib.org/">Matplotlib</a> — библиотека для построения графиков. В этом разделе дается краткое введение в модуль, который обеспечивает систему построения графиков, аналогичную системе <em>MATLAB</em>.<code>matplotlib.pyplot</code></p>
+<h3>Постоение графиков</h3>
+<p>Наиболее важной функцией в <em>matplotlib</em> является , что позволяет строить графики <em>2D</em> данных. Вот простой пример:<code>plot</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -845,9 +946,14 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># You must call plt.show() to make graphics appear.</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p>Выполнение этого кода создает следующий график:  </p>
 <p><img alt="" src="https://cs231n.github.io/assets/sine.png"></p>
 <p>Приложив немного дополнительной работы, мы можем легко построить несколько линий и добавить заголовок, легенду и подписи осям:  </p>
+=======
+<p>Выполнение этого кода создает следующий график:<br><strong>_<br><img alt="" src="https://cs231n.github.io/assets/sine.png"><br></strong>_  </p>
+<p>Приложив немного дополнительной работы, мы можем легко построить несколько линий и добавьте заголовок, легенду и подписи оси:  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -866,10 +972,17 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><img alt="" src="https://cs231n.github.io/assets/sine_cosine.png"></p>
 <p>Гораздо больше о функции <code>plot</code> вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">в документации</a>.</p>
 <h3>Подзаголовки</h3>
 <p>С помощью <code>subplot</code> функции на одном и том же рисунке можно изобразить разные объекты. Вот пример:  </p>
+=======
+<p><strong>_<br><img alt="" src="https://cs231n.github.io/assets/sine_cosine.png"><br></strong>_  </p>
+<p>Гораздо больше о функции вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.plot">в документации</a>.<code>plot</code></p>
+<h3>Побочные сюжеты</h3>
+<p>С помощью этой функции на одном и том же рисунке можно изобразить разные объекты. Вот пример:<code>subplot</code>  </p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
@@ -895,8 +1008,13 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><img alt="" src="https://cs231n.github.io/assets/sine_cosine_subplot.png"></p>
 <p>Гораздо больше о функции <code>subplot</code> вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot">в документации</a>.</p>
+=======
+<p><strong>_<br><img alt="" src="https://cs231n.github.io/assets/sine_cosine_subplot.png"><br></strong>_  </p>
+<p>Гораздо больше о функции вы можете прочитать <a href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.subplot">в документации</a>.<code>subplot</code></p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
 <h3>Изображения</h3>
 <p>Вы можете использовать функцию <code>imshow</code> для показа изображений. Вот пример:  </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -920,7 +1038,11 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
+<<<<<<< HEAD
 <p><img alt="" src="https://cs231n.github.io/assets/cat_tinted_imshow.png"></p>
+=======
+<p><strong>_<br><img alt="" src="https://cs231n.github.io/assets/cat_tinted_imshow.png"><br></strong>_</p>
+>>>>>>> d57914c0bf70c9a9ee0eec1512a65385579bcbae
     </div>
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
