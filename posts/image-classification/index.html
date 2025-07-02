@@ -2,6 +2,7 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
 <head>
 <meta charset="utf-8">
+<meta name="description" content="Введение в классификацию изображений, классификатор ближайшего соседа, классификатор k - ближайших соседей, наборы данных для настройки гиперпараметров. ">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Классификация изображений  | Заметки по ML, DL</title>
 <link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
@@ -11,17 +12,14 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
 <link rel="canonical" href="https://mldl.ru/posts/image-classification/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
-<link rel="prev" href="../numpy-tutorial/" title="Tutorial Python Numpy" type="text/html">
-<link rel="next" href="../linear-classifier/" title="Линейный классификатор " type="text/html">
+<link rel="prev" href="../visualisation/" title="Понимание и визуализация" type="text/html">
 <meta property="og:site_name" content="Заметки по ML, DL">
 <meta property="og:title" content="Классификация изображений ">
 <meta property="og:url" content="https://mldl.ru/posts/image-classification/">
-<meta property="og:description" content="Классификация изображений
-Это вводная лекция, призванная познакомить людей, не связанных с компьютерным зрением, с проблемой классификации изображений и подходом, основанным на данных.   
-Содержание:
-">
+<meta property="og:description" content="Введение в классификацию изображений, классификатор ближайшего соседа, классификатор k - ближайших соседей, наборы данных для настройки гиперпараметров. ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2025-03-03T19:42:16+03:00">
+<meta property="article:published_time" content="2025-03-14T08:00:00+03:00">
+<meta property="article:tag" content="CV">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
@@ -84,7 +82,7 @@
             </span></p>
             <p class="dateline">
             <a href="." rel="bookmark">
-            <time class="published dt-published" datetime="2025-03-03T19:42:16+03:00" itemprop="datePublished" title="2025-03-03 19:42">2025-03-03 19:42</time></a>
+            <time class="published dt-published" datetime="2025-03-14T08:00:00+03:00" itemprop="datePublished" title="2025-03-14 08:00">2025-03-14 08:00</time></a>
             </p>
             
         <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
@@ -94,184 +92,266 @@
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <h2>Классификация изображений</h2>
-<p>Это вводная лекция, призванная познакомить людей, не связанных с компьютерным зрением, с проблемой классификации изображений и подходом, основанным на данных.   </p>
-<p>Содержание:
-- <a href=".">Классификация изображений</a> 
-    + <a href=".">Классификатор ближайшего Соседа</a>
-    + <a href=".">Классификатор k - Ближайшего соседа</a>
-    + <a href=".">Наборы проверочных данных для настройки гиперпараметров</a>
-    + <a href=".">Краткие сведения</a>
--  <a href=".">Краткая сводка: Применение kNN на практике</a>
--  <a href=".">Дополнительные материалы</a>  </p>
-<h2>Классификация изображений</h2>
-<p><strong>Мотивация</strong>. В этом разделе мы рассмотрим задачу классификации изображений, которая заключается в присвоении входному изображению одной метки из фиксированного набора категорий. Это одна из основных задач компьютерного зрения, которая, несмотря на свою простоту, имеет множество практических применений. Более того, как мы увидим далее в курсе, многие другие, казалось бы, отдельные задачи компьютерного зрения (такие как обнаружение объектов, сегментация) могут быть сведены к классификации изображений.   </p>
+<p>В этой лекции мы познакомимся с проблемой классификации изображений. 
+Решение проблемы заключается в подходе, основанном на большом объеме размеченных данных.   </p>
+<p>Содержание:<br>
+- <a href="#%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8E-%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9">Введение в классификацию изображений</a><br>
+  - <a href="#%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80-%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B5%D0%B3%D0%BE-%D1%81%D0%BE%D1%81%D0%B5%D0%B4%D0%B0">Классификатор ближайшего соседа</a><br>
+  - <a href="#%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80-k---%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D1%85-%D1%81%D0%BE%D1%81%D0%B5%D0%B4%D0%B5%D0%B9">Классификатор k - ближайших соседей</a> <br>
+  - <a href="#%D0%BD%D0%B0%D0%B1%D0%BE%D1%80%D1%8B-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-%D0%B8-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B8-%D0%B3%D0%B8%D0%BF%D0%B5%D1%80%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%BE%D0%B2">Наборы данных для настройки гиперпараметров</a><br>
+  - <a href="#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-knn-%D0%BD%D0%B0-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B5">Применение kNN на практике</a><br>
+    - <a href="#%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5-%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B">Дополнительные материалы</a> </p>
+<h3>Введение в классификацию изображений</h3>
+<p><strong>Мотивация</strong>. В этом разделе мы рассмотрим задачу классификации изображений. Задача заключается в присвоении входному изображению одной метки из фиксированного набора категорий. Это одна из основных задач компьютерного зрения, которая, несмотря на свою простоту, имеет множество практических применений. Более того, многие другие задачи компьютерного зрения (детекция объектов, сегментация) могут быть сведены к классификации изображений.   </p>
 <p><strong>Пример</strong>. Например, на изображении ниже модель классификации изображений принимает одно изображение и присваивает вероятности четырём меткам: <em>{«кошка», «собака», «шляпа», «кружка»}</em>. Как показано на изображении, для компьютера изображение представляет собой один большой трёхмерный массив чисел. В этом примере изображение кошки имеет ширину <strong>248</strong> пикселей, высоту <strong>400</strong> пикселей и три цветовых канала: красный, зелёный, синий (или сокращённо <em>RGB</em>). Таким образом, изображение состоит из <strong>248 x 400 x 3</strong> чисел, или в общей сложности 297 600 чисел. Каждое число представляет собой целое число от 0 (чёрный) до 255 (белый). Наша задача — превратить эти четверть миллиона чисел в одну метку, например <em>«кошка»</em>.  </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/classify.png"></p>
-<p>Задача классификации изображений состоит в том, чтобы предсказать одну метку (или распределение меток, как показано здесь, чтобы указать степень нашей уверенности) для заданного изображения. Изображения представляют собой трёхмерные массивы целых чисел от 0 до 255 размером «ширина x высота x 3». Число 3 обозначает три цветовых канала: красный, зелёный и синий.  </p>
+<p>Задача классификации изображений состоит в том, чтобы предсказать одну метку для заданного изображения. Так же мы можем предсказать распределение вероятностей для всех меток, что отражает степень нашей уверенности в результате классификации.   Изображения представляют собой трёхмерные массивы целых чисел от 0 до 255 размером «ширина x высота x 3». Число 3 обозначает три цветовых канала: красный, зелёный и синий.  </p>
 <hr>
-<p><strong>Проблемы</strong>. Поскольку задача распознавания визуального образа (например, кошки) относительно проста для человека, стоит рассмотреть связанные с ней проблемы с точки зрения алгоритма компьютерного зрения. Ниже мы приводим (неполный) список проблем, не забывая о том, что изображения представлены в виде трёхмерного массива значений яркости:
-- <strong>Изменение точки обзора</strong>. Один экземпляр объекта может быть ориентирован по-разному относительно камеры.
-- <strong>Изменение масштаба</strong>. Визуальные классы часто различаются по размеру (размеру в реальном мире, а не только по размеру на изображении).
-- <strong>Деформация</strong>. Многие интересующие нас объекты не являются твёрдыми телами и могут сильно деформироваться.
-- <strong>Окклюзия</strong>. Интересующие нас объекты могут быть частично скрыты. Иногда видна лишь небольшая часть объекта (всего несколько пикселей).
-- <strong>Условия освещения</strong>. Влияние освещения на пиксели очень велико.
-- <strong>Фоновый шум</strong>. Интересующие нас объекты могут сливаться с окружающей средой, что затрудняет их идентификацию.
-- <strong>Внутриклассовые различия</strong>. Классы, представляющие интерес, часто могут быть относительно обширными, например, <em>стулья</em>. Существует множество различных типов этих предметов, каждый из которых имеет отличный от других элементов класса внешний вид.   </p>
+<p><strong>Проблемы</strong>.  Поскольку задача распознавания визуального образа (например, кошки) относительно проста для человека, стоит рассмотреть связанные с ней проблемы с точки зрения алгоритма компьютерного зрения.<br>
+Ниже мы приводим (неполный) список проблем, не забывая о том, что изображения представлены в виде трёхмерного массива значений яркости:<br>
+- <strong>Изменение точки обзора</strong>. Один экземпляр объекта может быть ориентирован по-разному относительно камеры.<br>
+- <strong>Изменение масштаба</strong>. Визуальные классы часто различаются по размеру (размеру в реальном мире, а не только по размеру на изображении).<br>
+- <strong>Деформация</strong>. Многие интересующие нас объекты не являются твёрдыми телами и могут сильно деформироваться.<br>
+- <strong>Окклюзия</strong>. Интересующие нас объекты могут быть частично скрыты. Иногда видна лишь небольшая часть объекта (всего несколько пикселей).<br>
+- <strong>Условия освещения</strong>. Влияние освещения на пиксели очень велико.<br>
+- <strong>Фоновый шум</strong>. Интересующие нас объекты могут сливаться с окружающей средой, что затрудняет их идентификацию.<br>
+- <strong>Внутриклассовые различия</strong>. Классы, представляющие интерес, часто могут быть относительно обширными, например, <em>стулья</em>. 
+Существует множество различных типов этих предметов, каждый из которых имеет отличный от других элементов класса внешний вид.    </p>
 <p>Хорошая модель классификации изображений должна быть инвариантна к перекрёстному произведению всех этих вариаций, сохраняя при этом чувствительность к межклассовым вариациям.   </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/challenges.jpeg"></p>
 <hr>
-<p><strong>Подход, основанный на данных</strong>. Как бы мы могли написать алгоритм, который сможет классифицировать изображения по отдельным категориям? В отличие от написания алгоритма, например, для сортировки списка чисел, не очевидно, как можно написать алгоритм для распознавания кошек на изображениях. Поэтому вместо того, чтобы пытаться описать каждую из интересующих нас категорий непосредственно в коде, мы воспользуемся подходом, похожим на тот, что вы бы использовали с ребёнком: мы предоставим компьютеру множество примеров каждого класса, а затем разработаем алгоритмы обучения, которые будут изучать эти примеры и узнавать о визуальном представлении каждого класса. Этот подход называется подходом, основанным на данных, поскольку он предполагает сначала накопление обучающего набора данных с размеченными изображениями. Вот пример того, как может выглядеть такой набор данных:   </p>
+<p><strong>Подход, основанный на данных</strong>. Как бы мы могли написать алгоритм, который сможет классифицировать изображения по отдельным категориям? В отличие от написания алгоритма, например, для сортировки списка чисел, не очевидно, как можно написать алгоритм для распознавания кошек на изображениях. Поэтому вместо того, чтобы пытаться описать каждую из интересующих нас категорий непосредственно в коде, мы воспользуемся подходом, похожим на обучение ребёнка. Мы предоставим компьютеру множество примеров, а затем используем алгоритм обучения, который связывает визуальное представление с меткой каждого класса. Этот подход предполагает, что у нас есть обучающий набор с размеченными изображениями. Вот пример того, как может выглядеть такой набор данных:   </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/trainset.jpg"></p>
-<p>Пример обучающего набора для четырёх визуальных категорий. На практике у нас могут быть тысячи категорий и сотни тысяч изображений для каждой категории.  </p>
+<p>Пример обучающего набора для четырёх визуальных категорий. 
+На практике у нас могут быть тысячи категорий и сотни тысяч изображений для каждой категории.  </p>
 <hr>
-<p><strong>Конвейер классификации изображений</strong>. Мы увидели, что задача классификации изображений состоит в том, чтобы взять массив пикселей, представляющий одно изображение, и присвоить ему метку. Наш полный конвейер можно формализоваться следующим образом:
-- <strong>Входные данные</strong>: наши входные данные состоят из набора <strong><em>N</em></strong> изображений, каждое из которых помечено одним из <strong><em>K</em></strong> различных классов. Мы называем эти данные <em>обучающим набором</em>.
-- <strong>Обучение</strong>: наша задача — использовать обучающую выборку, чтобы узнать, как выглядит каждый из классов. Мы называем этот этап <em>обучением классификатора</em> или <em>обучением модели</em>.
-- <strong>Оценка</strong>: в конце мы оцениваем качество классификатора, задавая ему вопрос о том, какие метки он предскажет для нового набора изображений, которые он никогда раньше не видел. Затем мы сравниваем истинные метки этих изображений с теми, которые предсказал классификатор. Интуитивно мы надеемся, что многие прогнозы совпадут с истинными ответами (которые мы называем <em>исходными данными</em>). </p>
-<h3>Классификатор ближайшего Соседа</h3>
-<p>В качестве первого подхода мы разработаем так называемый <strong>классификатор ближайших соседей</strong>. Этот классификатор не имеет ничего общего со свёрточными нейронными сетями и очень редко используется на практике, но он позволит нам получить представление об основном подходе к задаче классификации изображений.   </p>
-<p><strong>Пример набора данных для классификации изображений: CIFAR-10</strong>. Одним из популярных наборов данных для классификации изображений является <a href="https://www.cs.toronto.edu/~kriz/cifar.html">набор данных CIFAR-10</a>. Этот набор данных состоит из 60 000 крошечных изображений высотой и шириной 32 пикселя. Каждое изображение относится к одному из 10 классов (например, <em>«самолет, автомобиль, птица и т. д.»</em>). Эти 60 000 изображений разделены на обучающую выборку из 50 000 изображений и тестовую выборку из 10 000 изображений. На изображении ниже вы можете увидеть 10 случайных примеров изображений из каждого из 10 классов:   </p>
+<p><strong>Конвейер классификации изображений</strong>.  Мы увидели, что задача классификации изображений состоит в том, чтобы взять массив пикселей изображения и присвоить ему метку. 
+Наш полный конвейер можно формализовать следующим образом:<br>
+- <strong>Входные данные</strong>: состоят из набора <strong><em>N</em></strong> изображений, каждое из которых помечено одним из <strong><em>K</em></strong> различных классов. 
+Эти данные называются <em>обучающей выборкой</em>.<br>
+- <strong>Обучение</strong>: наша задача использовать обучающую выборку, чтобы узнать, как выглядит каждый из классов. 
+Мы называем этот этап <em>обучением классификатора</em> или <em>обучением модели</em>.<br>
+- <strong>Оценка</strong>: в конце мы оцениваем качество классификатора. 
+Для этого нужно задать вопрос о том, какие метки предскажет классификатор для нового набора изображений, которые он никогда раньше не видел. 
+Затем мы сравниваем истинные метки этих изображений с теми, которые предсказал классификатор. 
+Интуитивно мы надеемся, что многие прогнозы совпадут с истинными ответами. 
+Данные, которые используются для оценки точности классификатора называются <em>тестовой выборкой</em>. </p>
+<h4>Классификатор ближайшего соседа</h4>
+<p>В качестве первого подхода мы используем так называемый <strong>классификатор ближайшего соседа</strong>. 
+Этот классификатор не имеет ничего общего со свёрточными нейронными сетями и очень редко используется на практике. 
+Однако он позволит нам получить представление о том, как решается задача классификации изображений.   </p>
+<p><strong>Пример набора данных для классификации изображений: CIFAR-10</strong>.<br>
+Одним из популярных наборов данных для классификации изображений является <a href="https://www.cs.toronto.edu/~kriz/cifar.html">набор данных CIFAR-10</a>. Этот набор данных состоит из 60 000 крошечных изображений высотой и шириной 32 пикселя. Каждое изображение относится к одному из 10 классов: самолет, автомобиль, птица и т. д. Эти 60 000 изображений разделены на обучающую выборку из 50 000 изображений и тестовую выборку из 10 000 изображений. 
+На изображении ниже вы можете увидеть 10 случайных примеров изображений для каждого класса.    </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/nn.jpg"></p>
-<p>Слева: примеры изображений из набора данных CIFAR-10. Справа: в первом столбце показаны несколько тестовых изображений, а рядом с каждым из них — 10 ближайших соседей из обучающей выборки по пиксельной разнице.   </p>
+<p>Слева: примеры изображений из набора данных CIFAR-10.<br>
+Справа: в первом столбце показаны несколько тестовых изображений.<br>
+Рядом с каждым изображением мы видим 10 наиболее похожих "картинок" из обучающей выборки. </p>
 <hr>
-<p>Предположим, что у нас есть обучающая выборка CIFAR-10 из 50 000 изображений (по 5000 изображений для каждой из 10 категорий), и мы хотим классифицировать оставшиеся 10 000 изображений. Классификатор ближайших соседей возьмёт тестовое изображение, сравнит его с каждым из обучающих изображений и предскажет категорию ближайшего обучающего изображения. На изображении выше и справа вы можете увидеть пример результата такой процедуры для 10 тестовых изображений. Обратите внимание, что только в 3 из 10 изображений являются элементами того же класса, в то время как в остальных 7 примерах возникает ошибка определения класса. Например, в 8-м ряду ближайшим обучающим изображением к голове лошади является красный автомобиль, предположительно из-за сильного чёрного фона. В результате это изображение лошади в данном случае будет ошибочно помечено как автомобиль. 
-Возможно, вы заметили, что мы не уточнили, как именно мы сравниваем два изображения, которые в данном случае представляют собой просто два блока размером 32 x 32 x 3. Один из самых простых способов — сравнивать изображения попиксельно и суммировать все различия. Другими словами, если у вас есть два изображения, представленные в виде векторов \(I_1\),\(I_2\), разумным выбором для их сравнения может быть <strong>расстояние L1</strong>:   </p>
+<p>Изначально, у нас есть обучающая выборка CIFAR-10 из 50 000 изображений (по 5000 изображений для каждой из 10 категорий). 
+Мы хотим классифицировать оставшиеся 10 000. Классификатор ближайших соседей работает следующим образом. Берется тестовое изображение и сравается с каждым изображением из обучающей выборки. Будем считать, что метка тестового изображения будет такой же, как и у самого похожего на него изображения.  </p>
+<p>На изображении выше и справа вы можете увидеть пример результата такой процедуры для 10 тестовых изображений. Обратите внимание, что только в 3 из 10 изображений являются элементами того же класса, в то время как в остальных 7 примерах возникает ошибка определения класса. Например, в 8-м ряду ближайшим обучающим изображением к голове лошади является красный автомобиль, предположительно из-за сильного чёрного фона. В результате этого, изображение лошади в данном случае будет ошибочно помечено как автомобиль. </p>
+<p>Мы не уточнили, как именно мы сравниваем два изображения. 
+Технически изображения представляют собой просто два блока (тензора) размером 32 x 32 x 3. 
+Один из самых простых способов — сравнивать изображения попиксельно и суммировать все разности. 
+Другими словами, если у вас есть два изображения, представленные в виде векторов $I_1$, $I_2$, разумным выбором для их сравнения может быть <strong>расстояние L1</strong>:   </p>
 <p>$$
 d_1 (I_1, I_2) = \sum_{p} \left| I^p_1 - I^p_2 \right|
 $$   </p>
-<p>Где сумма берется по всем пикселям. Вот как выглядит эта процедура:   </p>
+<p>Сумма берется по всем пикселям. 
+Вот как выглядит эта процедура:   </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/nneg.jpeg"></p>
-<p>Пример использования попиксельных различий для сравнения двух изображений с помощью расстояния <strong>\(L_1\)</strong> (в данном примере для одного цветового канала). Два изображения вычитаются поэлементно, а затем все различия суммируются до получения одного числа. Если два изображения идентичны, результат будет равен нулю. Но если изображения сильно отличаются, результат будет большим.   </p>
+<p>Пример использования попиксельных различий для сравнения двух изображений с помощью расстояния $L_1$ (в данном примере для одного цветового канала). 
+Два изображения вычитаются поэлементно, а затем все различия суммируются до получения одного числа. 
+Если два изображения идентичны, результат будет равен нулю. 
+Но если изображения сильно отличаются, результат будет большим.   </p>
 <hr>
 <p>Давайте также посмотрим, как можно реализовать классификатор в коде. Сначала загрузим данные CIFAR-10 в память в виде четырех массивов: обучающие данные/метки и тестовые данные/метки. В приведенном ниже коде <code>Xtr</code> хранятся все изображения из обучающей выборки  (объем 50 000 x 32 x 32 x 3), а соответствующий одномерный массив <code>Ytr</code> (длиной 50 000) содержит обучающие метки (от 0 до 9):   </p>
-<div class="code"><pre class="code literal-block"><span class="n">Xtr</span><span class="p">,</span><span class="w"> </span><span class="n">Ytr</span><span class="p">,</span><span class="w"> </span><span class="n">Xte</span><span class="p">,</span><span class="w"> </span><span class="n">Yte</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_CIFAR10</span><span class="p">(</span><span class="s1">'data/cifar10/'</span><span class="p">)</span><span class="w"> </span><span class="c1"># a magic function we provide</span>
+<div class="code"><pre class="code literal-block"><span class="n">Xtr</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">,</span> <span class="n">Xte</span><span class="p">,</span> <span class="n">Yte</span> <span class="o">=</span> <span class="n">load_CIFAR10</span><span class="p">(</span><span class="s1">'data/cifar10/'</span><span class="p">)</span> <span class="c1"># a magic function we provide</span>
 <span class="c1"># flatten out all images to be one-dimensional </span>
-<span class="n">Xtr_rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="c1"># Xtr_rows becomes 50000 x 3072</span>
-<span class="n">Xte_rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="c1"># Xte_rows becomes 10000 x 3072 </span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Xtr_rows becomes 50000 x 3072</span>
+<span class="n">Xte_rows</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Xte</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">32</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Xte_rows becomes 10000 x 3072 </span>
 </pre></div>
 
-<p>Теперь, когда все изображения вытянуты в ряд, вот как мы можем обучить и оценить классификатор:   </p>
-<div class="code"><pre class="code literal-block">nn = NearestNeighbor() # create a Nearest Neighbor classifier class
-nn.train(Xtr_rows, Ytr) # train the classifier on the training images and labels
-Yte_predict = nn.predict(Xte_rows) # predict labels on the test images
-<span class="gh">#</span> and now print the classification accuracy, which is the average number
-<span class="gh">#</span> of examples that are correctly predicted (i.e. label matches)
-print 'accuracy: %f' % ( np.mean(Yte_predict == Yte) )
+<p>Теперь, когда все изображения вытянуты в ряд, мы можем обучить и оценить классификатор:   </p>
+<div class="code"><pre class="code literal-block"><span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span> <span class="c1"># create a Nearest Neighbor classifier class</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span> <span class="c1"># train the classifier on the training images and labels</span>
+<span class="n">Yte_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xte_rows</span><span class="p">)</span> <span class="c1"># predict labels on the test images</span>
+<span class="c1"># and now print the classification accuracy, which is the average number</span>
+<span class="c1"># of examples that are correctly predicted (i.e. label matches)</span>
+<span class="nb">print</span> <span class="s1">'accuracy: </span><span class="si">%f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yte_predict</span> <span class="o">==</span> <span class="n">Yte</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
-<p>Обратите внимание, что в качестве критерия оценки обычно используется <strong>точность</strong>, которая измеряет долю правильных прогнозов. Обратите внимание, что все классификаторы, которые мы создадим, удовлетворяют этому общему API: у них есть <code>train(X,y)</code> функция, которая принимает данные и метки для обучения. Внутри класса должна быть построена своего рода модель меток и того, как их можно предсказать на основе данных и <code>predict(X)</code> функция, которая принимает новые данные и предсказывает метки. Конечно, мы не стали вдаваться в подробности — в сам классификатор. Вот реализация простого классификатора ближайших соседей с расстоянием <strong>\(L_1\)</strong>, которая соответствует этому шаблону:   </p>
+<p>Обратите внимание, что в качестве критерия оценки обычно используется метрика <strong>accuracy</strong>, 
+Эта метрика измеряет долю правильных прогнозов в тестовой выборке. 
+Обратите внимание, что все классификаторы, которые мы создадим, имеют общий интерфейс (API). 
+У них есть метод <code>train(X,y)</code>, который принимает на вход данные и метки для обучения. 
+Внутри класса должна быть построена своего рода модель, которая предсказывает метки на основе данных. 
+Метод <code>predict(X)</code> принимает новые данные и предсказывает метки. </p>
+<p>Пример реализации простого классификатора ближайшего соседа с расстоянием $L_1$, который реализует интерфейс классификатора:   </p>
 <div class="code"><pre class="code literal-block"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">NearestNeighbor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="k">pass</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="sd">""" X is N x D where each row is an example. Y is 1-dimension of size N """</span>
-<span class="c1"># the nearest neighbor classifier simply remembers all the training data</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" X is N x D where each row is an example. Y is 1-dimension of size N</span>
+<span class="sd">        The nearest neighbor classifier simply remembers all the training data """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span> <span class="o">=</span> <span class="n">y</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="sd">""" X is N x D where each row is an example we wish to predict label for """</span>
-<span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="kp">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="c1"># lets make sure that the output type matches the input type</span>
-<span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="kp">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="kp">dtype</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">""" X is N x D where each row is an example we wish to predict label for """</span>
+        <span class="n">num_test</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># lets make sure that the output type matches the input type</span>
+        <span class="n">Ypred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_test</span><span class="p">,</span> <span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 
-<span class="c1"># loop over all test rows</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
-<span class="c1"># find the nearest training image to the i'th test image</span>
-<span class="c1"># using the L1 distance (sum of absolute value differences)</span>
-<span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="kp">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c1"># get the index with smallest distance</span>
-<span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c1"># predict the label of the nearest example</span>
+        <span class="c1"># loop over all test rows</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test</span><span class="p">):</span>
+        <span class="c1"># find the nearest training image to the i'th test image</span>
+        <span class="c1"># using the L1 distance (sum of absolute value differences)</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">min_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="c1"># get the index with smallest distance</span>
+        <span class="n">Ypred</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ytr</span><span class="p">[</span><span class="n">min_index</span><span class="p">]</span> <span class="c1"># predict the label of the nearest example</span>
 
-<span class="k">return</span> <span class="n">Ypred</span>
+        <span class="k">return</span> <span class="n">Ypred</span>
 </pre></div>
 
-<p>Если вы запустите этот код, то увидите, что этот классификатор достигает точности <strong>38,6%</strong> только на CIFAR-10. Это более впечатляющий результат, чем случайное угадывание (которое дало бы <strong>10%</strong> точности, так как существует 10 классов), но он далёк от результатов человека (которые <a href="https://karpathy.github.io/2011/04/27/manually-classifying-cifar10/">оцениваются примерно в 94%</a>) или от результатов современных свёрточных нейронных сетей, которые достигают примерно 95%, соответствуя точности человека (<a href="https://www.kaggle.com/c/cifar-10/leaderboard">см.  таблицу лидеров</a> недавнего соревнования Kaggle по CIFAR-10).  </p>
-<p><strong>Выбор расстояния</strong>. Существует множество других способов вычисления, напромер на основании расстояний между векторами. Одним из столь распространённых вариантов может быть использование <strong>расстояния \(L_2\)</strong>, которое имеет геометрическую интерпретацию вычисления евклидова расстояния между двумя векторами. Расстояние имеет вид:  </p>
+<p>Если вы запустите этот код, то увидите, что классификатор достигает точности <strong>38,6%</strong> на тестовой выборке CIFAR-10. 
+Это более впечатляющий результат, чем случайное угадывание (которое дало бы <strong>10%</strong> точности для 10 классов). 
+Но он далёк от результатов человека, которые <a href="https://karpathy.github.io/2011/04/27/manually-classifying-cifar10/">оцениваются примерно в 94%</a>.  Еще лучший результат можно получить с помощью свёрточных нейронных сетей, которые достигают примерно 95% (см. таблицу соревнования <a href="https://www.kaggle.com/c/cifar-10/leaderboard">Kaggle</a> по CIFAR-10).  </p>
+<p><strong>Выбор расстояния</strong>.  Существует множество других способов вычисления расстояний между векторами. Одним из распространённых вариантов может быть использование <strong>расстояния $L_2$</strong>, которое имеет геометрическую интерпретацию вычисления евклидова расстояния между двумя векторами. 
+Формула для вычисления этого расстояния имеет вид:  </p>
 <p>$$
 d_2 (I_1, I_2) = \sqrt{\sum_{p} \left( I^p_1 - I^p_2 \right)^2}
 $$  </p>
-<p>Другими словами, мы вычисляем разницу по пикселям, как и раньше, но на этот раз возводим их в квадрат, складываем и, наконец, извлекаем квадратный корень. В numpy, используя приведенный выше код, нам нужно заменить только одну строку. Строка, которая вычисляет расстояния:   </p>
-<div class="code"><pre class="code literal-block">distances = np.sqrt(np.sum(np.square(self.Xtr - X[i,:]), axis = 1))
+<p>Другими словами, мы вычисляем разницу по пикселям, как и раньше, но на этот раз возводим их в квадрат, складываем и, наконец, извлекаем квадратный корень. 
+Используя приведенный выше код с numpy, нам нужно заменить только одну строку:   </p>
+<div class="code"><pre class="code literal-block"><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xtr</span> <span class="o">-</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:]),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
 </pre></div>
 
-<p>Обратите внимание, что происходит включение <code>np.sqrt</code> вызова выше, но в практическом применении метода ближайшего соседа мы могли бы не использовать операцию извлечения квадратного корня, потому что квадратный корень является <em>монотонной функцией</em>. То есть он масштабирует абсолютные значения расстояний, но сохраняет порядок, поэтому ближайшие соседи с ним и без него идентичны. Если бы вы применили классификатор ближайшего соседа к CIFAR-10 с этим расстоянием, вы бы получили <strong>35,4%</strong> точности (немного ниже, чем результат с расстоянием <strong>\(L_1\)</strong>.   </p>
-<p><strong>\(L_1\) против \(L_2\)</strong>. Интересно рассмотреть различия между этими двумя метриками. В частности, расстояние <strong>\(L_2\)</strong> гораздо более строгое, чем расстояние <strong>\(L_1\)</strong>, когда речь идёт о различиях между двумя векторами. То есть расстояние <strong>\(L_2\)</strong> предпочитает множество небольших расхождений одному большому. Расстояния <strong>\(L_1\)</strong> и  <strong>\(L_2\)</strong> (или, что эквивалентно, нормы  <strong>\(L_1\) \(L_2\)</strong> различий между парой изображений) являются наиболее часто используемыми частными случаями <a href="https://planetmath.org/vectorpnorm">p-нормы</a>.   </p>
-<h3>Классификатор k - Ближайшего соседа</h3>
-<p>Возможно, вы заметили, что странно использовать только метку ближайшего изображения, когда мы хотим сделать прогноз. Действительно, почти всегда можно добиться лучшего результата, используя так называемый <strong>классификатор k-ближайших соседей</strong>. Идея очень проста: вместо того, чтобы искать одно ближайшее изображение в обучающем наборе, мы найдём <strong>k</strong> ближайших изображений и заставим их "проголосовать" за метку тестового изображения. В частности, когда <em>k = 1</em>, мы получаем классификатор ближайших соседей. Интуитивно понятно, что более высокие значения <strong>k</strong> оказывают сглаживающий эффект, который делает классификатор более устойчивым к ошибкам:   </p>
+<p>Обратите внимание на вычисление корня в функции <code>np.sqrt</code>. 
+В практической реализации метода ближайшего соседа мы могли бы не использовать операцию извлечения квадратного корня, потому что он является <em>монотонной функцией</em>. 
+То есть он масштабирует абсолютные значения расстояний, но сохраняет порядок. 
+Поэтому с ним или без него, ближайшие соседи будут идентичны. 
+Однако если применить классификатор ближайшего соседа к CIFAR-10 с $L_2$ расстоянием, получится всего <strong>35,4%</strong> точности. 
+Это немного ниже, чем результат с расстоянием <strong>$L_1$</strong>.   </p>
+<p><strong>Расстояние $L_1$ против $L_2$ .</strong>  Различие между этими двумя метриками в том, что расстояние <strong>$L_2$</strong> более строгое, чем расстояние <strong>$L_1$</strong>. Это значит, что если имеется множество небольших расхождений и всего одно большое, расстояние $L_2$ будет больше, чем $L_1$. Понятия расстояний <strong>$L_1$</strong> и  <strong>$L_2$</strong>  эквивалентно нормам, которые являются частными случаями <a href="https://planetmath.org/vectorpnorm">p-нормы</a>.   </p>
+<h4>Классификатор k - ближайших соседей</h4>
+<p>Когда мы хотим сделать более точный прогноз, нам не обязательно использовать только одну метку ближайшего изображения. Действительно, почти всегда можно добиться лучшего результата, используя так называемый <strong>классификатор k-ближайших соседей</strong>. 
+Идея очень проста: вместо того, чтобы искать одно ближайшее изображение в обучающем наборе, мы найдём <strong>k</strong> ближайших изображений. 
+Дальше мы сравним их и устроим "голосование" за метку тестового изображения. 
+В частности, когда <em>k = 1</em>, мы получаем классификатор ближайшего соседа. 
+Интуитивно понятно, что чем больше значений <strong>k</strong> мы возьмем, тем больше будет сглаживающий эффект. 
+Это первый пример гиперпараметра, который делает классификатор более устойчивым к ошибкам:   </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/knn.jpeg"></p>
-<p>Пример разницы между классификатором «ближайший сосед» и классификатором «ближайшие 5 соседей» с использованием двумерных точек и 3 классов (красный, синий, зелёный). Цветные области показывают <strong>границы решений</strong>, создаваемые классификатором с использованием расстояния  \(L_2\). Белые области показывают точки, которые классифицируются неоднозначно (т. е. голоса за классы равны как минимум для двух классов). Обратите внимание, что в случае классификатора NN ошибки (например, зелёная точка в середине облака синих точек) создают небольшие островки вероятных неверных прогнозов, в то время как классификатор 5-NN сглаживает эти неровности, что, вероятно, приводит к лучшему <strong>обобщению</strong> на тестовых данных (не показано). Также обратите внимание, что серые области на изображении 5-NN вызваны равенством голосов ближайших соседей (например, 2 соседа красные, следующие два соседа синие, последний сосед зелёный). </p>
+<p>Пример разницы между классификатором «один ближайший сосед» и классификатором «ближайшие 5 соседей» с использованием двумерных точек и 3 классов (красный, синий, зелёный). 
+Цветные области показывают <strong>границы решений</strong>, создаваемые классификатором с использованием расстояния  $L_2$. 
+Белые области показывают точки, которые классифицируются неоднозначно - голоса за классы равны как минимум для двух классов. 
+Обратите внимание, что в случае классификатора 1-соседа ошибки создают небольшие островки вероятных неверных прогнозов. 
+Например, зелёная точка в середине облака синих точек. 
+В это же время классификатор 5-соседей сглаживает эти неровности, что, приводит к лучшему <strong>обобщению</strong> на тестовых данных. 
+Также обратите внимание, что серые области на изображении 5-соседей вызваны равенством голосов ближайших соседей. 
+Например, 2 соседа красные, следующие два соседа синие, последний сосед зелёный. </p>
 <hr>
-<p>На практике вы почти всегда будете использовать метод k-ближайших соседей. Но какое значение k следует использовать? Мы рассмотрим эту проблему далее.   </p>
-<h3>Наборы проверочных данных для настройки гиперпараметров</h3>
-<p>Классификатор k-ближайших соседей требует настройки параметра <em>k</em>. Но какое число подходит лучше всего? Кроме того, мы увидели, что существует множество различных функций расстояния, которые мы могли бы использовать: норма  <strong>\(L_1\)</strong>, норма <strong>\(L_2\)</strong>, а также множество других вариантов, которые мы даже не рассматривали (например, скалярные произведения). Эти варианты называются <strong>гиперпараметрами</strong>, и они очень часто используются при разработке многих алгоритмов машинного обучения, которые обучаются на данных. Часто не очевидно, какие значения/настройки следует выбрать.   </p>
-<p>У вас может возникнуть соблазн предложить попробовать множество различных значений и посмотреть, что работает лучше всего. Это хорошая идея, и именно это мы и сделаем, но делать это нужно очень осторожно. В частности, <strong>мы не можем использовать тестовый набор данных для настройки гиперпараметров</strong>. Всякий раз, когда вы разрабатываете алгоритмы машинного обучения, вы должны относиться к тестовому набору данных как к очень ценному ресурсу, к которому, в идеале, не следует прикасаться до самого конца. В противном случае существует реальная опасность того, что вы настроите гиперпараметры так, чтобы они хорошо работали на тестовом наборе данных, но при развёртывании модели показывали значительное снижение производительности. На практике можно сказать, что вы <strong>переобучились</strong> на тестовом наборе данных. С другой стороны, если вы настраиваете гиперпараметры на тестовом наборе данных, вы фактически используете тестовый набор данных в качестве обучающего, и поэтому производительность, которую вы достигаете на нём, будет слишком оптимистичной по сравнению с тем, что вы можете наблюдать при развёртывании модели. Но если вы используете тестовый набор данных только один раз в конце, он остаётся хорошим показателем для измерения <strong>обобщение</strong> вашего классификатора (мы подробнее обсудим обобщение позже на занятии).   </p>
-<blockquote>
-<p>Оценивайте тестовый набор только один раз, в самом конце.</p>
-</blockquote>
-<p>К счастью, существует правильный способ настройки гиперпараметров, и он никак не затрагивает тестовый набор данных. Идея состоит в том, чтобы разделить наш обучающий набор данных на две части: немного меньший обучающий набор данных и то, что мы называем <strong>тестирующим набором данных</strong>. Используя в качестве примера CIFAR-10, мы могли бы, например, использовать 49 000 обучающих изображений для обучения и оставить 1000 для тестирования. Этот набор данных для проверки, по сути, используется в качестве <em>"поддельного"</em> тестового набора для настройки гиперпараметров.   </p>
+<p>На практике почти всегда используется метод k-ближайших соседей. 
+Но какое значение k следует использовать? 
+Давайте рассмотрим этот вопрос поподробнее.   </p>
+<h4>Наборы данных и настройки гиперпараметров</h4>
+<p>Классификатор k-ближайших соседей требует настройки параметра <em>k</em>. 
+Интуитивно можно предположить, что существует число, которое подходит лучше всего. 
+Кроме того, мы увидели, что существует множество различных функций расстояния, которые мы могли бы использовать: норма  <strong>$L_1$</strong>, норма <strong>$L_2$</strong>, а также множество других вариантов, которые мы даже не рассматривали (например, скалярные произведения). 
+Эти варианты называются <strong>гиперпараметрами</strong>, и они очень часто используются при разработке многих алгоритмов машинного обучения, которые обучаются на данных. 
+Часто не очевидно, какие значения/настройки следует выбрать.   </p>
+<p>У вас может возникнуть соблазн предложить попробовать множество различных значений и посмотреть, что работает лучше всего. 
+Это хорошая идея, и именно это мы и сделаем, но делать это нужно очень осторожно. 
+В частности, <strong>мы не можем использовать тестовый набор данных для настройки гиперпараметров</strong>. 
+Всякий раз, когда вы разрабатываете алгоритмы машинного обучения, вы должны относиться к тестовому набору данных как к очень ценному ресурсу, к которому, в идеале, не следует прикасаться до самого конца. 
+В противном случае существует реальная опасность того, что вы настроите гиперпараметры так, чтобы они хорошо работали на тестовом наборе данных, но при развёртывании модели показывали значительное снижение производительности. 
+На практике можно сказать, что произошло <strong>переобучение</strong> на тестовом наборе данных. 
+С другой стороны, если вы настраиваете гиперпараметры на тестовом наборе данных, вы фактически используете тестовый набор данных в качестве обучающего. 
+По этой причине точность, которую вы достигаете на нём, будет слишком оптимистичной по сравнению с тем, что будет наблюдаться на реальных данных при развёртывании модели. 
+Но если вы используете тестовый набор данных только один раз в конце, он остаётся хорошим показателем для того, чтобы измерить степень <strong>обобщения</strong> вашего классификатора.   </p>
+<p><strong>Итого: Оценивайте модель на тестовой выборке только один раз, в самом конце!</strong></p>
+<p>Существует правильный способ настройки гиперпараметров, который никак не затрагивает тестовый набор данных. 
+Идея состоит в том, чтобы разделить обучающую выборку на две части: немного меньший обучающий набор и то, что называется <strong>выборкой для валидации</strong>. 
+Используя в качестве примера CIFAR-10, мы могли бы использовать 49 000 обучающих изображений для обучения и оставить 1000 для валидации. 
+Этот набор данных по сути используется для настройки гиперпараметров.   </p>
 <p>Вот как это может выглядеть в случае CIFAR-10:   </p>
-<div class="code"><pre class="code literal-block"><span class="gh">#</span> assume we have Xtr_rows, Ytr, Xte_rows, Yte as before
-<span class="gh">#</span> recall Xtr_rows is 50,000 x 3072 matrix
-Xval_rows = Xtr_rows[:1000, :] # take first 1000 for validation
-Yval = Ytr[:1000]
-Xtr_rows = Xtr_rows[1000:, :] # keep last 49,000 for train
-Ytr = Ytr[1000:]
+<div class="code"><pre class="code literal-block"><span class="c1"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span class="c1"># recall Xtr_rows is 50,000 x 3072 matrix</span>
+<span class="n">Xval_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[:</span><span class="mi">1000</span><span class="p">,</span> <span class="p">:]</span> <span class="c1"># take first 1000 for validation</span>
+<span class="n">Yval</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">Xtr_rows</span> <span class="o">=</span> <span class="n">Xtr_rows</span><span class="p">[</span><span class="mi">1000</span><span class="p">:,</span> <span class="p">:]</span> <span class="c1"># keep last 49,000 for train</span>
+<span class="n">Ytr</span> <span class="o">=</span> <span class="n">Ytr</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
 
-<span class="gh">#</span> find hyperparameters that work best on the validation set
-validation_accuracies = []
-for k in [1, 3, 5, 10, 20, 50, 100]:
+<span class="c1"># find hyperparameters that work best on the validation set</span>
+<span class="n">validation_accuracies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]:</span>
 
-<span class="gh">#</span> use a particular value of k and evaluation on validation data
-nn = NearestNeighbor()
-nn.train(Xtr_rows, Ytr)
-<span class="gh">#</span> here we assume a modified NearestNeighbor class that can take a k as input
-Yval_predict = nn.predict(Xval_rows, k = k)
-acc = np.mean(Yval_predict == Yval)
-print 'accuracy: %f' % (acc,)
+<span class="c1"># use a particular value of k and evaluation on validation data</span>
+<span class="n">nn</span> <span class="o">=</span> <span class="n">NearestNeighbor</span><span class="p">()</span>
+<span class="n">nn</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">Xtr_rows</span><span class="p">,</span> <span class="n">Ytr</span><span class="p">)</span>
+<span class="c1"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+<span class="n">Yval_predict</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xval_rows</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Yval_predict</span> <span class="o">==</span> <span class="n">Yval</span><span class="p">)</span>
+<span class="nb">print</span> <span class="s1">'accuracy: </span><span class="si">%f</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">acc</span><span class="p">,)</span>
 
-<span class="gh">#</span> keep track of what works on the validation set
-validation_accuracies.append((k, acc))
+<span class="c1"># keep track of what works on the validation set</span>
+<span class="n">validation_accuracies</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">k</span><span class="p">,</span> <span class="n">acc</span><span class="p">))</span>
 </pre></div>
 
-<p>По завершении этой процедуры мы могли бы построить график, показывающий, какие значения k работают лучше всего. Затем мы бы остановились на этом значении и провели оценку на реальном тестовом наборе данных.   </p>
-<blockquote>
-<p>Разделите обучающую выборку на обучающую и проверочную. Используйте проверочную выборку для настройки всех гиперпараметров. В конце выполните один запуск на тестовой выборке и оцените производительность.</p>
-</blockquote>
-<p><strong>Перекрестная проверка</strong>. В случаях, когда размер обучающих данных (и, следовательно, проверочных данных) может быть небольшим, люди иногда используют более сложный метод настройки гиперпараметров, называемый <strong>перекрестной проверкой</strong>. Если вернуться к нашему предыдущему примеру, то идея заключается в том, что вместо произвольного выбора первых 1000 точек данных в качестве проверочного набора, а остальных — в качестве обучающего, можно получить более точную и менее зашумлённую оценку того, насколько хорошо работает определённое значение <strong>k</strong>, перебирая различные проверочные наборы и усредняя результаты по ним. Например, при 5-кратной перекрёстной проверке мы разделили бы обучающие данные на 5 равных частей, использовали 4 из них для обучения, а 1 — для проверки. Затем мы бы определили, какая из выборок является контрольной, оценили бы производительность и, наконец, усреднили бы производительность по разным выборкам.   </p>
+<p>По завершении этой процедуры построим график, который показывает, какие значения k работают лучше всего. 
+Затем мы остановимся на этом значении и проведем оценку на реальном тестовом наборе данных.   </p>
+<p>Разделите обучающую выборку на обучающую и валидационную. 
+Используйте проверочную выборку для настройки всех гиперпараметров. 
+В конце выполните один запуск на тестовой выборке и оцените производительность.</p>
+<p><strong>Кросс-валидация</strong>. В случаях, когда размер обучающих данных (и, следовательно, проверочных данных) может быть небольшим, люди иногда используют более сложный метод настройки гиперпараметров, называемый <strong>кросс-валидацией</strong>.</p>
+<p>Если вернуться к нашему предыдущему примеру, то идея заключается в том, что вместо произвольного выбора первых 1000 точек данных в качестве проверочного набора, а остальных — в качестве обучающего, можно получить более точную и менее зашумлённую оценку того, насколько хорошо работает определённое значение <strong>k</strong>, перебирая различные проверочные наборы и усредняя результаты по ним. Например, при 5-кратной перекрёстной проверке мы разделили бы обучающие данные на 5 равных частей, использовали 4 из них для обучения, а 1 — для проверки. Затем мы бы определили, какая из выборок является контрольной, оценили бы производительность и, наконец, усреднили бы производительность по разным выборкам.   </p>
 <hr>
-<p><img alt="" src="https://cs231n.github.io/assets/cvplot.png"></p>
-<p>Пример 5-кратного выполнения перекрестной проверки для параметра <strong>k</strong>. Для каждого значения <strong>k</strong> мы тренируемся на 4 сгибах и оцениваем на 5-м. Следовательно, для каждого k мы получаем 5 значений точности для проверочного сгиба (точность отражается на оси y, и каждый результат равен точке). Линия тренда проводится через среднее значение результатов для каждого <strong>k</strong>, а столбики ошибок указывают на стандартное отклонение. Обратите внимание, что в данном конкретном случае перекрёстная проверка показывает, что значение около <strong>k = 7</strong> лучше всего подходит для этого конкретного набора данных (соответствует пику на графике). Если бы мы использовали более 5 циклов, то могли бы ожидать более плавную (то есть менее шумную) кривую.   </p>
+<p><img alt="" src="https://cs231n.github.io/assets/cvplot.png"><br>
+Пример 5-кратного выполнения перекрестной проверки для параметра <strong>k</strong>. Для каждого значения <strong>k</strong> мы тренируемся на 4 сгибах и оцениваем на 5-м. Следовательно, для каждого k мы получаем 5 значений точности для проверочного сгиба (точность отражается на оси y, и каждый результат равен точке). Линия тренда проводится через среднее значение результатов для каждого <strong>k</strong>, а столбики ошибок указывают на стандартное отклонение. Обратите внимание, что в данном конкретном случае перекрёстная проверка показывает, что значение около <strong>k = 7</strong> лучше всего подходит для этого конкретного набора данных (соответствует пику на графике). Если бы мы использовали более 5 циклов, то могли бы ожидать более плавную (то есть менее шумную) кривую.   </p>
 <hr>
-<p><strong>На практике</strong>. На практике люди предпочитают избегать перекрёстной проверки в пользу одного проверочного набора данных, поскольку перекрёстная проверка может быть ресурсозатратной. Обычно люди используют от <strong>50%</strong> до <strong>90%</strong> обучающих данных для обучения и остальную часть для проверки. Однако это зависит от множества факторов: например, если количество гиперпараметров велико, вы можете предпочесть использовать более крупные проверочные наборы данных. Если количество примеров в проверочном наборе невелико (возможно, всего несколько сотен или около того), безопаснее использовать перекрёстную проверку. На практике обычно используется 3-кратная, 5-кратная или 10-кратная перекрёстная проверка.   </p>
+<p>На практике люди предпочитают избегать перекрёстной проверки в пользу одного проверочного набора данных, поскольку перекрёстная проверка может быть ресурсозатратной. Обычно люди используют от <strong>50%</strong> до <strong>90%</strong> обучающих данных для обучения и остальную часть для проверки. Однако это зависит от множества факторов: например, если количество гиперпараметров велико, вы можете предпочесть использовать более крупные проверочные наборы данных. Если количество примеров в проверочном наборе невелико (возможно, всего несколько сотен или около того), безопаснее использовать перекрёстную проверку. На практике обычно используется 3-кратная, 5-кратная или 10-кратная перекрёстная проверка.     </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/crossval.jpeg"></p>
-<p>Обычное разделение данных. Выделяются обучающий и тестовый наборы данных. Обучающий набор данных делится на части (например, здесь их 5). Части 1-4 становятся обучающим набором данных. Одна часть (например, часть 5, выделенная здесь жёлтым цветом) называется проверочной частью и используется для настройки гиперпараметров. Перекрёстная проверка идёт дальше и позволяет выбрать, какая часть будет проверочной, отдельно от частей 1-5. Это называется 5-кратной перекрёстной проверкой. В самом конце, когда модель обучена и определены все наилучшие гиперпараметры, модель один раз оценивается на тестовых данных (красный цвет).   </p>
+<p>Обычное разделение данных. Выделяются обучающий и тестовый наборы данных. Обучающий набор данных делится на части (например, здесь их 5). Части 1-4 становятся обучающим набором данных. Одна часть (например, часть 5, выделенная здесь жёлтым цветом) называется проверочной частью и используется для настройки гиперпараметров. Перекрёстная проверка идёт дальше и позволяет выбрать, какая часть будет проверочной, отдельно от частей 1-5. Это называется 5-кратной перекрёстной проверкой. В самом конце, когда модель обучена и определены все наилучшие гиперпараметры, модель один раз оценивается на тестовых данных (красный цвет). </p>
 <hr>
 <p><strong>Плюсы и минусы классификатора ближайших соседей.</strong>   </p>
-<p>Стоит рассмотреть некоторые преимущества и недостатки классификатора «ближайший сосед». Очевидно, что одним из преимуществ является простота реализации и понимания. Кроме того, обучение классификатора не занимает много времени, поскольку всё, что требуется, — это хранить и, возможно, индексировать обучающие данные. Однако мы платим за это вычислительными затратами во время тестирования, поскольку для классификации тестового примера требуется сравнение с каждым обучающим примером. Это неправильно, поскольку на практике мы часто уделяем больше внимания эффективности во время тестирования, чем во время обучения. На самом деле, объемные нейронные сети, которые мы будем разрабатывать в этом классе, смещают этот компромисс в другую крайность: их обучение обходится очень дорого, но после завершения обучения классифицировать новый тестовый пример очень дёшево. Такой режим работы гораздо более желателен на практике.   </p>
-<p>Кроме того, вычислительная сложность классификатора «ближайший сосед» является активной областью исследований, и существует несколько алгоритмов и библиотек <strong>приблизительного поиска ближайшего соседа</strong> (<em>ANN</em>), которые могут ускорить поиск ближайшего соседа в наборе данных (например, <a href="https://github.com/mariusmuja/flann">FLANN</a> ). Эти алгоритмы позволяют найти компромисс между точностью поиска ближайшего соседа и его пространственной/временной сложностью во время поиска и обычно полагаются на этап предварительной обработки/индексирования, который включает в себя построение KD-дерева или запуск алгоритма k-средних.  </p>
-<p>В некоторых случаях классификатор ближайших соседей может быть хорошим выбором (особенно если данные имеют низкую размерность), но он редко подходит для использования в практических задачах классификации изображений. Одна из проблем заключается в том, что изображения — это объекты с высокой размерностью (то есть они часто содержат много пикселей), а расстояния в многомерных пространствах могут быть очень нелогичными. На изображении ниже показано, что сходство на основе пикселей, которое мы описали выше, сильно отличается от сходства с точки зрения восприятия:   </p>
+<p>Стоит рассмотреть некоторые преимущества и недостатки классификатора «ближайший сосед». 
+Очевидно, что одним из преимуществ является простота реализации и понимания. 
+Кроме того, обучение классификатора не занимает много времени, поскольку всё, что требуется, — это хранить и, возможно, индексировать обучающие данные. 
+Однако мы платим за это вычислительными затратами во время тестирования, поскольку для классификации тестового примера требуется сравнение с каждым обучающим примером. 
+Это неправильно, поскольку на практике мы часто уделяем больше внимания эффективности во время тестирования, чем во время обучения. 
+На самом деле, объемные нейронные сети, которые мы будем разрабатывать в этом классе, смещают этот компромисс в другую крайность: их обучение обходится очень дорого, но после завершения обучения классифицировать новый тестовый пример очень дёшево. 
+Такой режим работы гораздо более желателен на практике.   </p>
+<p>Кроме того, вычислительная сложность классификатора «ближайший сосед» является активной областью исследований, и существует несколько алгоритмов и библиотек <strong>приблизительного поиска ближайшего соседа</strong> (<em>ANN</em>), которые могут ускорить поиск ближайшего соседа в наборе данных (например, <a href="https://github.com/mariusmuja/flann">FLANN</a> ). 
+Эти алгоритмы позволяют найти компромисс между точностью поиска ближайшего соседа и его пространственной/временной сложностью во время поиска и обычно полагаются на этап предварительной обработки/индексирования, который включает в себя построение KD-дерева или запуск алгоритма k-средних.  </p>
+<p>В некоторых случаях классификатор ближайших соседей может быть хорошим выбором (особенно если данные имеют низкую размерность), но он редко подходит для использования в практических задачах классификации изображений. 
+Одна из проблем заключается в том, что изображения — это объекты с высокой размерностью (то есть они часто содержат много пикселей), а расстояния в многомерных пространствах могут быть очень нелогичными. 
+На изображении ниже показано, что сходство на основе пикселей, которое мы описали выше, сильно отличается от сходства с точки зрения восприятия:   </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/samenorm.png"></p>
-<p>Расстояния на основе пикселей в многомерных данных (и особенно в изображениях) могут быть очень неинтуитивными. Исходное изображение (слева) и три других изображения рядом с ним, которые находятся на одинаковом расстоянии от него на основе пиксельного расстояния <strong>\(L_2\)</strong>. Очевидно, что пиксельное расстояние никак не соответствует перцептивному или семантическому сходству.   </p>
+<p>Расстояния на основе пикселей в многомерных данных (и особенно в изображениях) могут быть очень неинтуитивными. 
+Исходное изображение (слева) и три других изображения рядом с ним, которые находятся на одинаковом расстоянии от него на основе пиксельного расстояния <strong>$L_2$</strong>. 
+Очевидно, что пиксельное расстояние никак не соответствует перцептивному или семантическому сходству. </p>
 <hr>
-<p>Вот ещё одна визуализация, которая убедит вас в том, что использование разницы в пикселях для сравнения изображений недостаточно. Мы можем использовать метод визуализации под названием <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a>, чтобы взять изображения CIFAR-10 и разместить их в двух измерениях так, чтобы их  парные (локальные) расстояния сохранялись наилучшим образом. В этой визуализации изображения, которые показаны рядом, считаются очень близкими в соответствии с расстоянием <strong>\(L_2\)</strong> по пикселям, которое мы разработали выше:   </p>
+<p>Вот ещё одна визуализация, которая убедит вас в том, что использование разницы в пикселях для сравнения изображений недостаточно. Мы можем использовать метод визуализации под названием <a href="https://lvdmaaten.github.io/tsne/">t-SNE</a>, чтобы взять изображения CIFAR-10 и разместить их в двух измерениях так, чтобы их  парные (локальные) расстояния сохранялись наилучшим образом. В этой визуализации изображения, которые показаны рядом, считаются очень близкими в соответствии с расстоянием <strong>$L_2$</strong> по пикселям, которое мы разработали выше:    </p>
 <hr>
 <p><img alt="" src="https://cs231n.github.io/assets/pixels_embed_cifar10.jpg"></p>
-<p>Изображения CIFAR-10, размещённые в двух измерениях с помощью <em>t-SNE</em>. Изображения, расположенные рядом на этом изображении, считаются близкими на основе пиксельного расстояния <strong>\(L_2\)</strong>. Обратите внимание на сильное влияние фона, а не семантических различий между классами. Нажмите <a href="https://cs231n.github.io/assets/pixels_embed_cifar10_big.jpg">здесь</a>, чтобы увидеть увеличенную версию этой визуализации.   </p>
+<p>Изображения CIFAR-10, размещённые в двух измерениях с помощью <em>t-SNE</em>. Изображения, расположенные рядом на этом изображении, считаются близкими на основе пиксельного расстояния <strong>$L_2$</strong>. 
+Обратите внимание на сильное влияние фона, а не семантических различий между классами. 
+Нажмите <a href="https://cs231n.github.io/assets/pixels_embed_cifar10_big.jpg">здесь</a>, чтобы увидеть увеличенную версию этой визуализации. </p>
 <hr>
 <p>В частности, обратите внимание, что изображения, расположенные друг рядом с другом, в большей степени зависят от общего цветового распределения изображений или типа фона, а не от их семантической идентичности. Например, собаку можно увидеть рядом с лягушкой, потому что они обе находятся на белом фоне. В идеале мы хотели бы, чтобы изображения всех 10 классов образовывали собственные кластеры, чтобы изображения одного класса находились рядом друг с другом независимо от нерелевантных характеристик и вариаций (например, фона). Однако, чтобы добиться этого, нам придётся выйти за рамки необработанных пикселей.   </p>
-<h2>Краткая сводка</h2>
+<h4>Применение kNN на практике</h4>
 <p>Подводя итог: 
 - Мы рассмотрели задачу <strong>классификации изображений</strong>, в которой нам даётся набор изображений, каждое из которых помечено одной категорией. Затем нас просят предсказать эти категории для нового набора тестовых изображений и оценить точность прогнозов.
 - Мы представили простой классификатор под названием <em>«классификатор ближайших соседей»</em>.  Мы увидели, что существует множество гиперпараметров (например, значение k или тип расстояния, используемого для сравнения примеров), связанных с этим классификатором, и что не существует очевидного способа их выбора.
@@ -279,27 +359,66 @@ validation_accuracies.append((k, acc))
 - Если вас беспокоит нехватка обучающих данных, мы обсудили процедуру под названием <strong>перекрёстная проверка</strong>, которая может помочь уменьшить погрешность при оценке наиболее эффективных гиперпараметров.
 - Как только мы находим оптимальные гиперпараметры, мы фиксируем их и проводим одну <strong>оценку</strong> на реальном тестовом наборе данных.
 - Мы увидели, что метод ближайшего соседа может обеспечить нам точность около <strong>40%</strong> на CIFAR-10. Он прост в реализации, но требует хранения всего обучающего набора данных, и его сложно оценивать на тестовых изображениях.
-- В итоге мы увидели, что использование расстояний <strong>\(L_1\)</strong> или <strong>\(L_2\</strong>) по необработанным значениям пикселей нецелесообразно, поскольку эти расстояния сильнее коррелируют с фоном и цветовыми распределениями изображений, чем с их семантическим содержанием.   </p>
-<p>На следующих лекциях мы приступим к решению этих задач и в конечном итоге придём к решениям, которые обеспечат точность <strong>90%</strong>, позволят полностью отказаться от обучающего набора данных после завершения обучения и позволят оценивать тестовые изображения менее чем за миллисекунду.   </p>
-<h3>Краткое описание: Применение kNN на практике</h3>
-<p>Если вы хотите применить <em>kNN</em> на практике (надеюсь, не на изображениях или, возможно, только в качестве базовой модели), действуйте следующим образом: 
-1. <strong>Предварительная обработка данных</strong>: нормализуйте признаки в ваших данных (например, один пиксель на изображениях), чтобы среднее значение было равно нулю, а дисперсия — единице. Мы рассмотрим это более подробно в следующих разделах и решили не рассматривать нормализацию данных в этом разделе, потому что пиксели на изображениях обычно однородны и не имеют сильно различающихся распределений, что снижает необходимость в нормализации данных.
-2. <strong>Если ваши данные имеют очень высокую размерность</strong>, рассмотрите возможность использования метода уменьшения размерности, такого как метод главных компонент (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">ссылка на вики-страницу</a>, <a href="http://cs229.stanford.edu/notes/cs229-notes10.pdf">ссылка на CS229</a>, <a href="https://web.archive.org/web/20150503165118/http://www.bigdataexaminer.com:80/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/">ссылка на блог</a>, метод независимых компонент (<a href="https://en.wikipedia.org/wiki/Neighbourhood_components_analysis">ссылка на вики-страницу</a>, <a href="https://kevinzakka.github.io/2020/02/10/nca/">ссылка на блог</a> или даже <a href="https://scikit-learn.org/stable/modules/random_projection.html">случайные проекции</a>.
-3. <strong>Разделите обучающие данные случайным образом на обучающую и проверочную выборки</strong>. Как правило, от <strong>70</strong> до <strong>90%</strong> данных обычно попадают в обучающую выборку. Этот параметр зависит от того, сколько у вас гиперпараметров и насколько сильно они влияют на результат. Если нужно оценить множество гиперпараметров, лучше использовать более крупную проверочную выборку для их эффективной оценки. Если вас беспокоит размер проверочной выборки, лучше разделить обучающие данные на части и выполнить перекрёстную проверку. Если вы можете позволить себе потратить больше времени на вычисления, всегда безопаснее использовать перекрёстную проверку (чем больше циклов, тем лучше, но тем дороже).
-4. <strong>Обучите и оцените классификатор kNN на проверочных данных</strong> (для всех выборок, если выполняется перекрёстная проверка) для множества вариантов k (например, чем больше, тем лучше) и для разных типов расстояний (<strong>\(L_1\) и \(L_2\)</strong> — хорошие кандидаты)
-5. <strong>Если ваш классификатор kNN работает слишком долгo</strong>, рассмотрите возможность использования библиотеки приближённых ближайших соседей (например, <a href="https://github.com/mariusmuja/flann">FLANN</a> для ускорения поиска (за счёт некоторой потери точности).
-6. <strong>Обратите внимание на гиперпараметры</strong>, которые дали наилучшие результаты. Возникает вопрос, следует ли использовать весь набор обучающих данных с наилучшими гиперпараметрами, поскольку оптимальные гиперпараметры могут измениться, если вы добавите проверочные данные в набор обучающих данных (поскольку размер данных увеличится). На практике лучше не использовать проверочные данные в итоговом классификаторе и считать их потерянными при оценке гиперпараметров. Оцените наилучшую модель на тестовом наборе данных. Сообщите о точности тестового набора данных и объявите результат производительностью классификатора <em>kNN</em> на ваших данных.  </p>
-<h2>Дополнительные материалы</h2>
-<p>Вот несколько (необязательных) ссылок, которые могут показаться вам интересными для дальнейшего чтения:
-- <a href="https://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf">Несколько полезных фактов о машинном обучении</a>, особенно раздел 6, но рекомендуется к прочтению вся статья.
-- <a href="https://people.csail.mit.edu/torralba/shortCourseRLOC/index.html">Распознавание и изучение категорий объектов</a>, краткий курс по категоризации объектов на ICCV 2005.</p>
+- В итоге мы увидели, что использование расстояний <strong>$L_1$</strong> или <strong>$L_2$</strong> по необработанным значениям пикселей нецелесообразно, поскольку эти расстояния сильнее коррелируют с фоном и цветовыми распределениями изображений, чем с их семантическим содержанием.   </p>
+<p>На следующих лекциях мы приступим к решению этих задач и в конечном итоге придём к решениям, которые обеспечат точность <strong>90%</strong>, 
+позволят полностью отказаться от обучающего набора данных после завершения обучения и позволят оценивать тестовые изображения менее чем за миллисекунду.   </p>
+<p>Если вы хотите применить <em>kNN</em> на практике (не на изображениях), действуйте следующим образом:  </p>
+<ol>
+<li>
+<p><strong>Предварительная обработка данных.</strong> 
+Нормализуйте признаки в ваших данных (например, один пиксель на изображениях), чтобы среднее значение было равно нулю, а дисперсия — единице. 
+Мы рассмотрим этот прием более подробно в следующих разделах. 
+Сейчас нормализация данных не используется, потому что распределение яркости пикселей на изображениях достаточно однородны.  </p>
+</li>
+<li>
+<p><strong>Рассмотрите возможность снижения размерности данных</strong>. 
+На практике для снижения размерности используются следующие методы: </p>
+</li>
+<li>метод главных компонент <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">ссылка на вики-страницу</a>, <a href="http://cs229.stanford.edu/notes/cs229-notes10.pdf">ссылка на CS229</a>, <a href="https://web.archive.org/web/20150503165118/http://www.bigdataexaminer.com:80/understanding-dimensionality-reduction-principal-component-analysis-and-singular-value-decomposition/">ссылка на блог</a>, </li>
+<li>метод независимых компонент <a href="https://en.wikipedia.org/wiki/Neighbourhood_components_analysis">ссылка на вики-страницу</a>, <a href="https://kevinzakka.github.io/2020/02/10/nca/">ссылка на блог</a> </li>
+<li>
+<p><a href="https://scikit-learn.org/stable/modules/random_projection.html">случайные проекции</a>.  </p>
+</li>
+<li>
+<p><strong>Разделите обучающие данные случайным образом на обучающую и проверочную (валидационную) выборки.</strong> 
+Как правило, в обучающую выборку попадает от <strong>70</strong> до <strong>90%</strong> данных. 
+Этот параметр зависит от того, сколько у вас гиперпараметров и насколько сильно они влияют на результат. 
+Если нужно оценить множество гиперпараметров, лучше использовать более крупную проверочную выборку для их эффективной оценки. 
+Если вас беспокоит размер проверочной выборки, лучше разделить обучающие данные на части и выполнить кросс-валидацию. </p>
+</li>
+<li>
+<p><strong>Обучите и оцените классификатор kNN на кросс-валидации.</strong> 
+По возможности выполняйте кросс-валидацию для множества вариантов k и для разных типов расстояний (<strong>$L_1$ и $L_2$</strong> — хорошие кандидаты).<br>
+Если вы можете позволить себе потратить больше времени на вычисления, всегда безопаснее использовать кросс-валидацию. 
+Чем больше циклов обучения пройдет, тем лучше, но тем дороже с точки зрения вычислений.  </p>
+</li>
+<li>
+<p><strong>Оцените задержку классификатора.</strong> 
+Если ваш классификатор kNN работает слишком долгo, рассмотрите возможность использования библиотеки приближённых ближайших соседей. 
+Например, библиотека <a href="https://github.com/mariusmuja/flann">FLANN</a> позволяет ускорить поиск за счёт некоторой потери точности.  </p>
+</li>
+<li>
+<p><strong>Обратите внимание на гиперпараметры, которые дали наилучшие результаты.</strong> 
+Возникает вопрос, следует ли использовать валидационный набор для финального обучения с наилучшими гиперпараметрами. 
+Дело в том, что добавить данные для валидации в набор обучающих данных, оптимальные гиперпараметры могут измениться, поскольку размер данных увеличится. 
+На практике лучше не использовать данные валидации в итоговом классификаторе и считать их потерянными при оценке гиперпараметров. </p>
+</li>
+<li>
+<p><strong>Оцените наилучшую модель на тестовом наборе данных.</strong> 
+Вычислите точность на тестовой выборке и объявите результат производительностью классификатора <em>kNN</em> на ваших данных.  </p>
+</li>
+</ol>
+<h5>Дополнительные материалы</h5>
+<p>Вот несколько дополнительных ссылок, которые могут быть интересными для дальнейшего чтения:<br>
+- <a href="https://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf">Несколько полезных фактов о машинном обучении</a>, особенно раздел 6, но рекомендуется к прочтению вся статья.<br>
+- <a href="https://people.csail.mit.edu/torralba/shortCourseRLOC/index.html">Распознавание и изучение категорий объектов</a>, краткий курс по категоризации объектов на ICCV 2005.  </p>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/cv/" rel="tag">CV</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
-                <a href="../numpy-tutorial/" rel="prev" title="Tutorial Python Numpy">Предыдущая запись</a>
-            </li>
-            <li class="next">
-                <a href="../linear-classifier/" rel="next" title="Линейный классификатор ">Следующая запись</a>
+                <a href="../visualisation/" rel="prev" title="Понимание и визуализация">Предыдущая запись</a>
             </li>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({

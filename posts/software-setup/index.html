@@ -11,13 +11,13 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
 <link rel="canonical" href="https://mldl.ru/posts/software-setup/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
-<link rel="prev" href="../nlp-za-90-minut/" title="NLP за 90 минут" type="text/html">
-<link rel="next" href="../numpy-tutorial/" title="Tutorial Python Numpy" type="text/html">
+<link rel="prev" href="../transfer-learning/" title="Трансфер обучения" type="text/html">
+<link rel="next" href="../numpy-tutorial/" title="Tutorial python Numpy" type="text/html">
 <meta property="og:site_name" content="Заметки по ML, DL">
 <meta property="og:title" content="Настройка программного обеспечения ">
 <meta property="og:url" content="https://mldl.ru/posts/software-setup/">
 <meta property="og:description" content="Настройка программного обеспечения
-В этом году рекомендуется работать над заданиями через Google Colaboratory. Однако, если у вас уже есть оборудование на базе графического процессора и вы предпочитае">
+Для работы с нейросетями можно работать через Google Colaboratory. Однако, если у вас уже есть хорошая видеокарта (Nvidia) и вы предпочитаете работать локально, здес">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2025-03-01T19:42:16+03:00">
 </head>
@@ -92,91 +92,82 @@
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
     <h2>Настройка программного обеспечения</h2>
-<p>В этом году рекомендуется работать над заданиями через <a href="https://colab.research.google.com/">Google Colaboratory</a>. Однако, если у вас уже есть оборудование на базе графического процессора и вы предпочитаете работать локально, мы предоставим вам инструкции по настройке виртуальной среды.
+<p>Для работы с нейросетями можно работать через <a href="https://colab.research.google.com/">Google Colaboratory</a>. Однако, если у вас уже есть хорошая видеокарта (Nvidia) и вы предпочитаете работать локально, здесь вы найдет инструкции по настройке виртуальной среды.
 - <a href=".">Удаленная работа в Google Colaboratory</a>
 - <a href=".">Работа локально на вашем компьютере</a>
     - <a href=".">Виртуальная среда Anaconda</a>
     - <a href=".">Python venv</a>
     - <a href=".">Установка пакетов</a></p>
 <h4>Удаленная работа в Google Colaboratory</h4>
-<p><em>Google Colaboratory</em> — это, по сути, комбинация <em>Jupyter notebook</em> и<em> Google Drive</em>. Он полностью работает в облаке и поставляется предустановлены многие пакеты (например, <em>PyTorch</em> и <em>Tensorflow</em>), поэтому у всех есть доступ к одному и тому же Зависимости. Еще круче тот факт, что Colab получает бесплатный доступ к аппаратным ускорителям например, графические процессоры (<em>K80</em>, <em>P100</em>) и ТПУ, которые будут особенно полезны для заданий <strong>2</strong> и <strong>3</strong>.  </p>
-<p><strong>Требования</strong>. Чтобы использовать <em>Colab</em>, у вас должен быть аккаунт <em>Google</em> со связанным <em>Google</em> <strong>Диском</strong>. Предполагая, что у вас есть и то, и другое, вы можете подключить <em>Colab</em> к диску, выполнив следующие действия:</p>
+<p><em>Google Colaboratory</em> — это, по сути, комбинация <em>Jupyter notebook</em> и <em>Google Drive</em>. Он полностью работает в облаке и поставляется с множеством предустановленных заранее пакетами (например, <em>PyTorch</em> и <em>Tensorflow</em>), поэтому у всех есть доступ к одному и тому же широкому перечню возможностей. Еще круче тот факт, что <em>Colab</em> получает бесплатный доступ к аппаратным ускорителям например, графические процессоры (<em>K80</em>, <em>P100</em>) и TPU (Tensor Processing Unit).  </p>
+<p><strong>Требования</strong>. Чтобы использовать <em>Colab</em>, у вас должен быть аккаунт <em>Google</em> со связанным <strong>Google диском</strong>. Предполагается, что у вас есть и то, и другое, вы можете подключить <em>Colab</em> к <strong>G-drive</strong>, выполнив следующие действия:</p>
 <ol>
-<li>Нажмите на колесико в правом верхнем углу и выберите .<code>Settings</code>
-</li>
-<li>Нажмите на вкладку.<code>Manage Apps</code>
-</li>
-<li>Вверху выберите, что должно вызвать окно.<code>Connect more apps</code> <code>GSuite Marketplace</code>
-</li>
-<li>Найдите <strong>Colab</strong> и нажмите .<code>Add</code>  </li>
+<li>Нажмите на колесико в правом верхнем углу и выберите <code>Settings</code>.</li>
+<li>Нажмите на вкладку <code>Manage Apps</code>.</li>
+<li>Вверху выберите <code>Connect more apps</code>, что должно вызвать окно <code>GSuite Marketplace</code>. </li>
+<li>Найдите <strong>Colab</strong> и нажмите <code>Add</code>.</li>
 </ol>
-<p><strong>Рабочий процесс</strong>. Каждое задание содержит ссылку для скачивания zip-файла, содержащего записные книжки <em>Colab</em> и начальный код <em>Python</em>. Вы можете загрузить папку на <strong>Диск</strong>, открыть записные книжки в <em>Colab</em> и работать с ними, а затем сохранить свой прогресс обратно на <strong>Диск</strong>. Мы рекомендуем вам посмотреть обучающее видео ниже, в котором описывается рекомендуемый рабочий процесс на примере задания <strong>1</strong>.  </p>
-<iframe style="display: block; margin: auto;" width="560" height="315" src="https://www.youtube.com/embed/DsGd2e9JNH4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-<div class="code"><pre class="code literal-block">
-</pre></div>
-
-<p><strong>Лучшие практики</strong>. Есть несколько вещей, о которых вы должны знать при работе с <em>Colab</em>. Первое, что стоит отметить, это то, что ресурсы не гарантируются (это плата за бесплатность). Если вы бездействуете в течение определенного времени или общее время подключения превышает максимально допустимое время (<em>~12 часов</em>), виртуальная машина <em>Colab</em> будет отключена. Это означает, что любой несохраненный прогресс будет потерян. <font color="red"><strong> Таким образом, выработайте привычку часто сохранять свой код во время работы над заданиями. </strong></font> Чтобы узнать больше об ограничениях ресурсов в <em>Colab</em>, ознакомьтесь с их часто задаваемыми вопросами <a href="https://research.google.com/colaboratory/faq.html">здесь</a>.</p>
-<p><strong>Использование графического процессора</strong>. Использовать графический процессор так же просто, как переключить среду выполнения в <em>Colab</em>. В частности, нажмите, и ваш экземпляр <em>Colab</em> будет автоматически подкреплен вычислениями графического процессора.<code>Runtime -&gt; Change runtime type -&gt; Hardware Accelerator -&gt; GPU</code>  </p>
+<p><strong>Рекомендации</strong>. Есть несколько вещей, о которых вы должны знать при работе с <em>Colab</em>:
+1. Первое, что стоит отметить, это то, что постоянное наличие ресурсов не гарантировано (это плата за бесплатность).
+2. Если вы бездействуете в течение определенного времени или общее время подключения превышает максимально допустимое время (<em>~12 часов</em>), виртуальная машина <em>Colab</em> будет отключена. Это означает, что любой несохраненный прогресс будет потерян. <font color="red"><strong></strong></font></p>
+<p>Таким образом, выработайте привычку часто сохранять свой код и веса моделей во время работы! <br>
+Чтобы узнать больше об ограничениях ресурсов в <em>Colab</em>, ознакомьтесь с их часто задаваемыми вопросами <a href="https://research.google.com/colaboratory/faq.html">здесь</a>.</p>
+<p><strong>Использование графического процессора(GPU)</strong>. Использовать графический процессор так же просто, как переключить среду выполнения в <em>Colab</em>. В частности, самостоятельно перейдите в настройки по следующему пути: <code>Runtime -&gt; Change runtime type -&gt; Hardware Accelerator -&gt; GPU</code> , и <em>Colab</em> будет автоматически подкреплен вычислительными мощностями графического процессора.  </p>
 <p>Если вы хотите узнать больше о <em>Colab</em>, мы рекомендуем вам посетить следующие ресурсы:
 - <a href="https://www.youtube.com/watch?v=inN8seMm7UI">Введение в Google Colab</a>
 - <a href="https://colab.research.google.com/notebooks/intro.ipynb">Добро пожаловать в Colab</a>
 - <a href="https://colab.research.google.com/notebooks/basic_features_overview.ipynb">Обзор функций Colab</a>  </p>
-<h4>Работа локально на вашем компьютере</h4>
-<p>Если вы хотите работать локально, вам следует использовать виртуальную среду. Вы можете установить его через <em>Anaconda</em> (рекомендуется) или через собственный модуль <em>Python</em>. Убедитесь, что вы используете <strong>Python 3.7</strong>, так как <strong>мы больше не поддерживаем Python 2</strong>.<code>venv</code>  </p>
+<h4>Работа на вашем локальном компьютере</h4>
+<p>Если вы хотите работать локально, вам следует использовать виртуальную среду <code>venv</code>. 
+Вы можете установить его через <em>Anaconda</em> или через модуль <em>python -m venv</em>. </p>
 <h5>Виртуальная среда Anaconda</h5>
-<p>Мы настоятельно рекомендуем использовать бесплатный <a href="https://www.anaconda.com/download/">дистрибутив Anaconda Python</a>, который предоставляет простой способ обработки зависимостей пакетов. Пожалуйста, обязательно скачайте версию <strong>Python 3</strong>, которая в настоящее время устанавливает <strong>Python 3.7</strong>. Приятная вещь в <em>Anaconda</em> заключается в том, что она поставляется с <a href="https://docs.anaconda.com/mkl-optimizations/">оптимизацией MKL</a> по умолчанию, что означает, что вы и код получаете значительное ускорение без необходимости изменять ни одной строки кода.<code>numpy</code> <code>scipy</code></p>
-<p>После установки Anaconda имеет смысл создать виртуальную среду для курса. Если вы решите не использовать виртуальную среду (<em>настоятельно не рекомендуется!</em>), вы должны убедиться, что все зависимости для кода установлены глобально на вашем компьютере. Чтобы настроить виртуальную среду с именем , выполните следующие действия в терминале:<code>cs231n</code>  </p>
-<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">will</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="nv">an</span><span class="w"> </span><span class="nv">anaconda</span><span class="w"> </span><span class="nv">environment</span>
-#<span class="w"> </span><span class="nv">called</span><span class="w"> </span><span class="nv">cs231n</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="s1">'path/to/anaconda3/envs/'</span>
-<span class="nv">conda</span><span class="w"> </span><span class="nv">create</span><span class="w"> </span><span class="o">-</span><span class="nv">n</span><span class="w"> </span><span class="nv">cs231n</span><span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="mi">3</span>.<span class="mi">7</span>
-Чтобы<span class="w"> </span>активировать<span class="w"> </span>и<span class="w"> </span>войти<span class="w"> </span>в<span class="w"> </span>среду,<span class="w"> </span>запустите<span class="w"> </span>.<span class="w"> </span>Чтобы<span class="w"> </span>отключить<span class="w"> </span>среду,<span class="w"> </span>запустите<span class="w"> </span>терминал<span class="w"> </span>или<span class="w"> </span>выйдите<span class="w"> </span>из<span class="w"> </span>него.<span class="w"> </span>Обратите<span class="w"> </span>внимание,<span class="w"> </span>что<span class="w"> </span>каждый<span class="w"> </span>раз,<span class="w"> </span>когда<span class="w"> </span>вы<span class="w"> </span>хотите<span class="w"> </span>поработать<span class="w"> </span>над<span class="w"> </span>заданием,<span class="w"> </span>вы<span class="w"> </span>должны<span class="w"> </span>повторно<span class="w"> </span>запустить<span class="w"> </span>.<span class="nv">conda</span><span class="w"> </span><span class="nv">activate</span><span class="w"> </span><span class="nv">cs231nconda</span><span class="w"> </span><span class="nv">deactivate</span><span class="w"> </span><span class="nv">cs231nconda</span><span class="w"> </span><span class="nv">activate</span><span class="w"> </span><span class="nv">cs231n</span>
+<p>Бесплатный <a href="https://www.anaconda.com/download/">дистрибутив Anaconda Python</a> предоставляет собой набор пакетов для научных вычислений. 
+Приятная вещь в <em>Anaconda</em> заключается в том, что она поставляется с <a href="https://docs.anaconda.com/mkl-optimizations/">оптимизацией MKL</a> по умолчанию, 
+Это означает, что ваши библиотеки <code>numpy</code> и <code>scipy</code> код получают значительное ускорение без необходимости изменять ни одной строки кода. </p>
+<p>После установки Anaconda имеет смысл создать виртуальную среду для отдельного проекта. 
+Если вы не не будете использовать виртуальную среду (<em>настоятельно не рекомендуется!</em>), все зависимости будут установлены глобально на вашем компьютере. 
+Чтобы настроить виртуальную среду с именем <code>mldl</code>, выполните следующие действия в терминале:  </p>
+<div class="code"><pre class="code literal-block">conda create -n mldl python=3.12
+</pre></div>
 
-#<span class="w"> </span><span class="nv">sanity</span><span class="w"> </span><span class="nv">check</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">python</span>
-#<span class="w"> </span><span class="nv">binary</span><span class="w"> </span><span class="nv">matches</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">anaconda</span><span class="w"> </span><span class="nv">env</span>
-#<span class="w"> </span><span class="nv">after</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">activate</span><span class="w"> </span><span class="nv">it</span>
-<span class="nv">which</span><span class="w"> </span><span class="nv">python</span>
-#<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">example</span>,<span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">my</span><span class="w"> </span><span class="nv">machine</span>,<span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">prints</span>
-#<span class="w"> </span>$<span class="w"> </span><span class="s1">'/Users/kevin/anaconda3/envs/sci/bin/python'</span>
+<p>Чтобы активировать и войти в среду, запустите </p>
+<div class="code"><pre class="code literal-block">conda activate mldl
+</pre></div>
+
+<p>Чтобы отключить среду, закройте терминал или используйте команду</p>
+<div class="code"><pre class="code literal-block">conda deactivate
 </pre></div>
 
 <p>Вы можете обратиться к <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">этой странице</a> за более подробными инструкциями по управлению виртуальными средами с помощью Anaconda.  </p>
-<p>__Заметка___: Если вы решили пойти по пути <em>Anaconda</em>, вы можете смело пропустить следующий раздел и сразу перейти к <a href="https://cs231n.github.io/setup-instructions/#installing-packages">установке пакетов</a>.  </p>
 <h4>Python venv</h4>
-<p>Начиная с версии <em>3.3</em>, <em>Python</em> поставляется с облегченным модулем виртуальной среды под названием <a href="https://docs.python.org/3/library/venv.html">venv</a>. Каждая виртуальная среда упаковывает свой собственный независимый набор установленных пакетов <em>Python</em>, которые изолированы от общесистемных пакетов <em>Python</em> и запускают версию <em>Python</em>, совпадающую с версией двоичного файла, который использовался для ее создания. Чтобы настроить виртуальную среду с именем , выполните следующие действия в терминале:<code>cs231n</code>  </p>
-<div class="code"><pre class="code literal-block"># this will create a virtual environment
-# called cs231n in your home directory
-python3.7 -m venv ~/cs231n
+<p>Начиная с версии <em>3.3</em>, <em>Python</em> поставляется с облегченным модулем виртуальной среды под названием <a href="https://docs.python.org/3/library/venv.html">venv</a>. 
+Каждая виртуальная среда упаковывает свой собственный независимый набор установленных пакетов (библиотек) <em>Python</em>.
+Это позволяет изолировать проект от общесистемных пакетов <em>Python</em> и запускать нужную версию <em>Python</em>. 
+Чтобы настроить виртуальную среду с именем <code>mldl</code>, выполните команду в терминале:</p>
+<div class="code"><pre class="code literal-block">python3.12 -m venv mldl
 </pre></div>
 
-<p>Чтобы активировать и войти в среду, запустите . Чтобы отключить среду, запустите терминал или выйдите из него. Обратите внимание, что каждый раз, когда вы хотите поработать над заданием, вы должны повторно запустить .<code>source ~/cs231n/bin/activate</code> <code>deactivate</code> <code>source ~/cs231n/bin/activate</code>  </p>
-<div class="code"><pre class="code literal-block">#<span class="w"> </span><span class="nv">sanity</span><span class="w"> </span><span class="nv">check</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">path</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">python</span>
-#<span class="w"> </span><span class="nv">binary</span><span class="w"> </span><span class="nv">matches</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">virtual</span><span class="w"> </span><span class="nv">env</span>
-#<span class="w"> </span><span class="nv">after</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">activate</span><span class="w"> </span><span class="nv">it</span>
-<span class="nv">which</span><span class="w"> </span><span class="nv">python</span>
-#<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">example</span>,<span class="w"> </span><span class="nv">on</span><span class="w"> </span><span class="nv">my</span><span class="w"> </span><span class="nv">machine</span>,<span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">prints</span>
-#<span class="w"> </span>$<span class="w"> </span><span class="s1">'/Users/kevin/cs231n/bin/python'</span>
-</pre></div>
-
+<p>Чтобы активировать и войти в среду, запустите <code>source mldl/bin/activate</code>. 
+Чтобы отключить среду, запустите в терминале <code>deactivate</code> или выйдите из него. 
+Обратите внимание, что каждый раз, когда вы хотите поработать над проектом, вы должны повторно активировать среду. </p>
 <h4>Установка пакетов</h4>
-<p>После того как вы <strong>настроили</strong> и <strong>активировали</strong> свою виртуальную среду (с помощью или ), вы должны установить библиотеки, необходимые для выполнения назначений с помощью . Для этого выполните:<code>conda</code> <code>venv</code> <code>pip</code></p>
-<div class="code"><pre class="code literal-block"><span class="p">#</span><span class="w"> </span><span class="n">again</span><span class="p">,</span><span class="w"> </span><span class="n">ensure</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">virtual</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="p">(</span><span class="n">either</span><span class="w"> </span><span class="n">conda</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="n">venv</span><span class="p">)</span>
-<span class="p">#</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">been</span><span class="w"> </span><span class="n">activated</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">running</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">commands</span><span class="w"> </span><span class="n">below</span>
-<span class="n">cd</span><span class="w"> </span><span class="n">assignment1</span><span class="w">  </span><span class="p">#</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">assignment</span><span class="w"> </span><span class="n">directory</span>
-
-<span class="p">#</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">assignment</span><span class="w"> </span><span class="n">dependencies</span><span class="p">.</span>
-<span class="p">#</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">virtual</span><span class="w"> </span><span class="n">env</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">activated</span><span class="p">,</span>
-<span class="p">#</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">pip</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">associated</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">the</span>
-<span class="p">#</span><span class="w"> </span><span class="n">python</span><span class="w"> </span><span class="n">binary</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">environment</span>
-<span class="n">pip</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span><span class="w">  </span>
+<p>После того как вы <strong>настроили</strong> и <strong>активировали</strong> свою виртуальную среду (с помощью <code>conda</code> или <code>venv</code>), вы должны установить библиотеки, необходимые для выполнения назначений с помощью <code>pip</code>. 
+Для этого выполните команду:</p>
+<div class="code"><pre class="code literal-block">pip install -r requirements.txt  
 </pre></div>
+
+<h3>Python IDE</h3>
+<p>Использование Ide для работы над проектами очень упрощает создание и настройку python. 
+Кроме того, интеграция с Git и другие полезные утилиты позволяют повысить эффективность разработки, не отвлекаясь на рутинные операции. 
+Используйте PyCharm, VsCode или любую другую IDE на ваш вкус. 
+Мой выбор - VsCode с расширениями (Extentions): Python (Microsoft), Black Formatter, JetBrains IDE KeyMapping. </p>
     </div>
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
-                <a href="../nlp-za-90-minut/" rel="prev" title="NLP за 90 минут">Предыдущая запись</a>
+                <a href="../transfer-learning/" rel="prev" title="Трансфер обучения">Предыдущая запись</a>
             </li>
             <li class="next">
-                <a href="../numpy-tutorial/" rel="next" title="Tutorial Python Numpy">Следующая запись</a>
+                <a href="../numpy-tutorial/" rel="next" title="Tutorial python Numpy">Следующая запись</a>
             </li>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
