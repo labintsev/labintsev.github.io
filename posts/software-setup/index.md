@@ -1,7 +1,7 @@
 <!--
 .. title: Настройка программного обеспечения 
 .. slug: software-setup
-.. date: 2025-03-01 19:42:16 UTC+03:00
+.. date: 2025-07-02 14:00 UTC+03:00
 .. tags: 
 .. category: 
 .. link: 

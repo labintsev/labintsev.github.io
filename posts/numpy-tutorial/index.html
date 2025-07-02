@@ -11,17 +11,18 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
 <link rel="canonical" href="https://mldl.ru/posts/numpy-tutorial/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
-<link rel="prev" href="../software-setup/" title="Настройка программного обеспечения " type="text/html">
-<link rel="next" href="../linear-classifier/" title="Линейный классификатор " type="text/html">
+<link rel="prev" href="../image-classification/" title="Классификация изображений " type="text/html">
+<link rel="next" href="../software-setup/" title="Настройка программного обеспечения " type="text/html">
 <meta property="og:site_name" content="Заметки по ML, DL">
 <meta property="og:title" content="Tutorial python Numpy">
 <meta property="og:url" content="https://mldl.ru/posts/numpy-tutorial/">
-<meta property="og:description" content="Туториал python Numpy (с Jupyter и Colab)
+<meta property="og:description" content="Python numpy (с Jupyter и Colab)
 Блокнот Colab
 Этот урок был первоначально предоставлен Джастином Джонсоном.  
-Мы будем использовать язык программирования python для всех заданий этого курса.">
+Мы будем использовать язык программирования python для всех заданий этого курса. 
+Python ">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2025-03-02T19:42:16+03:00">
+<meta property="article:published_time" content="2025-07-02T09:42:16+03:00">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
@@ -84,7 +85,7 @@
             </span></p>
             <p class="dateline">
             <a href="." rel="bookmark">
-            <time class="published dt-published" datetime="2025-03-02T19:42:16+03:00" itemprop="datePublished" title="2025-03-02 19:42">2025-03-02 19:42</time></a>
+            <time class="published dt-published" datetime="2025-07-02T09:42:16+03:00" itemprop="datePublished" title="2025-07-02 09:42">2025-07-02 09:42</time></a>
             </p>
             
         <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
@@ -93,40 +94,54 @@
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <h2>Туториал python Numpy (с Jupyter и Colab)</h2>
+    <h2>Python numpy (с Jupyter и Colab)</h2>
 <p><a href="https://colab.research.google.com/github/cs231n/cs231n.github.io/blob/master/python-colab.ipynb">Блокнот Colab</a></p>
 <p>Этот урок был первоначально предоставлен <a href="http://cs.stanford.edu/people/jcjohns/">Джастином Джонсоном</a>.  </p>
-<p>Мы будем использовать язык программирования <em>python</em> для всех заданий этого курса. <em>Python</em> сам по себе является отличным языком программирования общего назначения, но с помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощной средой для научных вычислений.</p>
-<p>Мы ожидаем, что многие из вас имеют некоторый опыт работы с <em>python</em> и <em>numpy</em>; Для остальных из вас этот раздел послужит кратким ускоренным курсом по обоим направлениям языка программирования <em>python</em> и его использованию для научных исследований и вычислений. Мы также познакомим вас с блокнотами, которые являются очень удобным способом работы с кодом на <em>python</em>. Некоторые из вас, возможно, уже знакомы с другими языками, и в этом случае мы также рекомендуем ссылаться <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">на NumPy для пользователей Matlab</a>, <a href="http://www.data-analysis-in-python.org/python_for_r.html">python для пользователей R</a> и/или <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/pythonForSASUsers/tree/master/">python для пользователей SAS</a>.  </p>
+<p>Мы будем использовать язык программирования <em>python</em> для всех заданий этого курса. 
+<em>Python</em> сам по себе является отличным языком программирования общего назначения, но с помощью нескольких популярных библиотек (<em>numpy</em>, <em>scipy</em>, <em>matplotlib</em>) он становится мощной средой для научных вычислений.</p>
+<p>Мы ожидаем, что многие из вас имеют некоторый опыт работы с <em>python</em> и <em>numpy</em>. 
+Если нет, то этот раздел послужит кратким ускоренным курсом по обоим направлениям языка программирования <em>python</em> и его использованию для научных исследований и вычислений. 
+Мы также познакомимся с Jupyter-notebooks, которые являются очень удобным способом работы с кодом на <em>python</em>. </p>
+<p>Ссылки на полезные ресурсы: 
+- <a href="https://stepik.org/course/67/promo">Stepic курс по python</a>
+- <a href="https://numpy.org/doc/stable/user/numpy-for-matlab-users.html">NumPy для пользователей Matlab</a>, 
+- <a href="http://www.data-analysis-in-python.org/python_for_r.html">python для пользователей R</a> ,
+- <a href="https://nbviewer.jupyter.org/github/RandyBetancourt/pythonForSASUsers/tree/master/">python для пользователей SAS</a>.  </p>
 <p>Содержание
-- <a href=".">Блокноты Jupyter и Colab</a>
-- <a href=".">Питон</a>
-    - <a href=".">Версии python</a>
-    - <a href=".">Основные типы данных</a>
-    - <a href=".">Контейнеры</a>
-        - <a href=".">Списках</a>
-        - <a href=".">Словари</a>
-        - <a href=".">Множество</a>
-        - <a href=".">Кортежи</a>
-    - <a href=".">Функции</a>
-    - <a href=".">Классы</a>
-- <a href=".">Numpy</a>
-    - <a href=".">Массивы</a>
-    - <a href=".">Индексация массивов</a>
-    - <a href=".">Типы данных</a>
-    - <a href=".">Математические операции с массивами</a>
-    - <a href=".">Вещание</a>
-    - <a href=".">Документация Numpy</a>
-- <a href=".">SciPy</a>
-    - <a href=".">Операции с изображениями</a>
-    - <a href=".">Файлы MATLAB</a>
-    - <a href=".">Расстояние между точками</a>
-- <a href=".">Matplotlib</a>
-    - <a href=".">Постоение кривой</a>
-    - <a href=".">Побочные сюжеты</a>
+- <a href=".">Блокноты Jupyter и Colab</a><br>
+- <a href=".">Питон</a><br>
+    - <a href=".">Версии python</a><br>
+    - <a href=".">Основные типы данных</a><br>
+    - <a href=".">Контейнеры</a><br>
+        - <a href=".">Списках</a><br>
+        - <a href=".">Словари</a><br>
+        - <a href=".">Множество</a><br>
+        - <a href=".">Кортежи</a><br>
+    - <a href=".">Функции</a><br>
+    - <a href=".">Классы</a><br>
+- <a href=".">Numpy</a><br>
+    - <a href=".">Массивы</a><br>
+    - <a href=".">Индексация массивов</a><br>
+    - <a href=".">Типы данных</a><br>
+    - <a href=".">Математические операции с массивами</a><br>
+    - <a href=".">Broadcasting</a><br>
+    - <a href=".">Документация Numpy</a> <br>
+- <a href=".">SciPy</a><br>
+    - <a href=".">Операции с изображениями</a><br>
+    - <a href=".">Файлы MATLAB</a><br>
+    - <a href=".">Расстояние между точками</a><br>
+- <a href=".">Matplotlib</a><br>
+    - <a href=".">Постоение кривой</a><br>
+    - <a href=".">Побочные сюжеты</a><br>
     - <a href=".">Изображения</a>  </p>
 <h2>Блокноты Jupyter и Colab</h2>
-<p>Прежде чем мы углубимся в <em>python</em>, мы хотели бы кратко поговорить о <em>блокнотах</em>. Блокнот <em>Jupyter</em> позволяет писать и выполнять код <em>python</em> <em>локально</em> в вашем веб-браузере. <em>Jupyter notebooks</em> yпрощает работу с кодом и выполняет его битами и сегментами; По этой причине он широко используется в научных вычислениях. <em>Colab</em>, с другой стороны, является разновидностью <em>Google-блокнота</em> <em>Jupyter</em>, который особенно подходит для машинных алгоритмов обучения и анализа данных, которые сохраняют функционал в <em>облаке</em>. <em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, поставляется с предустановленными пакетами, им легко поделиться со всем миром, присутствуют преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
+<p>Прежде чем мы углубимся в <em>python</em>, мы хотели бы кратко поговорить о <em>блокнотах</em>. 
+Блокнот <em>Jupyter</em> позволяет писать и выполнять код <em>python</em> <em>локально</em> в вашем веб-браузере. 
+<em>Jupyter notebooks</em> yпрощает работу с кодом и выполняет его по блокам. 
+По этой причине он широко используется в научных вычислениях. 
+<em>Colab</em>, с другой стороны, является разновидностью <em>Google-блокнота</em> <em>Jupyter</em>, который особенно подходит для машинных алгоритмов обучения и анализа данных, которые сохраняют функционал в <em>облаке</em>. 
+<em>Colab</em> — это, по сути, <em>Jupyter</em> notebook на стероидах: он бесплатный, не требует настройки, поставляется с предустановленными пакетами, им легко поделиться со всем миром. 
+В нем присутствуют преимущества бесплатного доступа к аппаратным ускорителям, таким как графические процессоры и <em>TPU</em> (с некоторыми оговорками).  </p>
 <p><strong>Запустите Tutorial в Colab (рекомендуется)</strong>. Если вы хотите выполнить это руководство полностью в <em>Colab</em>, нажмите на значок <code>Open in Colab</code> в самом верху этой страницы.</p>
 <p><strong>Запустите Tutorial в блокноте Jupyter</strong>. Если вы хотите запустить блокнот локально с помощью <em>Jupyter</em>, убедитесь, что ваша виртуальная среда установлена правильно (в соответствии с <a href="https://cs231n.github.io/setup-instructions/">инструкциями по настройке</a>), активируйте ее, а затем запустите <code>pip install notebook</code> для установки блокнота <em>Jupyter</em>. Затем <a href="https://raw.githubusercontent.com/cs231n/cs231n.github.io/master/jupyter-notebook-tutorial.ipynb">откройте блокнот</a> и загрузите его в каталог по вашему выбору, щелкнув правой кнопкой мыши по странице и выбрав <code>Save Page As</code>. Затем <code>cd</code> в этот каталог и запустите <code>jupyter notebook</code>.     </p>
 <p><img alt="" src="https://cs231n.github.io/assets/ipython-tutorial/file-browser.png"></p>
@@ -924,10 +939,10 @@
     </div>
     <aside class="postpromonav"><nav><ul class="pager hidden-print">
 <li class="previous">
-                <a href="../software-setup/" rel="prev" title="Настройка программного обеспечения ">Предыдущая запись</a>
+                <a href="../image-classification/" rel="prev" title="Классификация изображений ">Предыдущая запись</a>
             </li>
             <li class="next">
-                <a href="../linear-classifier/" rel="next" title="Линейный классификатор ">Следующая запись</a>
+                <a href="../software-setup/" rel="next" title="Настройка программного обеспечения ">Следующая запись</a>
             </li>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
