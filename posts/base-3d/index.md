@@ -161,12 +161,12 @@ $P' = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} \frac{f}{z}x + c
 
 $P_0 = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \\\ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \\\ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)
 
-где 
-$\alpha = f \cdot k$
-$\beta = f \cdot l$
-$f$ — фокусное расстояние в мм,
-$k$ — размер пикселя по оси x, пикс/мм. 
-$l$ — размер пикселя по оси x, пикс/мм. 
+где  
+$\alpha = f \cdot k$  
+$\beta = f \cdot l$  
+$f$ — фокусное расстояние в мм,  
+$k$ — размер пикселя по оси x, пикс/мм.   
+$l$ — размер пикселя по оси x, пикс/мм.  
 
 Сокращение размерностей приводит к тому, что параметры $\alpha$ и $\beta$ выражаются в пикселях.  
 Это логично, так как коэффициенты связывают физические измерения (метры) с дискретными единицами цифрового изображения (пиксели).

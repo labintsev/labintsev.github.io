@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Mon, 29 Sep 2025 19:52:10 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Основы трехмерного компьютерного зрения </title><link>https://mldl.ru/posts/base-3d/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;1. Введение&lt;/h4&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Mon, 29 Sep 2025 19:53:30 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Основы трехмерного компьютерного зрения </title><link>https://mldl.ru/posts/base-3d/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;1. Введение&lt;/h4&gt;
 &lt;p&gt;Камера является одним из важнейших инструментов в компьютерном зрении. Это механизм, с помощью которого мы можем фиксировать окружающий мир и использовать получаемые результаты — фотографии — для различных приложений. Поэтому один из фундаментальных вопросов трехмерного компьютерного зрения звучит так: как мы можем смоделировать камеру? &lt;/p&gt;
 &lt;h4&gt;2. Камера-обскура&lt;/h4&gt;
 &lt;p&gt;Камера-обскура — это простейшая система, которая позволяет фиксировать изображение объекта или сцены в трёхмерном мире. Такая система может быть создана путём размещения преграды с небольшим отверстием (апертурой) между трёхмерным объектом и фотоплёнкой или светочувствительным сенсором.&lt;/p&gt;
@@ -92,12 +92,12 @@
 &lt;p&gt;Для учёта этого изменения единиц измерения необходимо ввести два новых параметра $k$ и $l$. Эти параметры имеют размерность [пиксель на сантиметр], соответствуют изменению единиц измерения по двум осям плоскости изображения. Важно отметить, что $k$ и $l$ могут быть разными, поскольку соотношение сторон пикселя не обязательно равно единице. Если $k = l$, мы говорим, что камера имеет квадратные пиксели. 
 Мы модифицируем наше предыдущее отображение следующим образом:&lt;/p&gt;
 &lt;p&gt;$P_0 = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \\ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \\ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)&lt;/p&gt;
-&lt;p&gt;где 
-$\alpha = f \cdot k$
-$\beta = f \cdot l$
-$f$ — фокусное расстояние в мм,
-$k$ — размер пикселя по оси x, пикс/мм. 
-$l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
+&lt;p&gt;где&lt;br&gt;
+$\alpha = f \cdot k$&lt;br&gt;
+$\beta = f \cdot l$&lt;br&gt;
+$f$ — фокусное расстояние в мм,&lt;br&gt;
+$k$ — размер пикселя по оси x, пикс/мм. &lt;br&gt;
+$l$ — размер пикселя по оси x, пикс/мм.  &lt;/p&gt;
 &lt;p&gt;Сокращение размерностей приводит к тому, что параметры $\alpha$ и $\beta$ выражаются в пикселях.&lt;br&gt;
 Это логично, так как коэффициенты связывают физические измерения (метры) с дискретными единицами цифрового изображения (пиксели).&lt;/p&gt;
 &lt;p&gt;Геометрический смысл состоит в том, сколько в пикселях будет объект, размер которого на плоскости проекции равен фокусному расстоянию камеры. &lt;/p&gt;
