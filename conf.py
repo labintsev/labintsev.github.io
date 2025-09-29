@@ -1101,19 +1101,19 @@ PRETTY_URLS = True
 
 # Want to use KaTeX instead of MathJax? While KaTeX may not support every
 # feature yet, it's faster and the output looks better.
-# USE_KATEX = False
+USE_KATEX = True
 
 # KaTeX auto-render settings. If you want support for the $.$ syntax (which may
 # conflict with running text!), just use this config:
-# KATEX_AUTO_RENDER = """
-# delimiters: [
-#     {left: "$$", right: "$$", display: true},
-#     {left: "\\\\[", right: "\\\\]", display: true},
-#     {left: "\\\\begin{equation*}", right: "\\\\end{equation*}", display: true},
-#     {left: "$", right: "$", display: false},
-#     {left: "\\\\(", right: "\\\\)", display: false}
-# ]
-# """
+KATEX_AUTO_RENDER = r"""
+delimiters: [
+    {left: "$$", right: "$$", display: true},
+    {left: "\\\\[", right: "\\\\]", display: true},
+    {left: "\\\\begin{equation*}", right: "\\\\end{equation*}", display: true},
+    {left: "$", right: "$", display: false},
+    {left: "\\\\(", right: "\\\\)", display: false}
+]
+"""
 
 # Do you want to customize the nbconversion of your IPython notebook?
 # IPYNB_CONFIG = {}
@@ -1429,11 +1429,3 @@ MathJax.Hub.Config({
 </script>
 """
 
-KATEX_AUTO_RENDER = """
-delimiters: [
-    {left: "$$", right: "$$", display: true},
-    {left: "\\\[", right: "\\\]", display: true},
-    {left: "$", right: "$", display: false},
-    {left: "\\\(", right: "\\\)", display: false}
-]
-"""
