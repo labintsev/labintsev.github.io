@@ -1413,7 +1413,7 @@ GLOBAL_CONTEXT = {}
 # rendered
 GLOBAL_CONTEXT_FILLER = []
 
-MATHJAX_CONFIG = """
+MATHJAX_CONFIG = r"""
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     tex2jax: {
