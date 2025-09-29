@@ -46,7 +46,7 @@
 Обратите внимание, что треугольник $P' C'O$ подобен треугольнику, образованному точками $P$, $O$ и $(0, 0, z)$. 
 Используя теорему о подобных треугольниках, мы получаем:
 
-$P' = \begin{pmatrix} x' \\\ y' \end{pmatrix}^T = \begin{pmatrix} \frac{fx}{z} \\\ \frac{fy}{z} \end{pmatrix}^T$ (1)
+$P' = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} \frac{fx}{z} \\\ \frac{fy}{z} \end{pmatrix}$ (1)
 
 Важно отметить, что в этой модели камеры-обскуры мы делаем одно существенное допущение: апертура (отверстие) считается одной точкой. Однако в большинстве реальных ситуаций мы не можем предполагать, что апертура может быть бесконечно малой. Возникает вопрос: как влияет изменение размера апертуры на результат?
 
@@ -97,7 +97,7 @@ $P' = \begin{pmatrix} x' \\\ y' \end{pmatrix}^T = \begin{pmatrix} \frac{fx}{z} \
 
 Кроме того, световые лучи, проходящие через центр линзы, не отклоняются. Благодаря этому мы можем построить конструкцию, аналогичную модели камеры-обскуры, которая связывает точку $P$ в трёхмерном пространстве с соответствующей точкой $P'$ на плоскости изображения:
 
-$P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} z' \frac{x}{z} \\ z' \frac{y}{z} \end{pmatrix}$ (2)
+$P' = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} z' \frac{x}{z} \\\ z' \frac{y}{z} \end{pmatrix}$ (2)
 
 Важно отметить следующие различия между моделями:
 * В модели камеры-обскуры $z' = f$
@@ -148,18 +148,18 @@ $P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} z' \frac{x}{z} \\
 1. **Параметры $c_x$ и $c_y$** описывают разницу между координатами плоскости изображения и цифровыми координатами изображения через перенос. 
    * Координаты плоскости изображения имеют начало координат $C_0$ в центре изображения, где ось $k$ пересекает плоскость изображения.
    * Цифровые координаты изображения обычно имеют начало в левом нижнем углу изображения.
-   * Таким образом, 2D точки на плоскости изображения и 2D точки в цифровом изображении смещаются на вектор переноса $\begin{pmatrix} c_x \\ c_y \end{pmatrix}^T$.
+   * Таким образом, 2D точки на плоскости изображения и 2D точки в цифровом изображении смещаются на вектор переноса $\begin{pmatrix} c_x \\\ c_y \end{pmatrix}^T$.
 
 С учётом этого изменения систем координат отображение теперь выглядит так:
 
-$P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} \frac{f}{z}x + c_x \\ \frac{f}{z}y + c_y \end{pmatrix}$ (3)
+$P' = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} \frac{f}{z}x + c_x \\\ \frac{f}{z}y + c_y \end{pmatrix}$ (3)
 
 2. **Второй важный эффект** — это то, что точки в цифровых изображениях выражаются в пикселях, в то время как точки на плоскости изображения представлены в физических измерениях (например, сантиметрах).
 
 Для учёта этого изменения единиц измерения необходимо ввести два новых параметра $k$ и $l$. Эти параметры имеют размерность [пиксель на сантиметр], соответствуют изменению единиц измерения по двум осям плоскости изображения. Важно отметить, что $k$ и $l$ могут быть разными, поскольку соотношение сторон пикселя не обязательно равно единице. Если $k = l$, мы говорим, что камера имеет квадратные пиксели. 
 Мы модифицируем наше предыдущее отображение следующим образом:
 
-$P_0 = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \\ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \\ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)
+$P_0 = \begin{pmatrix} x' \\\ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \\\ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \\\ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)
 
 где 
 $\alpha = f \cdot k$
@@ -203,7 +203,7 @@ $l$ — размер пикселя по оси x, пикс/мм.
 
 Используя однородные координаты, мы можем сформулировать преобразование следующим образом:
 
-$P'_h = \begin{bmatrix} \alpha x + c_x z \\ \beta y + c_y z \\ z \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\ 0 & \beta & c_y & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\ 0 & \beta & c_y & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} P_h$ (5)
+$P'_h = \begin{bmatrix} \alpha x + c_x z \\\ \beta y + c_y z \\\ z \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\\ 0 & \beta & c_y & 0 \\\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} x \\\ y \\\ z \\\ 1 \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\\ 0 & \beta & c_y & 0 \\\ 0 & 0 & 1 & 0 \end{bmatrix} P_h$ (5)
 
 Преимущества использования однородных координат:
 * Позволяют представить нелинейное преобразование в виде матричного умножения;
@@ -214,7 +214,7 @@ $P'_h = \begin{bmatrix} \alpha x + c_x z \\ \beta y + c_y z \\ z \end{bmatrix} =
 
 Как видно из уравнения (5), мы можем представить связь между точкой в трёхмерном пространстве и её координатами изображения в виде матрично-векторного соотношения:
 
-$P' = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\ 0 & \beta & c_y & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\ 0 & \beta & c_y & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} P = MP$ (6)
+$P' = \begin{bmatrix} x' \\\ y' \\\ z \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\\ 0 & \beta & c_y & 0 \\\ 0 & 0 & 1 & 0 \end{bmatrix} \begin{bmatrix} x \\\ y \\\ z \\\ 1 \end{bmatrix} = \begin{bmatrix} \alpha & 0 & c_x & 0 \\\ 0 & \beta & c_y & 0 \\\ 0 & 0 & 1 & 0 \end{bmatrix} P = MP$ (6)
 
 где:
 * $M$ — **матрица камеры**
@@ -232,7 +232,7 @@ $P' = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha & 0 &
 
 Мы можем представить преобразование в виде:
 
-$P' = MP = \begin{bmatrix} \alpha & 0 & c_x \\ 0 & \beta & c_y \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} I & 0 \end{bmatrix} P = K \begin{bmatrix} I & 0 \end{bmatrix} P$ (7)
+$P' = MP = \begin{bmatrix} \alpha & 0 & c_x \\\ 0 & \beta & c_y \\\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} I & 0 \end{bmatrix} P = K \begin{bmatrix} I & 0 \end{bmatrix} P$ (7)
 
 где:
 * $P'$ — координаты точки на плоскости изображения
@@ -248,7 +248,7 @@ $P' = MP = \begin{bmatrix} \alpha & 0 & c_x \\ 0 & \beta & c_y \\ 0 & 0 & 1 \end
 
 Матрица камеры $K$ имеет следующий вид:
 
-$K = \begin{bmatrix} \alpha & 0 & c_x \\ 0 & \beta & c_y \\ 0 & 0 & 1 \end{bmatrix}$
+$K = \begin{bmatrix} \alpha & 0 & c_x \\\ 0 & \beta & c_y \\\ 0 & 0 & 1 \end{bmatrix}$
 
 где:
 * $\alpha$ и $\beta$ — масштабные коэффициенты, связанные с фокусным расстоянием
@@ -278,7 +278,7 @@ $K = \begin{bmatrix} \alpha & 0 & c_x \\ 0 & \beta & c_y \\ 0 & 0 & 1 \end{bmatr
 
 Матрица камеры с учётом скоса имеет вид:
 
-$K = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha & -\alpha \cot \theta & c_x \\ 0 & \frac{\beta}{\sin \theta} & c_y \\ 0 & 0 & 1 \end{bmatrix}$ (8)
+$K = \begin{bmatrix} x' \\\ y' \\\ z \end{bmatrix} = \begin{bmatrix} \alpha & -\alpha \cot \theta & c_x \\\ 0 & \frac{\beta}{\sin \theta} & c_y \\\ 0 & 0 & 1 \end{bmatrix}$ (8)
 
 где:
 * $\alpha$ и $\beta$ — масштабные коэффициенты
@@ -309,7 +309,7 @@ $K = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha & -\al
 
 Таким образом, для точки $P_w$ в мировой системе координат её координаты в системе камеры можно вычислить следующим образом:
 
-$P = \begin{bmatrix} R & T \\ 0 & 1 \end{bmatrix} P_w$ (9)
+$P = \begin{bmatrix} R & T \\\ 0 & 1 \end{bmatrix} P_w$ (9)
 
 где:
 * $R$ — матрица вращения размером 3×3
