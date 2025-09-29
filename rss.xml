@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Mon, 29 Sep 2025 19:47:19 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Основы трехмерного компьютерного зрения </title><link>https://mldl.ru/posts/base-3d/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;1. Введение&lt;/h4&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL</title><link>https://mldl.ru/</link><description>Заметки по machine learning, deep learning.</description><atom:link href="https://mldl.ru/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Mon, 29 Sep 2025 19:52:10 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Основы трехмерного компьютерного зрения </title><link>https://mldl.ru/posts/base-3d/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;1. Введение&lt;/h4&gt;
 &lt;p&gt;Камера является одним из важнейших инструментов в компьютерном зрении. Это механизм, с помощью которого мы можем фиксировать окружающий мир и использовать получаемые результаты — фотографии — для различных приложений. Поэтому один из фундаментальных вопросов трехмерного компьютерного зрения звучит так: как мы можем смоделировать камеру? &lt;/p&gt;
 &lt;h4&gt;2. Камера-обскура&lt;/h4&gt;
 &lt;p&gt;Камера-обскура — это простейшая система, которая позволяет фиксировать изображение объекта или сцены в трёхмерном мире. Такая система может быть создана путём размещения преграды с небольшим отверстием (апертурой) между трёхмерным объектом и фотоплёнкой или светочувствительным сенсором.&lt;/p&gt;
@@ -18,7 +18,7 @@
 Следовательно, если мы выведем соотношение между трёхмерной точкой $P$ и точкой $P'$ на плоскости изображения, мы сможем понять, как трёхмерный мир отображается на снимке, сделанном камерой-обскурой.&lt;/p&gt;
 &lt;p&gt;Обратите внимание, что треугольник $P' C'O$ подобен треугольнику, образованному точками $P$, $O$ и $(0, 0, z)$. 
 Используя теорему о подобных треугольниках, мы получаем:&lt;/p&gt;
-&lt;p&gt;$P' = \begin{pmatrix} x' \\ y' \end{pmatrix}^T = \begin{pmatrix} \frac{fx}{z} \\ \frac{fy}{z} \end{pmatrix}^T$ (1)&lt;/p&gt;
+&lt;p&gt;$P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} \frac{fx}{z} \\ \frac{fy}{z} \end{pmatrix}$ (1)&lt;/p&gt;
 &lt;p&gt;Важно отметить, что в этой модели камеры-обскуры мы делаем одно существенное допущение: апертура (отверстие) считается одной точкой. Однако в большинстве реальных ситуаций мы не можем предполагать, что апертура может быть бесконечно малой. Возникает вопрос: как влияет изменение размера апертуры на результат?&lt;/p&gt;
 &lt;p&gt;&lt;img alt="Рисунок 3: Влияние размера апертуры на изображение" src="https://storage.yandexcloud.net/yahosting/3d/3.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Рисунок 3: Влияние размера апертуры на изображение&lt;/strong&gt;&lt;/p&gt;
@@ -46,7 +46,7 @@
 &lt;p&gt;Такая модель является фундаментальной для понимания принципов работы современных камер и систем компьютерного зрения. &lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Объективы камер&lt;/strong&gt; обладают ещё одним важным свойством: они фокусируют все световые лучи, движущиеся параллельно оптической оси, в одну точку, известную как &lt;strong&gt;фокусная точка&lt;/strong&gt; (см. рисунок 5). Расстояние между фокусной точкой и центром линзы называется &lt;strong&gt;фокусным расстоянием&lt;/strong&gt; $f$.&lt;/p&gt;
 &lt;p&gt;Кроме того, световые лучи, проходящие через центр линзы, не отклоняются. Благодаря этому мы можем построить конструкцию, аналогичную модели камеры-обскуры, которая связывает точку $P$ в трёхмерном пространстве с соответствующей точкой $P'$ на плоскости изображения:&lt;/p&gt;
-&lt;p&gt;$P' = \begin{pmatrix} x' \ y' \end{pmatrix} = \begin{pmatrix} z' \frac{x}{z} \ z' \frac{y}{z} \end{pmatrix}$ (2)&lt;/p&gt;
+&lt;p&gt;$P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} z' \frac{x}{z} \\ z' \frac{y}{z} \end{pmatrix}$ (2)&lt;/p&gt;
 &lt;p&gt;Важно отметить следующие различия между моделями:
 * В модели камеры-обскуры $z' = f$
 * В модели с линзой $z' = f + z_0$&lt;/p&gt;
@@ -82,16 +82,16 @@
 &lt;li&gt;&lt;strong&gt;Параметры $c_x$ и $c_y$&lt;/strong&gt; описывают разницу между координатами плоскости изображения и цифровыми координатами изображения через перенос. &lt;/li&gt;
 &lt;li&gt;Координаты плоскости изображения имеют начало координат $C_0$ в центре изображения, где ось $k$ пересекает плоскость изображения.&lt;/li&gt;
 &lt;li&gt;Цифровые координаты изображения обычно имеют начало в левом нижнем углу изображения.&lt;/li&gt;
-&lt;li&gt;Таким образом, 2D точки на плоскости изображения и 2D точки в цифровом изображении смещаются на вектор переноса $\begin{pmatrix} c_x \ c_y \end{pmatrix}^T$.&lt;/li&gt;
+&lt;li&gt;Таким образом, 2D точки на плоскости изображения и 2D точки в цифровом изображении смещаются на вектор переноса $\begin{pmatrix} c_x \\ c_y \end{pmatrix}^T$.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;С учётом этого изменения систем координат отображение теперь выглядит так:&lt;/p&gt;
-&lt;p&gt;$P' = \begin{pmatrix} x' \ y' \end{pmatrix} = \begin{pmatrix} \frac{f}{z}x + c_x \ \frac{f}{z}y + c_y \end{pmatrix}$ (3)&lt;/p&gt;
+&lt;p&gt;$P' = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} \frac{f}{z}x + c_x \\ \frac{f}{z}y + c_y \end{pmatrix}$ (3)&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Второй важный эффект&lt;/strong&gt; — это то, что точки в цифровых изображениях выражаются в пикселях, в то время как точки на плоскости изображения представлены в физических измерениях (например, сантиметрах).&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Для учёта этого изменения единиц измерения необходимо ввести два новых параметра $k$ и $l$. Эти параметры имеют размерность [пиксель на сантиметр], соответствуют изменению единиц измерения по двум осям плоскости изображения. Важно отметить, что $k$ и $l$ могут быть разными, поскольку соотношение сторон пикселя не обязательно равно единице. Если $k = l$, мы говорим, что камера имеет квадратные пиксели. 
 Мы модифицируем наше предыдущее отображение следующим образом:&lt;/p&gt;
-&lt;p&gt;$P_0 = \begin{pmatrix} x' \ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)&lt;/p&gt;
+&lt;p&gt;$P_0 = \begin{pmatrix} x' \\ y' \end{pmatrix} = \begin{pmatrix} f k \frac{x}{z} + c_x \\ f l \frac{y}{z} + c_y \end{pmatrix} = \begin{pmatrix} \alpha\frac{x}{z} + c_x \\ \beta\frac{y}{z} + c_y \end{pmatrix}$ (4)&lt;/p&gt;
 &lt;p&gt;где 
 $\alpha = f \cdot k$
 $\beta = f \cdot l$
@@ -126,14 +126,14 @@ $l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
 &lt;li&gt;При обратном преобразовании из произвольных однородных координат $(v_1, ..., v_n, w)$ мы получаем евклидовы координаты $(\frac{v_1}{w}, ..., \frac{v_n}{w})$&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Используя однородные координаты, мы можем сформулировать преобразование следующим образом:&lt;/p&gt;
-&lt;p&gt;$P'_h = \begin{bmatrix} \alpha x + c_x z \ \beta y + c_y z \ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} x \ y \ z \ 1 \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} P_h$ (5)&lt;/p&gt;
+&lt;p&gt;$P'_h = \begin{bmatrix} \alpha x + c_x z \\ \beta y + c_y z \\ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \\ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \\ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} P_h$ (5)&lt;/p&gt;
 &lt;p&gt;Преимущества использования однородных координат:
 * Позволяют представить нелинейное преобразование в виде матричного умножения;
 * Упрощают дальнейшие математические выкладки;
 * Обеспечивают единый способ работы с проективными преобразованиями.&lt;/p&gt;
 &lt;p&gt;С этого момента будем работать преимущественно в &lt;strong&gt;однородных координатах&lt;/strong&gt;, если не указано иное. Индекс $h$ опустим, подразумевая, что любая точка $P$ или $P'$ задана в однородных координатах.&lt;/p&gt;
 &lt;p&gt;Как видно из уравнения (5), мы можем представить связь между точкой в трёхмерном пространстве и её координатами изображения в виде матрично-векторного соотношения:&lt;/p&gt;
-&lt;p&gt;$P' = \begin{bmatrix} x' \ y' \ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} x \ y \ z \ 1 \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} P = MP$ (6)&lt;/p&gt;
+&lt;p&gt;$P' = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \\ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x &amp;amp; 0 \\ 0 &amp;amp; \beta &amp;amp; c_y &amp;amp; 0 \\ 0 &amp;amp; 0 &amp;amp; 1 &amp;amp; 0 \end{bmatrix} P = MP$ (6)&lt;/p&gt;
 &lt;p&gt;где:
 * $M$ — &lt;strong&gt;матрица камеры&lt;/strong&gt;
 * $P$ — точка в однородных координатах трёхмерного пространства
@@ -145,7 +145,7 @@ $l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
 * Последний столбец матрицы $M$ содержит нули, что характерно для проективных преобразований.&lt;/p&gt;
 &lt;p&gt;Давайте разберем это матричное разложение более подробно:&lt;/p&gt;
 &lt;p&gt;Мы можем представить преобразование в виде:&lt;/p&gt;
-&lt;p&gt;$P' = MP = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x \ 0 &amp;amp; \beta &amp;amp; c_y \ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} I &amp;amp; 0 \end{bmatrix} P = K \begin{bmatrix} I &amp;amp; 0 \end{bmatrix} P$ (7)&lt;/p&gt;
+&lt;p&gt;$P' = MP = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x \\ 0 &amp;amp; \beta &amp;amp; c_y \\ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix} \begin{bmatrix} I &amp;amp; 0 \end{bmatrix} P = K \begin{bmatrix} I &amp;amp; 0 \end{bmatrix} P$ (7)&lt;/p&gt;
 &lt;p&gt;где:
 * $P'$ — координаты точки на плоскости изображения
 * $M$ — полная матрица преобразования
@@ -156,7 +156,7 @@ $l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="Рисунок 7: Проекция точки с помощью матрицы камеры" src="https://storage.yandexcloud.net/yahosting/3d/7.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Рисунок 7: Проекция точки с помощью матрицы камеры&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Матрица камеры $K$ имеет следующий вид:&lt;/p&gt;
-&lt;p&gt;$K = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x \ 0 &amp;amp; \beta &amp;amp; c_y \ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix}$&lt;/p&gt;
+&lt;p&gt;$K = \begin{bmatrix} \alpha &amp;amp; 0 &amp;amp; c_x \\ 0 &amp;amp; \beta &amp;amp; c_y \\ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix}$&lt;/p&gt;
 &lt;p&gt;где:
 * $\alpha$ и $\beta$ — масштабные коэффициенты, связанные с фокусным расстоянием
 * $c_x$ и $c_y$ — координаты главной точки (principal point)
@@ -175,7 +175,7 @@ $l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
 * &lt;strong&gt;Дисторсия (distortion)&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Скос изображения&lt;/strong&gt; возникает, когда система координат камеры имеет неточный угол между осями (отличающийся от 90 градусов). Большинство камер имеют нулевой скос, однако некоторое его значение может появиться из-за погрешностей при производстве сенсора.&lt;/p&gt;
 &lt;p&gt;Матрица камеры с учётом скоса имеет вид:&lt;/p&gt;
-&lt;p&gt;$K = \begin{bmatrix} x' \ y' \ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; -\alpha \cot \theta &amp;amp; c_x \ 0 &amp;amp; \frac{\beta}{\sin \theta} &amp;amp; c_y \ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix}$ (8)&lt;/p&gt;
+&lt;p&gt;$K = \begin{bmatrix} x' \\ y' \\ z \end{bmatrix} = \begin{bmatrix} \alpha &amp;amp; -\alpha \cot \theta &amp;amp; c_x \\ 0 &amp;amp; \frac{\beta}{\sin \theta} &amp;amp; c_y \\ 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix}$ (8)&lt;/p&gt;
 &lt;p&gt;где:
 * $\alpha$ и $\beta$ — масштабные коэффициенты
 * $\theta$ — угол скоса
@@ -196,7 +196,7 @@ $l$ — размер пикселя по оси x, пикс/мм. &lt;/p&gt;
 * &lt;strong&gt;Матрицей вращения&lt;/strong&gt; $R$
 * &lt;strong&gt;Вектором переноса&lt;/strong&gt; $T$&lt;/p&gt;
 &lt;p&gt;Таким образом, для точки $P_w$ в мировой системе координат её координаты в системе камеры можно вычислить следующим образом:&lt;/p&gt;
-&lt;p&gt;$P = \begin{bmatrix} R &amp;amp; T \ 0 &amp;amp; 1 \end{bmatrix} P_w$ (9)&lt;/p&gt;
+&lt;p&gt;$P = \begin{bmatrix} R &amp;amp; T \\ 0 &amp;amp; 1 \end{bmatrix} P_w$ (9)&lt;/p&gt;
 &lt;p&gt;где:
 * $R$ — матрица вращения размером 3×3
 * $T$ — вектор переноса размером 3×1
