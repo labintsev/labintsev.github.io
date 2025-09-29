@@ -41,7 +41,7 @@
 'render_taxonomies:output\\rss.xml', (576000, 12385)
 'render_pages:output\\posts\\nlp-za-90-minut\\index.html', (700416, 9114)
 'render_sources:output\\posts\\nlp-za-90-minut\\index.md', (43008, 258)
-'_scan_locs:sitemap', (709632, 2101)
+'_scan_locs:sitemap', (709632, 2045)
 'sitemap:output\\sitemap.xml', (431104, 3960)
 'copy_assets:output\\assets\\css\\code.css', (46080, 141)
 'copy_assets:output\\assets\\css\\ipython.min.css', (381440, 896)
