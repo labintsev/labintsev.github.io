@@ -2,8 +2,8 @@
 .. title: Основы трехмерного компьютерного зрения 
 .. slug: base-3d
 .. date: 2025-09-29 14:00 UTC+03:00
-.. tags: 
-.. category: 
+.. tags: cs231a
+.. category: CV
 .. link: 
 .. description: 
 .. type: text
