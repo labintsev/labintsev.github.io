@@ -34,7 +34,7 @@ $P' = K \begin{bmatrix} R & T \end{bmatrix} P_w = MP_w$     (1)
 
 Мы составляем линейную систему уравнений из $n$ соответствий, таких что для каждого соответствия $P_i$, $p_i$ и матрицы камеры $M$, строки которой $m_1$, $m_2$, $m_3$:
 
-$p_i = \begin{pmatrix} u_i \\ v_i \end{pmatrix} = MP_i = \begin{pmatrix} \frac{m_1P_i}{m_3P_i} \\ \frac{m_2P_i}{m_3P_i} \end{pmatrix}$ (2)
+$p_i = \begin{pmatrix} u_i \\\ v_i \end{pmatrix} = MP_i = \begin{pmatrix} \frac{m_1P_i}{m_3P_i} \\\ \frac{m_2P_i}{m_3P_i} \end{pmatrix}$ (2)
 
 Уравнение (2) даёт нам два ограничения для нахождения неизвестных параметров, содержащихся в $m$.
 
@@ -56,15 +56,15 @@ $v_n(m_3P_n)−m_2P_n = 0$
 Мы можем вынести вектора $m_1 , m_2, m_3$ и представить эту систему уравнений в виде матричного произведения:
 
 $\begin{bmatrix}
-P_1^T & 0^T & -u_1P_1^T  \\
-0^T & P_1^T & -v_1P_1^T  \\
-\vdots & \vdots & \vdots \\
-P_n^T & 0^T & -u_nP_n^T  \\
+P_1^T & 0^T & -u_1P_1^T  \\\
+0^T & P_1^T & -v_1P_1^T  \\\
+\vdots & \vdots & \vdots \\\
+P_n^T & 0^T & -u_nP_n^T  \\\
 0^T & P_n^T & -v_nP_n^T
 \end{bmatrix}
 \begin{bmatrix}
-m_1^T \\
-m_2^T \\
+m_1^T \\\
+m_2^T \\\
 m_3^T
 \end{bmatrix} = Pm = 0$ (3)
 
@@ -87,8 +87,8 @@ $\min_{m} \|Pm\|^2 \quad \text{при условии} \quad \|m\|^2 = 1$ (4)
 C помощью SVD мы вычислили матрицу $M$, с точностью до масштабного множителя $\rho$. 
 
 $\rho M = \begin{bmatrix}
-\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T & \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\
-\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T & \frac{\beta}{\sin \theta} t_y + c_y t_z \\
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T & \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\\
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T & \frac{\beta}{\sin \theta} t_y + c_y t_z \\\
 r_3^T & t_z
 \end{bmatrix}$ (5)
 
@@ -97,16 +97,16 @@ r_3^T & t_z
 Разделим на скаляр $\rho$ и обозначим первый столбец как матрицу $A$, а второй столбец как вектор $b$:
 
 $M = \frac{1}{\rho} \begin{bmatrix}
-\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T & \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\
-\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T & \frac{\beta}{\sin \theta} t_y + c_y t_z \\
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T & \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\\
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T & \frac{\beta}{\sin \theta} t_y + c_y t_z \\\
 r_3^T & t_z
 \end{bmatrix} =
 \begin{bmatrix}
 A & b
 \end{bmatrix} =
 \begin{bmatrix}
-a_1^T & b_1 \\
-a_2^T & b_2 \\
+a_1^T & b_1 \\\
+a_2^T & b_2 \\\
 a_3^T & b_3
 \end{bmatrix}$
 
@@ -151,15 +151,15 @@ $\beta = \rho^2 \|a_2 \times a_3\| \sin \theta$
 
 $Q P_i =
 \begin{bmatrix}
-q_1 \\ q_2 \\ q_3
+q_1 \\\ q_2 \\\ q_3
 \end{bmatrix} P_i = 
 \begin{bmatrix}
-\frac{1}{\lambda} & 0 & 0 \\
-0 & \frac{1}{\lambda} & 0 \\
+\frac{1}{\lambda} & 0 & 0 \\\
+0 & \frac{1}{\lambda} & 0 \\\
 0 & 0 & 1
 \end{bmatrix} M P_i = 
 \begin{bmatrix}
-u_i \\
+u_i \\\
 v_i
 \end{bmatrix} = p_i$ (8)
 
@@ -183,12 +183,12 @@ $v_n(m_1P_n) - u_n(m_2P_n) = 0$
 Эта система может быть представлена в виде матрично-векторного произведения, решаемого с помощью **сингулярного разложения (SVD)**:
 
 $L n = \begin{bmatrix}
-v_1P_1^T & -u_1P_1^T \\
-\vdots & \vdots \\
+v_1P_1^T & -u_1P_1^T \\\
+\vdots & \vdots \\\
 v_nP_n^T & -u_nP_n^T
 \end{bmatrix}
 \begin{bmatrix}
-m_1^T \\
+m_1^T \\\
 m_2^T
 \end{bmatrix}$ (19)
 
