@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калибровка камеры  | Заметки по ML, DL</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
+<link rel="canonical" href="https://mldl.ru/posts/camera-calibration/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
+<link rel="prev" href="../base-3d/" title="Основы трехмерного компьютерного зрения " type="text/html">
+<meta property="og:site_name" content="Заметки по ML, DL">
+<meta property="og:title" content="Калибровка камеры ">
+<meta property="og:url" content="https://mldl.ru/posts/camera-calibration/">
+<meta property="og:description" content="Калибровка камеры
+Чтобы точно знать преобразование из реального трёхмерного мира в цифровые изображения, необходимо заранее знать многие внутренние параметры камеры. Если у нас есть произвольная камер">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-09-30T14:00:00+03:00">
+<meta property="article:tag" content="cs231a">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href="../../">
+
+            <span id="blog-title">Заметки по ML, DL</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.md" id="sourcelink" class="nav-link">Источник</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="../../archive.html" class="nav-link">Archive</a>
+                </li>
+<li class="nav-item">
+<a href="../../categories/" class="nav-link">Tags</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Калибровка камеры </a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    Андрей Лабинцев
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-09-30T14:00:00+03:00" itemprop="datePublished" title="2025-09-30 14:00">2025-09-30 14:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p><strong>Калибровка камеры</strong></p>
+<p>Чтобы точно знать преобразование из реального трёхмерного мира в цифровые изображения, необходимо заранее знать многие внутренние параметры камеры. Если у нас есть произвольная камера, мы можем как иметь доступ к этим параметрам, так и не иметь его. Однако у нас есть доступ к изображениям, которые делает камера.</p>
+<p>Возникает вопрос: можем ли мы найти способ вывести эти параметры из изображений? Эта задача оценки внешних и внутренних параметров камеры известна как <strong>калибровка камеры</strong>.</p>
+<p><strong>Калибровка камеры</strong> — это фундаментальный процесс в компьютерном зрении и обработке изображений, который позволяет нам переходить от наблюдаемых пикселей к реальным координатам в пространстве.</p>
+<p><img alt="Рисунок 1: Пример калибровочной установки" src="https://storage.yandexcloud.net/yahosting/calibrate/1.jpg"></p>
+<p><strong>Рисунок 1: Пример калибровочной установки</strong></p>
+<p>Процесс калибровки камеры заключается в определении <strong>внутренней матрицы камеры</strong> $K$ и <strong>внешних параметров</strong> $R$, $T$ из уравнения (1).  </p>
+<p>$P' = K \begin{bmatrix} R &amp; T \end{bmatrix} P_w = MP_w$     (1)</p>
+<p>Рассмотрим этот процесс в контексте калибровочной установки, подобной показанной на рисунке 1.</p>
+<p><strong>Калибровочная установка</strong> обычно состоит из простого шаблона (например, шахматной доски) с известными размерами. Кроме того, установка определяет нашу мировую систему координат с началом $O_w$ и осями $i_w$, $j_w$, $k_w$.</p>
+<p>Из известного шаблона мы получаем точки в мировой системе координат $P_1, ..., P_n$. Найдя эти точки на изображении, полученном с камеры, мы получаем соответствующие точки изображения $p_1, ..., p_n$.</p>
+<p>Мы составляем линейную систему уравнений из $n$ соответствий, таких что для каждого соответствия $P_i$, $p_i$ и матрицы камеры $M$, строки которой $m_1$, $m_2$, $m_3$:</p>
+<p>$p_i = \begin{pmatrix} u_i \ v_i \end{pmatrix} = MP_i = \begin{pmatrix} \frac{m_1P_i}{m_3P_i} \ \frac{m_2P_i}{m_3P_i} \end{pmatrix}$ (2)</p>
+<p>Уравнение (2) даёт нам два ограничения для нахождения неизвестных параметров, содержащихся в $m$.</p>
+<p>Мы знаем, что матрица камеры имеет 11 неизвестных параметров (6 внешних и 5 внутренних). Это означает, что нам нужно как минимум 6 соответствий для решения. Однако в реальном мире мы часто используем больше соответствий, поскольку измерения часто зашумлены.</p>
+<p>Для каждой точки $P_i$ мы можем вывести пару уравнений, связывающих координаты на плоскости $u_i, v_i$ с 3D координатами:</p>
+<p>$u_i(m_3P_i) − m_1P_i = 0$<br>
+$v_i(m_3P_i) − m_2P_i = 0$</p>
+<p>При наличии $n$ таких соответствующих точек вся линейная система уравнений принимает вид:</p>
+<p>$u_1(m_3P_1)−m_1P_1 = 0$<br>
+$v_1(m_3P_1)−m_2P_1 = 0$<br>
+...<br>
+$u_n(m_3P_n)−m_1P_n = 0$<br>
+$v_n(m_3P_n)−m_2P_n = 0$  </p>
+<p>Мы можем вынести вектора $m_1 , m_2, m_3$ и представить эту систему уравнений в виде матричного произведения:</p>
+<p>$\begin{bmatrix}
+P_1^T &amp; 0^T &amp; -u_1P_1^T  \
+0^T &amp; P_1^T &amp; -v_1P_1^T  \
+\vdots &amp; \vdots &amp; \vdots \
+P_n^T &amp; 0^T &amp; -u_nP_n^T  \
+0^T &amp; P_n^T &amp; -v_nP_n^T
+\end{bmatrix}
+\begin{bmatrix}
+m_1^T \
+m_2^T \
+m_3^T
+\end{bmatrix} = Pm = 0$ (3)</p>
+<p>Когда $2n &gt; 11$, наша однородная линейная система является переопределённой. Для такой системы $m = 0$ всегда является тривиальным решением. Более того, даже если существует ненулевое решение $m$, то для любого $\rho \in \mathbb{R}$, $km$ также будет решением.</p>
+<p>Поэтому для ограничения решения мы выполняем следующую минимизацию:</p>
+<p>$\min_{m} |Pm|^2 \quad \text{при условии} \quad |m|^2 = 1$ (4)</p>
+<p>Для решения этой задачи минимизации используется сингулярное разложение. Если обозначить $P = UDV^T$, то решение задачи минимизации заключается в том, чтобы установить $m$ равным последнему столбцу матрицы $V$.
+Обоснование данного решения выходит за рамки этого курса. Для более подробного изучения вы можете обратиться к разделу 5.3 книги Hartley &amp; Zisserman стр. 592–593. </p>
+<p>В этом разделе вы найдёте:<br>
+- Математическое обоснование метода<br>
+- Подробное доказательство решения<br>
+- Дополнительные технические детали  </p>
+<p>После преобразования вектора $m$ в матрицу $M$ мы хотим явно найти внешние и внутренние параметры камеры.</p>
+<p>C помощью SVD мы вычислили матрицу $M$, с точностью до масштабного множителя $\rho$. </p>
+<p>$\rho M = \begin{bmatrix}
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \
+r_3^T &amp; t_z
+\end{bmatrix}$ (5)</p>
+<p>где $r_1^T$, $r_2^T$, и $r_3^T$ — это три строки матрицы вращения $R$.</p>
+<p>Разделим на скаляр $\rho$ и обозначим первый столбец как матрицу $A$, а второй столбец как вектор $b$:</p>
+<p>$M = \frac{1}{\rho} \begin{bmatrix}
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \
+r_3^T &amp; t_z
+\end{bmatrix} =
+\begin{bmatrix}
+A &amp; b
+\end{bmatrix} =
+\begin{bmatrix}
+a_1^T &amp; b_1 \
+a_2^T &amp; b_2 \
+a_3^T &amp; b_3
+\end{bmatrix}$</p>
+<p>Теперь мы можем вычислить внутренние параметры камеры через элементы известной матрицы $M$, она же $A$ и $b$: (6)</p>
+<p>Масштабный множитель:<br>
+$\rho = \pm \frac{1}{|a_3|}$  </p>
+<p>Координаты главной точки:<br>
+$c_x = \rho^2 (a_1 \cdot a_3)$<br>
+$c_y = \rho^2 (a_2 \cdot a_3)$  </p>
+<p>Угол скоса:<br>
+$\theta = \cos^{-1} \left( -\frac{(a_1 \times a_3) \cdot (a_2 \times a_3)}{|a_1 \times a_3| \cdot |a_2 \times a_3|} \right)$ </p>
+<p>Масштабные коэффициенты:<br>
+$\alpha = \rho^2 |a_1 \times a_3| \sin \theta$<br>
+$\beta = \rho^2 |a_2 \times a_3| \sin \theta$  </p>
+<p>Формулы для вычисления внешних параметров (7)</p>
+<p>Матрица вращения:<br>
+  $r_1 = \frac{a_2 \times a_3}{|a_2 \times a_3|}$<br>
+  $r_2 = r_3 \times r_1$<br>
+  $r_3 = \rho a_3$  </p>
+<p>Вектор переноса:<br>
+  $T = \rho K^{-1} b$</p>
+<p>При подготовке данных для процедуры калибровки важно учитывать особые случаи, при которых процесс может дать некорректные результаты. 
+ <strong>Вырожденные конфигурации</strong> возникают, когда точки $P_i$ располагаются в одной плоскости или лежат на кривой пересечения двух квадрик. В таких случаях система уравнений становится неразрешимой, что приводит к невозможности корректного определения параметров камеры.
+Чтобы избежать подобных проблем, следует тщательно подходить к процессу калибровки. Необходимо использовать точки с различной глубиной расположения, обеспечивать разнообразие положений калибровочной мишени в пространстве и внимательно следить за распределением точек. Важно также проверять качество получаемых данных и анализировать корректность результатов на тестовых наборах.
+Для более глубокого понимания теоретических аспектов рекомендуется обратиться к разделу 1.3.1 учебника Forsyth &amp; Ponce, где подробно рассматриваются вырожденные конфигурации и методы их предотвращения.</p>
+<h4>2. Компенсация искажений при калибровке камеры</h4>
+<p>До этого момента мы рассматривали идеальные линзы, свободные от любых искажений. Однако в реальности объективы могут отклоняться от прямолинейной проекции, что требует применения более сложных методов обработки. В этом разделе мы кратко рассмотрим подходы к работе с искажениями.</p>
+<p>Благодаря физической симметрии линзы <strong>радиальные искажения</strong> тоже обладают симметрией. 
+ Для моделирования радиальных искажений используется изотропное преобразование $Q$:</p>
+<p>$Q P_i =
+\begin{bmatrix}
+q_1 \ q_2 \ q_3
+\end{bmatrix} P_i = 
+\begin{bmatrix}
+\frac{1}{\lambda} &amp; 0 &amp; 0 \
+0 &amp; \frac{1}{\lambda} &amp; 0 \
+0 &amp; 0 &amp; 1
+\end{bmatrix} M P_i = 
+\begin{bmatrix}
+u_i \
+v_i
+\end{bmatrix} = p_i$ (8)</p>
+<p>Переписав в систему векторных уравнений, получаем:  </p>
+<p>$u_i q_3 P_i = q_1 P_i$ <br>
+$v_i q_3 P_i = q_2 P_i$   </p>
+<p>Однако такая система перестаёт быть линейной, и для её решения требуются методы <strong>нелинейной оптимизации</strong>, которые подробно рассматриваются в разделе 22.2 учебника Forsyth &amp; Ponce.</p>
+<p>Упростить процесс нелинейной оптимизации при калибровке можно, сделав определённые допущения. В случае радиальных искажений важно отметить, что соотношение между координатами $u_i$ и $v_i$ остаётся неизменным. Это соотношение можно вычислить следующим образом:</p>
+<p>$\frac{u_i}{v_i} = \frac{\frac{m_1P_i}{m_3P_i}}{\frac{m_2P_i}{m_3P_i}} = \frac{m_1P_i}{m_2P_i}$ (18)</p>
+<p>При наличии $n$ соответствий мы можем составить систему линейных уравнений следующего вида:</p>
+<p>$v_1(m_1P_1) - u_1(m_2P_1) = 0$<br>
+$\vdots$<br>
+$v_n(m_1P_n) - u_n(m_2P_n) = 0$  </p>
+<p>Эта система может быть представлена в виде матрично-векторного произведения, решаемого с помощью <strong>сингулярного разложения (SVD)</strong>:</p>
+<p>$L n = \begin{bmatrix}
+v_1P_1^T &amp; -u_1P_1^T \
+\vdots &amp; \vdots \
+v_nP_n^T &amp; -u_nP_n^T
+\end{bmatrix}
+\begin{bmatrix}
+m_1^T \
+m_2^T
+\end{bmatrix}$ (19)</p>
+<p>После оценки векторов $m_1$ и $m_2$ вектор $m_3$ может быть выражен как <strong>нелинейная функция</strong> от $m_1$, $m_2$ и $\lambda$. Это приводит к необходимости решения задачи <strong>нелинейной оптимизации</strong>, которая значительно проще исходной задачи оценки элементов матрицы $Q$.</p>
+<p>Процесс решения включает следующие этапы:</p>
+<ol>
+<li>Формирование матрицы $L n$ на основе известных соответствий между точками  </li>
+<li>Применение SVD для нахождения $m_1$ и $m_2$  </li>
+<li>Вычисление $m_3$ через нелинейную зависимость  </li>
+</ol>
+<p>Используем условие ортогональности:  </p>
+<p>$m_1 \cdot m_3 = 0$ и $m_2 \cdot m_3 = 0$  </p>
+<p>Учитываем нормировку:  </p>
+<p>$|m_3| = 1$</p>
+<p>Вводим зависимость от параметра $\lambda$, итоговая формула для вычисления $m_3$ имеет вид:  </p>
+<p>$m_3 = \frac{m_1 \times m_2}{|m_1 \times m_2|} \cdot g(\lambda)$  </p>
+<p>где $g(\lambda)$ — некоторая функция от параметра $\lambda$, зависящая от конкретной модели искажений.</p>
+<p>Вид функции $g(\lambda)$ зависит от требуемой точности модели. </p>
+<p><strong>Полиномиальная модель</strong> общего вида: </p>
+<p>$g(\lambda) = 1 + k_1\lambda^2 + k_2\lambda^4 + k_3\lambda^6 + ...$  </p>
+<p>где $k_1, k_2, k_3$ — коэффициенты радиальных искажений.</p>
+<p>На практике используют вычислительно несложные модели:  </p>
+<p>$g(\lambda) = 1 + k_1\lambda^2$</p>
+<p>или</p>
+<p>$g(\lambda) = 1 + k_1\lambda^2 + k_2\lambda^4$</p>
+<p><strong>Модель Брауна</strong> включает как радиальные, так и тангенциальные искажения:</p>
+<p>$x_{distorted} = x(1 + k_1r^2 + k_2r^4) + 2p_1xy + p_2(r^2 + 2x^2)$  </p>
+<p>$y_{distorted} = y(1 + k_1r^2 + k_2r^4) + p_1(r^2 + 2y^2) + 2p_2xy$  </p>
+<p>где $r^2 = x^2 + y^2$  </p>
+<h4>Резюме</h4>
+<p>Калибровка камеры — это комплексный процесс определения внутренних и внешних параметров оптической системы для точного преобразования координат между трёхмерным пространством и двумерным изображением. 
+В основе калибровки лежит использование калибровочной мишени с известными координатами, что позволяет установить соответствие между мировыми и экранными координатами. Процесс включает определение матрицы камеры, которая содержит информацию о фокусном расстоянии, координатах главной точки и коэффициентах искажения.</p>
+<p>Важным этапом является учёт искажений, которые неизбежно присутствуют в реальных объективах. Для их компенсации применяются специальные математические модели, чаще всего основанные на полиномиальных функциях радиальных искажений. 
+При калибровке необходимо избегать вырожденных конфигураций, когда точки располагаются в одной плоскости, что делает невозможным корректное определение параметров. 
+Практическая реализация требует достаточного количества калибровочных изображений с разнообразным расположением мишени относительно камеры. После завершения калибровки получается набор параметров, позволяющий компенсировать искажения и восстанавливать пространственные координаты по изображениям с точностью до удаления $z$. </p>
+<p>Качество калибровки напрямую влияет на точность последующих измерений и является критически важным этапом в системах компьютерного зрения и машинного обучения.</p>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/cs231a/" rel="tag">cs231a</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../base-3d/" rel="prev" title="Основы трехмерного компьютерного зрения ">Предыдущая запись</a>
+            </li>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\\(","\\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\\[","\\\]"] ],
+        processEscapes: true
+    },
+    displayAlign: 'center', // Change this to 'left' if you want left-aligned equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script></article><!--End of body content--><footer id="footer">
+            Contents © 2025         <a href="mailto:andrej.labintsev@yandex.ru">Андрей Лабинцев</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+</body>
+</html>
