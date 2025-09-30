@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cat_cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Tue, 30 Sep 2025 11:52:48 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Калибровка камеры </title><link>https://mldl.ru/posts/camera-calibration/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;p&gt;&lt;strong&gt;Калибровка камеры&lt;/strong&gt;&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cat_cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Tue, 30 Sep 2025 18:45:24 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Калибровка камеры </title><link>https://mldl.ru/posts/camera-calibration/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;p&gt;&lt;strong&gt;Калибровка камеры&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Чтобы точно знать преобразование из реального трёхмерного мира в цифровые изображения, необходимо заранее знать многие внутренние параметры камеры. Если у нас есть произвольная камера, мы можем как иметь доступ к этим параметрам, так и не иметь его. Однако у нас есть доступ к изображениям, которые делает камера.&lt;/p&gt;
 &lt;p&gt;Возникает вопрос: можем ли мы найти способ вывести эти параметры из изображений? Эта задача оценки внешних и внутренних параметров камеры известна как &lt;strong&gt;калибровка камеры&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Калибровка камеры&lt;/strong&gt; — это фундаментальный процесс в компьютерном зрении и обработке изображений, который позволяет нам переходить от наблюдаемых пикселей к реальным координатам в пространстве.&lt;/p&gt;
@@ -11,7 +11,7 @@
 &lt;p&gt;&lt;strong&gt;Калибровочная установка&lt;/strong&gt; обычно состоит из простого шаблона (например, шахматной доски) с известными размерами. Кроме того, установка определяет нашу мировую систему координат с началом $O_w$ и осями $i_w$, $j_w$, $k_w$.&lt;/p&gt;
 &lt;p&gt;Из известного шаблона мы получаем точки в мировой системе координат $P_1, ..., P_n$. Найдя эти точки на изображении, полученном с камеры, мы получаем соответствующие точки изображения $p_1, ..., p_n$.&lt;/p&gt;
 &lt;p&gt;Мы составляем линейную систему уравнений из $n$ соответствий, таких что для каждого соответствия $P_i$, $p_i$ и матрицы камеры $M$, строки которой $m_1$, $m_2$, $m_3$:&lt;/p&gt;
-&lt;p&gt;$p_i = \begin{pmatrix} u_i \ v_i \end{pmatrix} = MP_i = \begin{pmatrix} \frac{m_1P_i}{m_3P_i} \ \frac{m_2P_i}{m_3P_i} \end{pmatrix}$ (2)&lt;/p&gt;
+&lt;p&gt;$p_i = \begin{pmatrix} u_i \\ v_i \end{pmatrix} = MP_i = \begin{pmatrix} \frac{m_1P_i}{m_3P_i} \\ \frac{m_2P_i}{m_3P_i} \end{pmatrix}$ (2)&lt;/p&gt;
 &lt;p&gt;Уравнение (2) даёт нам два ограничения для нахождения неизвестных параметров, содержащихся в $m$.&lt;/p&gt;
 &lt;p&gt;Мы знаем, что матрица камеры имеет 11 неизвестных параметров (6 внешних и 5 внутренних). Это означает, что нам нужно как минимум 6 соответствий для решения. Однако в реальном мире мы часто используем больше соответствий, поскольку измерения часто зашумлены.&lt;/p&gt;
 &lt;p&gt;Для каждой точки $P_i$ мы можем вывести пару уравнений, связывающих координаты на плоскости $u_i, v_i$ с 3D координатами:&lt;/p&gt;
@@ -25,15 +25,15 @@ $u_n(m_3P_n)−m_1P_n = 0$&lt;br&gt;
 $v_n(m_3P_n)−m_2P_n = 0$  &lt;/p&gt;
 &lt;p&gt;Мы можем вынести вектора $m_1 , m_2, m_3$ и представить эту систему уравнений в виде матричного произведения:&lt;/p&gt;
 &lt;p&gt;$\begin{bmatrix}
-P_1^T &amp;amp; 0^T &amp;amp; -u_1P_1^T  \
-0^T &amp;amp; P_1^T &amp;amp; -v_1P_1^T  \
-\vdots &amp;amp; \vdots &amp;amp; \vdots \
-P_n^T &amp;amp; 0^T &amp;amp; -u_nP_n^T  \
+P_1^T &amp;amp; 0^T &amp;amp; -u_1P_1^T  \\
+0^T &amp;amp; P_1^T &amp;amp; -v_1P_1^T  \\
+\vdots &amp;amp; \vdots &amp;amp; \vdots \\
+P_n^T &amp;amp; 0^T &amp;amp; -u_nP_n^T  \\
 0^T &amp;amp; P_n^T &amp;amp; -v_nP_n^T
 \end{bmatrix}
 \begin{bmatrix}
-m_1^T \
-m_2^T \
+m_1^T \\
+m_2^T \\
 m_3^T
 \end{bmatrix} = Pm = 0$ (3)&lt;/p&gt;
 &lt;p&gt;Когда $2n &amp;gt; 11$, наша однородная линейная система является переопределённой. Для такой системы $m = 0$ всегда является тривиальным решением. Более того, даже если существует ненулевое решение $m$, то для любого $\rho \in \mathbb{R}$, $km$ также будет решением.&lt;/p&gt;
@@ -48,23 +48,23 @@ m_3^T
 &lt;p&gt;После преобразования вектора $m$ в матрицу $M$ мы хотим явно найти внешние и внутренние параметры камеры.&lt;/p&gt;
 &lt;p&gt;C помощью SVD мы вычислили матрицу $M$, с точностью до масштабного множителя $\rho$. &lt;/p&gt;
 &lt;p&gt;$\rho M = \begin{bmatrix}
-\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp;amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \
-\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp;amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp;amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp;amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \\
 r_3^T &amp;amp; t_z
 \end{bmatrix}$ (5)&lt;/p&gt;
 &lt;p&gt;где $r_1^T$, $r_2^T$, и $r_3^T$ — это три строки матрицы вращения $R$.&lt;/p&gt;
 &lt;p&gt;Разделим на скаляр $\rho$ и обозначим первый столбец как матрицу $A$, а второй столбец как вектор $b$:&lt;/p&gt;
 &lt;p&gt;$M = \frac{1}{\rho} \begin{bmatrix}
-\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp;amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \
-\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp;amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \
+\alpha r_1^T - \alpha \cot \theta r_2^T + c_x r_3^T &amp;amp; \alpha t_x - \alpha \cot \theta t_y + c_x t_z \\
+\frac{\beta}{\sin \theta} r_2^T + c_y r_3^T &amp;amp; \frac{\beta}{\sin \theta} t_y + c_y t_z \\
 r_3^T &amp;amp; t_z
 \end{bmatrix} =
 \begin{bmatrix}
 A &amp;amp; b
 \end{bmatrix} =
 \begin{bmatrix}
-a_1^T &amp;amp; b_1 \
-a_2^T &amp;amp; b_2 \
+a_1^T &amp;amp; b_1 \\
+a_2^T &amp;amp; b_2 \\
 a_3^T &amp;amp; b_3
 \end{bmatrix}$&lt;/p&gt;
 &lt;p&gt;Теперь мы можем вычислить внутренние параметры камеры через элементы известной матрицы $M$, она же $A$ и $b$: (6)&lt;/p&gt;
@@ -95,15 +95,15 @@ $\beta = \rho^2 |a_2 \times a_3| \sin \theta$  &lt;/p&gt;
  Для моделирования радиальных искажений используется изотропное преобразование $Q$:&lt;/p&gt;
 &lt;p&gt;$Q P_i =
 \begin{bmatrix}
-q_1 \ q_2 \ q_3
+q_1 \\ q_2 \\ q_3
 \end{bmatrix} P_i = 
 \begin{bmatrix}
-\frac{1}{\lambda} &amp;amp; 0 &amp;amp; 0 \
-0 &amp;amp; \frac{1}{\lambda} &amp;amp; 0 \
+\frac{1}{\lambda} &amp;amp; 0 &amp;amp; 0 \\
+0 &amp;amp; \frac{1}{\lambda} &amp;amp; 0 \\
 0 &amp;amp; 0 &amp;amp; 1
 \end{bmatrix} M P_i = 
 \begin{bmatrix}
-u_i \
+u_i \\
 v_i
 \end{bmatrix} = p_i$ (8)&lt;/p&gt;
 &lt;p&gt;Переписав в систему векторных уравнений, получаем:  &lt;/p&gt;
@@ -118,12 +118,12 @@ $\vdots$&lt;br&gt;
 $v_n(m_1P_n) - u_n(m_2P_n) = 0$  &lt;/p&gt;
 &lt;p&gt;Эта система может быть представлена в виде матрично-векторного произведения, решаемого с помощью &lt;strong&gt;сингулярного разложения (SVD)&lt;/strong&gt;:&lt;/p&gt;
 &lt;p&gt;$L n = \begin{bmatrix}
-v_1P_1^T &amp;amp; -u_1P_1^T \
-\vdots &amp;amp; \vdots \
+v_1P_1^T &amp;amp; -u_1P_1^T \\
+\vdots &amp;amp; \vdots \\
 v_nP_n^T &amp;amp; -u_nP_n^T
 \end{bmatrix}
 \begin{bmatrix}
-m_1^T \
+m_1^T \\
 m_2^T
 \end{bmatrix}$ (19)&lt;/p&gt;
 &lt;p&gt;После оценки векторов $m_1$ и $m_2$ вектор $m_3$ может быть выражен как &lt;strong&gt;нелинейная функция&lt;/strong&gt; от $m_1$, $m_2$ и $\lambda$. Это приводит к необходимости решения задачи &lt;strong&gt;нелинейной оптимизации&lt;/strong&gt;, которая значительно проще исходной задачи оценки элементов матрицы $Q$.&lt;/p&gt;
