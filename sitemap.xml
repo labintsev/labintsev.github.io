@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/archive.html</loc>
-  <lastmod>2025-09-30T11:52:00Z</lastmod>
+  <lastmod>2025-10-01T14:10:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/</loc>
@@ -47,7 +47,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/index-1.html</loc>
-  <lastmod>2025-09-30T11:52:00Z</lastmod>
+  <lastmod>2025-10-01T14:10:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/architecture/</loc>
@@ -100,6 +100,10 @@
  <url>
   <loc>https://mldl.ru/posts/optimization/</loc>
   <lastmod>2025-09-29T19:15:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/single-view-metrology/</loc>
+  <lastmod>2025-10-01T14:10:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/software-setup/</loc>
