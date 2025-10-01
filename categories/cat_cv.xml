@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cat_cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Wed, 01 Oct 2025 17:38:52 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Измерение углов </title><link>https://mldl.ru/posts/single-view-metrology/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;Введение&lt;/h4&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о CV)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cat_cv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Wed, 01 Oct 2025 17:42:24 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Измерение углов </title><link>https://mldl.ru/posts/single-view-metrology/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;Введение&lt;/h4&gt;
 &lt;p&gt;На предыдущих лекциях мы обсуждали, как можно преобразовывать точки из реального трёхмерного мира в цифровые изображения, используя внешние и внутренние характеристики камер. Мы рассмотрели, как можно использовать известную структуру калибровочной установки и соответствующие изображения для определения характеристик камеры. &lt;/p&gt;
 &lt;p&gt;Теперь мы обратимся к смежной проблеме: можно ли восстановить известную структуру трёхмерного мира, если у нас есть единственное изображение и известны свойства камеры, которой это изображение было сделано? И наконец мы рассмотрим алгоритм калибровки камеры и измерения углов между плоскостями на одиночном изображении. &lt;/p&gt;
 &lt;h4&gt;1. Преобразования в 2D пространстве&lt;/h4&gt;
@@ -155,12 +155,14 @@ y \\
 &lt;p&gt;Линия горизонта позволяет &lt;strong&gt;вычислять&lt;/strong&gt; важные характеристики сцены. Существует интересное соотношение между нормалью $n$ плоскости в 3D и соответствующей линией горизонта $l_{horiz}$ на изображении:&lt;/p&gt;
 &lt;p&gt;$n = K^Tl_{horiz}$ (11)&lt;/p&gt;
 &lt;p&gt;Это означает, что если мы можем определить линию горизонта, связанную с плоскостью, и знаем внутренние характеристики камеры $K$, мы можем оценить ориентацию этой плоскости.&lt;/p&gt;
-&lt;p&gt;Теперь давайте рассмотрим понятие &lt;strong&gt;плоскость в бесконечности&lt;/strong&gt;. &lt;/p&gt;
+&lt;p&gt;Теперь давайте рассмотрим понятие &lt;strong&gt;плоскость в бесконечности&lt;/strong&gt;.  &lt;/p&gt;
 &lt;p&gt;&lt;img alt="Рисунок 3: Плоскость в бесконечности" src="https://storage.yandexcloud.net/yahosting/photo_metro/3.jpg"&gt; &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Рисунок 3: Плоскость в бесконечности&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Эта плоскость определяется набором из двух или более линий схода. В однородных координатах плоскость описывается вектором:&lt;/p&gt;
 &lt;p&gt;$Π_\infty = \begin{bmatrix} 0 &amp;amp; 0 &amp;amp; 0 &amp;amp; 1 \end{bmatrix}^T$ &lt;/p&gt;
-&lt;p&gt;Плоскость в бесконечности поможет нам понять важное свойство, связывающее линии и плоскости в 3D с соответствующими точками и линиями схода на плоскости изображения.
-&lt;img alt="Рисунок 4: Определение угла между линиями" src="https://storage.yandexcloud.net/yahosting/photo_metro/4.jpg"&gt;  &lt;/p&gt;
+&lt;p&gt;Плоскость в бесконечности поможет нам понять важное свойство, связывающее линии и плоскости в 3D с соответствующими точками и линиями схода на плоскости изображения.  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="Рисунок 4: Определение угла между линиями" src="https://storage.yandexcloud.net/yahosting/photo_metro/4.jpg"&gt;  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Рисунок 4: Определение угла между линиями&lt;/strong&gt;  &lt;/p&gt;
 &lt;p&gt;Пусть две пары параллельных линий в 3D имеют направления $d_1$ и $d_2$, связанные с точками в бесконечности $x_{1,\infty}$ и $x_{2,\infty}$. 
 Пусть $v_1$ и $v_2$ — соответствующие точки схода. 
 Тогда угол $θ$ между $d_1$ и $d_2$ определяется по формуле:&lt;/p&gt;
@@ -170,17 +172,11 @@ y \\
 &lt;p&gt;$\omega = (K K^T)^{-1}$&lt;/p&gt;
 &lt;p&gt;Эта матрица имеет важные свойства:  &lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Симметричность: матрица $\omega$ является симметричной, так как:&lt;/li&gt;
-&lt;li&gt;$K K^T$ — симметричная матрица&lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Обратная к симметричной матрице также симметрична&lt;/p&gt;
+&lt;p&gt;Симметричность: матрица $\omega$ является симметричной, так как $K K^T$ — симметричная матрица, а обратная к симметричной матрице также симметрична&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;Связь с параметрами камеры:&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;Содержит информацию о внутренних параметрах камеры&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Зависит от фокусных расстояний, координат главной точки и коэффициента skew&lt;/p&gt;
+&lt;p&gt;Связь с параметрами камеры: содержит информацию о внутренних параметрах камеры, зависит от фокусных расстояний, координат главной точки и коэффициента скоса (skew).&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;При стандартных предположениях о камере (нулевой скос, квадратные пиксели) матрица $\omega$ имеет вид:&lt;/p&gt;
