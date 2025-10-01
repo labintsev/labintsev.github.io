@@ -23,17 +23,17 @@
 **Изометрические преобразования** — это преобразования, сохраняющие расстояния. В своей базовой форме изометрия может быть описана как вращение $R$ и перенос $t$. Математически они определяются следующим образом:
 
 $\begin{bmatrix}
-x' \\
-y' \\
+x' \\\
+y' \\\
 1
 \end{bmatrix} = 
 \begin{bmatrix}
-R & t \\
+R & t \\\
 0 & 1
 \end{bmatrix}
 \begin{bmatrix}
-x \\
-y \\
+x \\\
+y \\\
 1
 \end{bmatrix}$
 
@@ -42,23 +42,23 @@ y \\
 **Преобразования подобия** — это преобразования, сохраняющие форму. Интуитивно они могут выполнять всё то же, что и изометрические преобразования, плюс масштабирование. Математически они обозначаются так:
 
 $\begin{bmatrix}
-x' \\
-y' \\
+x' \\\
+y' \\\
 1
 \end{bmatrix} = 
 \begin{bmatrix}
-SR & t \\
+SR & t \\\
 0 & 1
 \end{bmatrix}
 \begin{bmatrix}
-x \\
-y \\
+x \\\
+y \\\
 1
 \end{bmatrix} $  
 
 $ S = 
 \begin{bmatrix}
-s & 0 \\
+s & 0 \\\
 0 & s
 \end{bmatrix}$
 
@@ -79,17 +79,17 @@ $T(v) = Av + t$, где $A$ — линейное преобразование п
 В однородных координатах аффинные преобразования записываются так:  
 
 $\begin{bmatrix}
-x' \\
-y' \\
+x' \\\
+y' \\\
 1
 \end{bmatrix} = 
 \begin{bmatrix}
-A & t \\
+A & t \\\
 0 & 1
 \end{bmatrix}
 \begin{bmatrix}
-x \\
-y \\
+x \\\
+y \\\
 1
 \end{bmatrix}$
 
@@ -100,17 +100,17 @@ y \\
 В однородных координатах проективные преобразования представляются как: 
 
 $\begin{bmatrix}
-x' \\
-y' \\
+x' \\\
+y' \\\
 1
 \end{bmatrix} = 
 \begin{bmatrix}
-A & t \\
+A & t \\\
 v & b
 \end{bmatrix}
 \begin{bmatrix}
-x \\
-y \\
+x \\\
+y \\\
 1
 \end{bmatrix}$
 
@@ -137,7 +137,7 @@ $cross\ ratio = \frac{||P_3 - P_1||\ ||P_4 - P_2||}{||P_3 - P_2||\ ||P_4 - P_1||
 
 Для любой точки, лежащей на прямой, справедливо уравнение:
 
-$\forall p = \begin{bmatrix} x \\ y \end{bmatrix} \in \ell, \quad \begin{bmatrix} a & b & c \end{bmatrix} \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = 0$ (2)
+$\forall p = \begin{bmatrix} x \\\ y \end{bmatrix} \in \ell, \quad \begin{bmatrix} a & b & c \end{bmatrix} \begin{bmatrix} x \\\ y \\\ 1 \end{bmatrix} = 0$ (2)
 
 **Пересечение прямых**  
 В общем случае две прямые $\ell$ и $\ell'$ пересекаются в точке $x$, которая определяется как векторное произведение этих прямых.
@@ -149,7 +149,7 @@ $\forall p = \begin{bmatrix} x \\ y \end{bmatrix} \in \ell, \quad \begin{bmatrix
 
 Рассмотрим две параллельные прямые $\ell$ и $\ell'$. Когда прямые параллельны, их наклоны равны: $\frac{a}{b} = \frac{a'}{b'}$. Если вычислить точку пересечения в однородных координатах, получим:
 
-$\ell \times \ell' \propto \begin{bmatrix} b \\ -a \\ 0 \end{bmatrix} = x_\infty$ (3)
+$\ell \times \ell' \propto \begin{bmatrix} b \\\ -a \\\ 0 \end{bmatrix} = x_\infty$ (3)
 
 Это подтверждает, что параллельные прямые пересекаются в бесконечности. Точка пересечения параллельных прямых в бесконечности называется **идеальной точкой**. 
 
@@ -160,7 +160,7 @@ $\begin{bmatrix} x \ y \ 0 \end{bmatrix}^T$
 **Свойство идеальных точек**
 Все параллельные прямые с одинаковым наклоном $-\frac{a}{b}$ проходят через идеальную точку:
 
-$\ell^T x_\infty = \begin{bmatrix} a & b & c \end{bmatrix} \begin{bmatrix} b \\ -a \\ 0 \end{bmatrix} = 0$ (4)
+$\ell^T x_\infty = \begin{bmatrix} a & b & c \end{bmatrix} \begin{bmatrix} b \\\ -a \\\ 0 \end{bmatrix} = 0$ (4)
 
 **Бесконечно удалённые точки** позволяют определить прямую в бесконечности. Рассмотрим несколько пар параллельных прямых. Каждая пара пересекается в своей точке бесконечности $x_{\infty,i}$. Прямая $\ell_\infty$, проходящая через все эти точки, должна удовлетворять условию:
 
@@ -178,13 +178,13 @@ $\ell_\infty = \begin{bmatrix} 0 & 0 & 1 \end{bmatrix}^T$
 
 При применении проективного преобразования $H$ к точке в бесконечности $p_\infty$ получаем:
 
-$p' = Hp_\infty = \begin{bmatrix} A & t \\ v & b \end{bmatrix} \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} p'_x \\ p'_y \\ p'_z \end{bmatrix}$ (5)
+$p' = Hp_\infty = \begin{bmatrix} A & t \\\ v & b \end{bmatrix} \begin{bmatrix} 1 \\\ 1 \\\ 0 \end{bmatrix} = \begin{bmatrix} p'_x \\\ p'_y \\\ p'_z \end{bmatrix}$ (5)
 
 Заметим, что последний элемент $p'$ может стать ненулевым. Это означает, что проективное преобразование обычно переводит точки в бесконечности в точки, которые уже не находятся в бесконечности. Т.е. имеют конечные евклидовы координаты, пусть и за пределами изображения. 
 
 **Аффинные преобразования** ведут себя иначе и всегда переводят точку из бесконечности в бесконечность:
 
-$p' = Hp_\infty = \begin{bmatrix} A & t \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix} = \begin{bmatrix} p'_x \\ p'_y \\ 0 \end{bmatrix}$ (6)
+$p' = Hp_\infty = \begin{bmatrix} A & t \\\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 \\\ 1 \\\ 0 \end{bmatrix} = \begin{bmatrix} p'_x \\\ p'_y \\\ 0 \end{bmatrix}$ (6)
 
 **Преобразование прямых**
 
@@ -217,7 +217,7 @@ $\ell' = H^{-T}\ell$
 В трёхмерном пространстве вводится понятие **плоскости**, которая представляется вектором $\begin{bmatrix} a & b & c & d \end{bmatrix}^T$. 
 Здесь $(a, b, c)$ образуют вектор нормали, а $d$ — расстояние от начала координат до плоскости в направлении этого вектора. Формально плоскость определяется как множество точек $x$, удовлетворяющих уравнению:
 
-$x^T \begin{bmatrix} a \\ b \\ c \\ d \end{bmatrix} = ax_1 + bx_2 + cx_3 + d = 0$ (7)
+$x^T \begin{bmatrix} a \\\ b \\\ c \\\ d \end{bmatrix} = ax_1 + bx_2 + cx_3 + d = 0$ (7)
 
 **Прямые в 3D** определяются как пересечение двух плоскостей. Они имеют четыре степени свободы (точка пересечения и наклоны в трёх измерениях).
 
@@ -285,8 +285,8 @@ $\omega = (K K^T)^{-1}$
 3. При стандартных предположениях о камере (нулевой скос, квадратные пиксели) матрица $\omega$ имеет вид:
 
 $\omega = \begin{bmatrix}
-\omega_1 & 0 & \omega_4 \\
-0 & \omega_1 & \omega_5 \\
+\omega_1 & 0 & \omega_4 \\\
+0 & \omega_1 & \omega_5 \\\
 \omega_4 & \omega_5 & \omega_6
 \end{bmatrix}$
 
