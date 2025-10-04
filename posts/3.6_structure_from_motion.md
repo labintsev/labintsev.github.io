@@ -1,7 +1,7 @@
 <!--
 .. title: Извлечение структуры сцены из движения камеры 
 .. slug: structure-from-motion
-.. date: 2025-10-04 04:00 UTC+03:00
+.. date: 2025-10-04 10:00 UTC+03:00
 .. tags: cs231a
 .. category: CV
 .. link: 
