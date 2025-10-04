@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/archive.html</loc>
-  <lastmod>2025-10-04T15:28:00Z</lastmod>
+  <lastmod>2025-10-04T23:47:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/</loc>
@@ -51,7 +51,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/index-2.html</loc>
-  <lastmod>2025-10-04T15:28:00Z</lastmod>
+  <lastmod>2025-10-04T23:47:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/active-volumetric/</loc>
@@ -124,6 +124,10 @@
  <url>
   <loc>https://mldl.ru/posts/stereo-systems/</loc>
   <lastmod>2025-10-04T15:28:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/structure-from-motion/</loc>
+  <lastmod>2025-10-04T23:47:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/template/</loc>

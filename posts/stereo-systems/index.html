@@ -11,7 +11,7 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
 <link rel="canonical" href="https://mldl.ru/posts/stereo-systems/">
 <!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Андрей Лабинцев">
-<link rel="prev" href="../active-volumetric/" title="Активное стерео и объёмное стереовидение" type="text/html">
+<link rel="prev" href="../structure-from-motion/" title="Извлечение структуры сцены из движения камеры " type="text/html">
 <meta property="og:site_name" content="Заметки по ML, DL">
 <meta property="og:title" content="Стерео системы ">
 <meta property="og:url" content="https://mldl.ru/posts/stereo-systems/">
@@ -109,8 +109,8 @@ $p' = M'P = (x', y', 1)$   </p>
 <p>Векторы $p$ и $MP$ коллинеарны (лежат на одной прямой или параллельны), а значит  $p \times (MP) = 0$</p>
 <p>Развернем это векторное произведение в координатной форме:</p>
 <p>$p \times (MP) = \begin{vmatrix}
-i &amp; j &amp; k \
-x &amp; y &amp; 1 \
+i &amp; j &amp; k \\
+x &amp; y &amp; 1 \\
 M_1P &amp; M_2P &amp; M_3P
 \end{vmatrix} = 0$</p>
 <p>Раскрывая определитель, получаем:</p>
@@ -123,9 +123,9 @@ $x(M_2P) − y(M_1P) = 0$ (1)  </p>
 <p>Подобные ограничения можно сформулировать для $p'$ и $M'$. Используя ограничения обоих изображений, мы можем сформулировать линейное уравнение вида<br>
 $AP = 0$, где  </p>
 <p>$A = \begin{bmatrix}
-xM_3 − M_1 \
-yM_3 − M_2 \
-x'M'_3 − M'_1 \
+xM_3 − M_1 \\
+yM_3 − M_2 \\
+x'M'_3 − M'_1 \\
 y'M'_3 − M'_2
 \end{bmatrix}$ (2)</p>
 <p>Это уравнение можно решить с помощью сингулярного разложения (SVD), чтобы найти наилучшую линейную оценку точки $P$. </p>
@@ -160,9 +160,9 @@ y'M'_3 − M'_2
 <p>Когда мы формулируем остаточную функцию таким образом, становится видно, что она принимает формат стандартной задачи линейных наименьших квадратов. Для задачи триангуляции с $N$ изображениями решение линейных наименьших квадратов имеет вид:</p>
 <p>$\delta P = -(J^TJ)^{-1}J^Te$ (9)</p>
 <p>где:</p>
-<p>$e = \begin{bmatrix} e_1 \ \vdots \ e_N \end{bmatrix} = \begin{bmatrix} p_1 - M_1\hat{P} \ \vdots \ p_n - M_n\hat{P} \end{bmatrix}$ (10)</p>
+<p>$e = \begin{bmatrix} e_1 \\ \vdots \\ e_N \end{bmatrix} = \begin{bmatrix} p_1 - M_1\hat{P} \\ \vdots \\ p_n - M_n\hat{P} \end{bmatrix}$ (10)</p>
 <p>и</p>
-<p>$J = \begin{bmatrix} \frac{\partial e_1}{\partial \hat{P}_1} &amp; \frac{\partial e_1}{\partial \hat{P}_2} &amp; \frac{\partial e_1}{\partial \hat{P}_3} \ \vdots &amp; \vdots &amp; \vdots \ \frac{\partial e_N}{\partial \hat{P}_1} &amp; \frac{\partial e_N}{\partial \hat{P}_2} &amp; \frac{\partial e_N}{\partial \hat{P}_3} \end{bmatrix}$ (11)</p>
+<p>$J = \begin{bmatrix} \frac{\partial e_1}{\partial \hat{P}_1} &amp; \frac{\partial e_1}{\partial \hat{P}_2} &amp; \frac{\partial e_1}{\partial \hat{P}_3} \\ \vdots &amp; \vdots &amp; \vdots \\ \frac{\partial e_N}{\partial \hat{P}_1} &amp; \frac{\partial e_N}{\partial \hat{P}_2} &amp; \frac{\partial e_N}{\partial \hat{P}_3} \end{bmatrix}$ (11)</p>
 <p>Важно отметить, что вектор остаточной ошибки для конкретного изображения $e_i$ является вектором размера $2 \times 1$, поскольку в плоскости изображения есть два измерения. Следовательно, в простейшем случае с двумя камерами ($N = 2$) вектор остаточной ошибки $e$ будет иметь размер $2N \times 1 = 4 \times 1$, а матрица Якоби $J$ — размер $2N \times 3 = 4 \times 3$.</p>
 <p>Этот метод легко обрабатывает множественные виды, так как дополнительные изображения учитываются путем добавления соответствующих строк к вектору $e$ и матрице $J$. После вычисления обновления $\delta P$ мы можем просто повторить процесс фиксированное количество шагов или до численной сходимости.</p>
 <p>Важное свойство алгоритма Гаусса-Ньютона заключается в том, что наше предположение о линейности остаточной функции вблизи оценки не гарантирует сходимость. Поэтому на практике всегда полезно установить верхнюю границу количества обновлений оценки.</p>
@@ -182,7 +182,7 @@ y'M'_3 − M'_2
         </ul>
 <ul class="pager hidden-print">
 <li class="previous">
-                <a href="../active-volumetric/" rel="prev" title="Активное стерео и объёмное стереовидение">Предыдущая запись</a>
+                <a href="../structure-from-motion/" rel="prev" title="Извлечение структуры сцены из движения камеры ">Предыдущая запись</a>
             </li>
         </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
 MathJax.Hub.Config({
