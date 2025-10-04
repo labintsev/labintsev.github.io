@@ -1,7 +1,7 @@
 <!--
 .. title: Стерео системы 
 .. slug: stereo-systems
-.. date: 2025-10-04 18:00 UTC+03:00
+.. date: 2025-10-03 14:00 UTC+03:00
 .. tags: cs231a
 .. category: CV
 .. link: 
