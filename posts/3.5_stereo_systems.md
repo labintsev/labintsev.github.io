@@ -43,8 +43,8 @@ $p' = M'P = (x', y', 1)$
 Развернем это векторное произведение в координатной форме:
 
 $p \times (MP) = \begin{vmatrix}
-i & j & k \\
-x & y & 1 \\
+i & j & k \\\
+x & y & 1 \\\
 M_1P & M_2P & M_3P
 \end{vmatrix} = 0$
 
@@ -64,9 +64,9 @@ $x(M_2P) − y(M_1P) = 0$ (1)
 $AP = 0$, где  
 
 $A = \begin{bmatrix}
-xM_3 − M_1 \\
-yM_3 − M_2 \\
-x'M'_3 − M'_1 \\
+xM_3 − M_1 \\\
+yM_3 − M_2 \\\
+x'M'_3 − M'_1 \\\
 y'M'_3 − M'_2
 \end{bmatrix}$ (2)
 
@@ -129,11 +129,11 @@ $\delta P = -(J^TJ)^{-1}J^Te$ (9)
 
 где:
 
-$e = \begin{bmatrix} e_1 \\ \vdots \\ e_N \end{bmatrix} = \begin{bmatrix} p_1 - M_1\hat{P} \\ \vdots \\ p_n - M_n\hat{P} \end{bmatrix}$ (10)
+$e = \begin{bmatrix} e_1 \\\ \vdots \\\ e_N \end{bmatrix} = \begin{bmatrix} p_1 - M_1\hat{P} \\\ \vdots \\\ p_n - M_n\hat{P} \end{bmatrix}$ (10)
 
 и
 
-$J = \begin{bmatrix} \frac{\partial e_1}{\partial \hat{P}_1} & \frac{\partial e_1}{\partial \hat{P}_2} & \frac{\partial e_1}{\partial \hat{P}_3} \\ \vdots & \vdots & \vdots \\ \frac{\partial e_N}{\partial \hat{P}_1} & \frac{\partial e_N}{\partial \hat{P}_2} & \frac{\partial e_N}{\partial \hat{P}_3} \end{bmatrix}$ (11)
+$J = \begin{bmatrix} \frac{\partial e_1}{\partial \hat{P}_1} & \frac{\partial e_1}{\partial \hat{P}_2} & \frac{\partial e_1}{\partial \hat{P}_3} \\\ \vdots & \vdots & \vdots \\\ \frac{\partial e_N}{\partial \hat{P}_1} & \frac{\partial e_N}{\partial \hat{P}_2} & \frac{\partial e_N}{\partial \hat{P}_3} \end{bmatrix}$ (11)
 
 Важно отметить, что вектор остаточной ошибки для конкретного изображения $e_i$ является вектором размера $2 \times 1$, поскольку в плоскости изображения есть два измерения. Следовательно, в простейшем случае с двумя камерами ($N = 2$) вектор остаточной ошибки $e$ будет иметь размер $2N \times 1 = 4 \times 1$, а матрица Якоби $J$ — размер $2N \times 3 = 4 \times 3$.
 
