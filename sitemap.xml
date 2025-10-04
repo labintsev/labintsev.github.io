@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://mldl.ru/</loc>
-  <lastmod>2025-09-29T19:15:00Z</lastmod>
+  <lastmod>2025-10-04T15:28:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/2022/</loc>
@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>https://mldl.ru/archive.html</loc>
-  <lastmod>2025-10-03T19:18:00Z</lastmod>
+  <lastmod>2025-10-04T15:28:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/categories/</loc>
@@ -47,7 +47,11 @@
  </url>
  <url>
   <loc>https://mldl.ru/index-1.html</loc>
-  <lastmod>2025-10-03T19:18:00Z</lastmod>
+  <lastmod>2025-10-04T15:28:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/index-2.html</loc>
+  <lastmod>2025-10-04T15:28:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/active-volumetric/</loc>
@@ -116,6 +120,10 @@
  <url>
   <loc>https://mldl.ru/posts/software-setup/</loc>
   <lastmod>2025-09-29T19:15:00Z</lastmod>
+ </url>
+ <url>
+  <loc>https://mldl.ru/posts/stereo-systems/</loc>
+  <lastmod>2025-10-04T15:28:00Z</lastmod>
  </url>
  <url>
   <loc>https://mldl.ru/posts/template/</loc>
