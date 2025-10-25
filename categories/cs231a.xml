@@ -1,5 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о cs231a)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cs231a.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Sat, 25 Oct 2025 09:27:16 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Активное стерео и объёмное стереовидение</title><link>https://mldl.ru/posts/active-volumetric/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;Введение&lt;/h4&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Записи о cs231a)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/categories/cs231a.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Sat, 25 Oct 2025 09:36:54 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Форматы представления 3D изображений</title><link>https://mldl.ru/posts/formats/</link><dc:creator>Korotkova V.V.</dc:creator><description>&lt;p&gt;&lt;strong&gt;Тема:&lt;/strong&gt; 8. Robot Operating System (ROS) сетки занятости (Occupancy Grids) nav_msgs/OccupancyGrid&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4&gt;1. История и происхождение формата&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Немного про ROS:&lt;/strong&gt;
+ROS (Robot Operating System) — это гибкий фреймворк с открытым исходным кодом для разработки программного обеспечения роботов. Это набор инструментов, библиотек и соглашений, которые упрощают создание сложного поведения роботов. ROS был первоначально разработан в 2007 году в Лаборатории искусственного интеллекта Стэнфордского университета для своего проекта по созданию интеллектуального робота. Позже разработку продолжил исследовательский институт Willow Garage, который сделал ROS открытым и популярным во всем мире. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Создание и цели сеток занятости:&lt;/strong&gt;
+Формат &lt;code&gt;nav_msgs/OccupancyGrid&lt;/code&gt; является неотъемлемой частью ROS (Robot Operating System). Он был разработан в конце 2000-х годов в исследовательском институте Willow Garage. Целью было создание общего стандарта, по которому роботы будут представлять для себя окружающий мир в виде цифровой карты. &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Решаемая проблема:&lt;/strong&gt;
+На момент создания формата отсутствовал единый подход к представлению карт для задач навигации. Роботам требовался легковесный и простой для обработки способ хранения информации о препятствиях. Сетки занятости, предложенные Альберто Эльфсом в 1980-х, стали идеальной теоретической основой. ROS-сообщество адаптировало эту концепцию, создав стандартный формат данных nav_msgs/OccupancyGrid, чтобы унифицировать процессы SLAM (одновременной локализации и картографирования) и планирования пути.&lt;/p&gt;
+&lt;h4&gt;2. Структура данных и принцип работы&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Тип геометрии:&lt;/strong&gt;
+Для представления карты занятости используется дискретная двумерная сетка (2D Grid). Каждая ячейка сетки представляет собой квадратный участок реального мира и хранит информацию о вероятности его "занятости".&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Хранимые данные:&lt;/strong&gt;
+Формат данных &lt;code&gt;nav_msgs/OccupancyGrid&lt;/code&gt; состоит из трех основных частей:
+1.  &lt;code&gt;std_msgs/Header header&lt;/code&gt;: Это обязательный блок метаданных, который обеспечивает контекст для карты. Он содержит временную метку (timestamp): Фиксирует время создания или последнего обновления карты. Идентификатор системы координат (frame_id): Это текстовая метка (например, "map"), которая определяет, относительно какой базовой точки отсчета построена вся карта.
+2.  &lt;code&gt;nav_msgs/MapMetaData info&lt;/code&gt;: Информация о самой карте:
+    *   &lt;code&gt;resolution&lt;/code&gt;: Разрешение карты в метрах на ячейку (например, 0.05 м/пиксель).
+    *   &lt;code&gt;width&lt;/code&gt; и &lt;code&gt;height&lt;/code&gt;: Размеры карты в ячейках.
+    *   &lt;code&gt;geometry_msgs/Pose origin&lt;/code&gt;: Позиция и ориентация (вращение) левого нижнего угла карты в пространстве.
+3.  &lt;code&gt;int8[] data&lt;/code&gt;: Одномерный массив, хранящий данные о занятости всех ячеек в построчном порядке (row-major order). Значения в массиве интерпретируются следующим образом:
+    *   &lt;strong&gt;0 – 100&lt;/strong&gt;: Вероятность того, что ячейка занята (является препятствием). 0 — полностью свободна, 100 — полностью занята.
+    *   &lt;strong&gt;-1&lt;/strong&gt;: Неизвестная территория, еще не исследованная роботом.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Представление в файле:&lt;/strong&gt;
+Формат &lt;code&gt;nav_msgs/OccupancyGrid&lt;/code&gt; — это формат для обмена данными между нодами (программами) ROS в реальном времени. Для сохранения и загрузки карты используется пакет &lt;code&gt;map_server&lt;/code&gt;, который представляет сетку в виде двух файлов:
+*   &lt;strong&gt;.pgm (Portable Gray Map):&lt;/strong&gt; Файл изображения, где цвет каждого пикселя кодирует состояние ячейки (белый — свободна, черный — занята, серый — неизвестна).
+*   &lt;strong&gt;.yaml:&lt;/strong&gt; Текстовый файл с метаданными, описывающими изображение (разрешение, начало координат и т.д.).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Схематичное изображение структуры данных:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://mldl.ru/posts/formats/scheme.PNG" width="50%" height="50%"&gt;&lt;/p&gt;
+&lt;h4&gt;3. Достоинства и недостатки&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Достоинства&lt;/th&gt;
+&lt;th&gt;Недостатки&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Простота и эффективность&lt;/strong&gt;&lt;br&gt;Легко обрабатывается и требует мало вычислительных ресурсов.&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Строго 2D&lt;/strong&gt;&lt;br&gt;Неспособен представить 3D-объекты (например, стол).&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Вероятностный подход&lt;/strong&gt;&lt;br&gt;Возможность хранить неопределенность (-1) и степень уверенности (0-100).&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Статичность&lt;/strong&gt;&lt;br&gt;Формат предназначен для статических карт.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Стандарт в ROS&lt;/strong&gt;&lt;br&gt;Является основным форматом для 2D-навигации.&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Фиксированное разрешение&lt;/strong&gt;&lt;br&gt;Разрешение карты одинаково для всех ее участков, что неэффективно для больших пустых пространств.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Универсальность&lt;/strong&gt;&lt;br&gt;Подходит для любых данных, которые можно спроецировать на 2D-плоскость (лидары, сонары).&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;Большой объем памяти&lt;/strong&gt;&lt;br&gt;Для карт высокого разрешения или больших территорий размер массива &lt;code&gt;data&lt;/code&gt; может быть очень большим.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h4&gt;4. Сфера применения&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Области и ПО:&lt;/strong&gt;
+&lt;code&gt;OccupancyGrid&lt;/code&gt; — это важная часть всего стека навигации ROS (ROS Navigation Stack). Он используется в:
+*   &lt;strong&gt;SLAM-алгоритмах&lt;/strong&gt; для построения карт.
+*   &lt;strong&gt;Алгоритмах локализации&lt;/strong&gt; (&lt;code&gt;amcl&lt;/code&gt;) для определения положения робота на существующей карте.
+*   &lt;strong&gt;Планировщиках пути&lt;/strong&gt; (&lt;code&gt;move_base&lt;/code&gt;, &lt;code&gt;Nav2&lt;/code&gt;) для построения глобальных и локальных маршрутов, избегая препятствий.
+*   &lt;strong&gt;Инструментах визуализации&lt;/strong&gt;, в первую очередь в &lt;strong&gt;RViz&lt;/strong&gt;, для отображения карты и положения робота.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Импорт и экспорт:&lt;/strong&gt;
+Формат является и тем, и другим. Внутри ROS он передается между узлами как сообщение. С помощью утилиты &lt;code&gt;map_server&lt;/code&gt; карту можно "экспортировать" в файлы &lt;code&gt;.pgm&lt;/code&gt; и &lt;code&gt;.yaml&lt;/code&gt; для хранения и "импортировать" обратно для использования в системе навигации.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4&gt;5. Практический пример (наглядная демонстрация)&lt;/h4&gt;
+&lt;p&gt;Примеры можно посмотреть по ссылке - https://github.com/ros-navigation/navigation2/tree/main/nav2_bringup/maps&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Пример файла &lt;code&gt;warehouse.yaml&lt;/code&gt; (текстовое представление):&lt;/strong&gt;
+Этот файл используется &lt;code&gt;map_server&lt;/code&gt; для загрузки карты.&lt;/p&gt;
+&lt;div class="code"&gt;&lt;pre class="code literal-block"&gt;&lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;warehouse.pgm&lt;/span&gt;&lt;span class="w"&gt;       &lt;/span&gt;&lt;span class="c1"&gt;# Путь к файлу изображения карты&lt;/span&gt;
+&lt;span class="nt"&gt;mode&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;trinary&lt;/span&gt;&lt;span class="w"&gt;              &lt;/span&gt;&lt;span class="c1"&gt;# Каждый пиксель это свободно, занято или неизвестно &lt;/span&gt;
+&lt;span class="nt"&gt;resolution&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0.03&lt;/span&gt;&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="c1"&gt;# 3 сантиметра на пиксель&lt;/span&gt;
+&lt;span class="nt"&gt;origin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p p-Indicator"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;-15.1&lt;/span&gt;&lt;span class="p p-Indicator"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;-25&lt;/span&gt;&lt;span class="p p-Indicator"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;0&lt;/span&gt;&lt;span class="p p-Indicator"&gt;]&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# Координаты левого нижнего угла&lt;/span&gt;
+&lt;span class="nt"&gt;negate&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0&lt;/span&gt;&lt;span class="w"&gt;                  &lt;/span&gt;&lt;span class="c1"&gt;# Не инвертировать цвета&lt;/span&gt;
+&lt;span class="nt"&gt;occupied_thresh&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0.65&lt;/span&gt;&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="c1"&gt;# Пиксели с яркостью &amp;lt; 0.65 считаются занятыми&lt;/span&gt;
+&lt;span class="nt"&gt;free_thresh&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;0.1&lt;/span&gt;&lt;span class="w"&gt;           &lt;/span&gt;&lt;span class="c1"&gt;# Пиксели с яркостью &amp;gt; 0.1 считаются свободными    &lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Пример карты занятости:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://mldl.ru/posts/formats/warehouse.png" width="50%" height="50%"&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4&gt;6. Место в современном конвейере обработки 3D-данных&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;nav_msgs/OccupancyGrid&lt;/code&gt; является &lt;strong&gt;современным и широко распространенным стандартом&lt;/strong&gt;, но строго &lt;strong&gt;нишевым&lt;/strong&gt;. Его ниша — 2D-навигация роботов. Он не устарел и активно используется как в ROS1, так и в более современном ROS2.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Перспективы&lt;/strong&gt; формата остаются высокими в своей области. Для огромного класса роботов (складские роботы, роботы-пылесосы), работающих на плоских поверхностях, 2D-сетка является наиболее эффективным и вычислительно дешевым решением.&lt;/p&gt;
+&lt;p&gt;В то же время, для более сложных задач (дроны, роботы-манипуляторы, беспилотные автомобили) активно развиваются 3D-представления, такие как &lt;strong&gt;OctoMap&lt;/strong&gt; (на основе октодеревьев), которые позволяют хранить трехмерную информацию о пространстве. Однако &lt;code&gt;OccupancyGrid&lt;/code&gt; часто используется и здесь — как 2D-срез 3D-карты для быстрой навигации по поверхности. Таким образом, формат не столько конкурирует с 3D, сколько занимает свою незаменимую нишу в иерархии представлений окружающего мира.&lt;/p&gt;</description><category>cs231a</category><guid>https://mldl.ru/posts/formats/</guid><pubDate>Fri, 24 Oct 2025 11:00:00 GMT</pubDate></item><item><title>Активное стерео и объёмное стереовидение</title><link>https://mldl.ru/posts/active-volumetric/</link><dc:creator>Андрей Лабинцев</dc:creator><description>&lt;h4&gt;Введение&lt;/h4&gt;
 &lt;p&gt;В классическом стереовидении мы пытаемся определить положение трёхмерной точки в пространстве, используя &lt;strong&gt;соответствующие точки&lt;/strong&gt; на двух изображениях. Главная сложность здесь — решить &lt;strong&gt;проблему соответствия&lt;/strong&gt;: как понять, что точка на одном изображении соответствует точке на другом?&lt;/p&gt;
 &lt;p&gt;Эта проблема усложняется тем, что в сцене присутствует множество трёхмерных точек, и нам нужно обработать их все. Сегодня мы рассмотрим альтернативный подход к реконструкции трехмерной сцены. &lt;/p&gt;
 &lt;h4&gt;1. Активное стерео&lt;/h4&gt;

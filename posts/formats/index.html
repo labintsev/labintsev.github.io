@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Форматы представления 3D изображений | Заметки по ML, DL</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" hreflang="ru" href="../../rss.xml">
+<link rel="canonical" href="https://mldl.ru/posts/formats/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Korotkova V.V.">
+<link rel="prev" href="../active-volumetric/" title="Активное стерео и объёмное стереовидение" type="text/html">
+<meta property="og:site_name" content="Заметки по ML, DL">
+<meta property="og:title" content="Форматы представления 3D изображений">
+<meta property="og:url" content="https://mldl.ru/posts/formats/">
+<meta property="og:description" content="Тема: 8. Robot Operating System (ROS) сетки занятости (Occupancy Grids) nav_msgs/OccupancyGrid
+
+1. История и происхождение формата
+Немного про ROS:
+ROS (Robot Operating System) — это гибкий фреймворк ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2025-10-24T14:00:00+03:00">
+<meta property="article:tag" content="cs231a">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Перейти к главному содержимому</a>
+
+<!-- Header and menu bar -->
+<div class="container">
+      <header class="blog-header py-3"><div class="row nbb-header align-items-center">
+          <div class="col-md-3 col-xs-2 col-sm-2" style="width: auto;">
+            <button class="navbar-toggler navbar-light bg-light nbb-navbar-toggler" type="button" data-toggle="collapse" data-target=".bs-nav-collapsible" aria-controls="bs-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse bs-nav-collapsible bootblog4-search-form-holder">
+                
+            </div>
+        </div>
+          <div class="col-md-6 col-xs-10 col-sm-10 bootblog4-brand" style="width: auto;">
+            <a class="navbar-brand blog-header-logo text-dark" href="../../">
+
+            <span id="blog-title">Заметки по ML, DL</span>
+        </a>
+          </div>
+            <div class="col-md-3 justify-content-end align-items-center bs-nav-collapsible collapse flex-collapse bootblog4-right-nav">
+            <nav class="navbar navbar-light bg-white"><ul class="navbar-nav bootblog4-right-nav">
+<li class="nav-item">
+    <a href="index.md" id="sourcelink" class="nav-link">Источник</a>
+    </li>
+
+
+                    
+            </ul></nav>
+</div>
+    </div>
+</header><nav class="navbar navbar-expand-md navbar-light bg-white static-top"><div class="collapse navbar-collapse bs-nav-collapsible" id="bs-navbar">
+            <ul class="navbar-nav nav-fill d-flex w-100">
+<li class="nav-item">
+<a href="../../archive.html" class="nav-link">Archive</a>
+                </li>
+<li class="nav-item">
+<a href="../../categories/" class="nav-link">Tags</a>
+
+                
+            </li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+</nav>
+</div>
+
+<div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        
+        
+        
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Форматы представления 3D изображений</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard p-author h-card"><span class="byline-name fn p-name" itemprop="author">
+                    <a class="u-url" href="../../authors/korotkova-vv/">Korotkova V.V.</a>
+            </span></p>
+            <p class="dateline">
+            <a href="." rel="bookmark">
+            <time class="published dt-published" datetime="2025-10-24T14:00:00+03:00" itemprop="datePublished" title="2025-10-24 14:00">2025-10-24 14:00</time></a>
+            </p>
+            
+        <p class="sourceline"><a href="index.md" class="sourcelink">Источник</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p><strong>Тема:</strong> 8. Robot Operating System (ROS) сетки занятости (Occupancy Grids) nav_msgs/OccupancyGrid</p>
+<hr>
+<h4>1. История и происхождение формата</h4>
+<p><strong>Немного про ROS:</strong>
+ROS (Robot Operating System) — это гибкий фреймворк с открытым исходным кодом для разработки программного обеспечения роботов. Это набор инструментов, библиотек и соглашений, которые упрощают создание сложного поведения роботов. ROS был первоначально разработан в 2007 году в Лаборатории искусственного интеллекта Стэнфордского университета для своего проекта по созданию интеллектуального робота. Позже разработку продолжил исследовательский институт Willow Garage, который сделал ROS открытым и популярным во всем мире. </p>
+<p><strong>Создание и цели сеток занятости:</strong>
+Формат <code>nav_msgs/OccupancyGrid</code> является неотъемлемой частью ROS (Robot Operating System). Он был разработан в конце 2000-х годов в исследовательском институте Willow Garage. Целью было создание общего стандарта, по которому роботы будут представлять для себя окружающий мир в виде цифровой карты. </p>
+<p><strong>Решаемая проблема:</strong>
+На момент создания формата отсутствовал единый подход к представлению карт для задач навигации. Роботам требовался легковесный и простой для обработки способ хранения информации о препятствиях. Сетки занятости, предложенные Альберто Эльфсом в 1980-х, стали идеальной теоретической основой. ROS-сообщество адаптировало эту концепцию, создав стандартный формат данных nav_msgs/OccupancyGrid, чтобы унифицировать процессы SLAM (одновременной локализации и картографирования) и планирования пути.</p>
+<h4>2. Структура данных и принцип работы</h4>
+<p><strong>Тип геометрии:</strong>
+Для представления карты занятости используется дискретная двумерная сетка (2D Grid). Каждая ячейка сетки представляет собой квадратный участок реального мира и хранит информацию о вероятности его "занятости".</p>
+<p><strong>Хранимые данные:</strong>
+Формат данных <code>nav_msgs/OccupancyGrid</code> состоит из трех основных частей:
+1.  <code>std_msgs/Header header</code>: Это обязательный блок метаданных, который обеспечивает контекст для карты. Он содержит временную метку (timestamp): Фиксирует время создания или последнего обновления карты. Идентификатор системы координат (frame_id): Это текстовая метка (например, "map"), которая определяет, относительно какой базовой точки отсчета построена вся карта.
+2.  <code>nav_msgs/MapMetaData info</code>: Информация о самой карте:
+    *   <code>resolution</code>: Разрешение карты в метрах на ячейку (например, 0.05 м/пиксель).
+    *   <code>width</code> и <code>height</code>: Размеры карты в ячейках.
+    *   <code>geometry_msgs/Pose origin</code>: Позиция и ориентация (вращение) левого нижнего угла карты в пространстве.
+3.  <code>int8[] data</code>: Одномерный массив, хранящий данные о занятости всех ячеек в построчном порядке (row-major order). Значения в массиве интерпретируются следующим образом:
+    *   <strong>0 – 100</strong>: Вероятность того, что ячейка занята (является препятствием). 0 — полностью свободна, 100 — полностью занята.
+    *   <strong>-1</strong>: Неизвестная территория, еще не исследованная роботом.</p>
+<p><strong>Представление в файле:</strong>
+Формат <code>nav_msgs/OccupancyGrid</code> — это формат для обмена данными между нодами (программами) ROS в реальном времени. Для сохранения и загрузки карты используется пакет <code>map_server</code>, который представляет сетку в виде двух файлов:
+*   <strong>.pgm (Portable Gray Map):</strong> Файл изображения, где цвет каждого пикселя кодирует состояние ячейки (белый — свободна, черный — занята, серый — неизвестна).
+*   <strong>.yaml:</strong> Текстовый файл с метаданными, описывающими изображение (разрешение, начало координат и т.д.).</p>
+<p><strong>Схематичное изображение структуры данных:</strong></p>
+<p><img src="scheme.PNG" width="50%" height="50%"></p>
+<h4>3. Достоинства и недостатки</h4>
+<table>
+<thead><tr>
+<th>Достоинства</th>
+<th>Недостатки</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>
+<strong>Простота и эффективность</strong><br>Легко обрабатывается и требует мало вычислительных ресурсов.</td>
+<td>
+<strong>Строго 2D</strong><br>Неспособен представить 3D-объекты (например, стол).</td>
+</tr>
+<tr>
+<td>
+<strong>Вероятностный подход</strong><br>Возможность хранить неопределенность (-1) и степень уверенности (0-100).</td>
+<td>
+<strong>Статичность</strong><br>Формат предназначен для статических карт.</td>
+</tr>
+<tr>
+<td>
+<strong>Стандарт в ROS</strong><br>Является основным форматом для 2D-навигации.</td>
+<td>
+<strong>Фиксированное разрешение</strong><br>Разрешение карты одинаково для всех ее участков, что неэффективно для больших пустых пространств.</td>
+</tr>
+<tr>
+<td>
+<strong>Универсальность</strong><br>Подходит для любых данных, которые можно спроецировать на 2D-плоскость (лидары, сонары).</td>
+<td>
+<strong>Большой объем памяти</strong><br>Для карт высокого разрешения или больших территорий размер массива <code>data</code> может быть очень большим.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4>4. Сфера применения</h4>
+<p><strong>Области и ПО:</strong>
+<code>OccupancyGrid</code> — это важная часть всего стека навигации ROS (ROS Navigation Stack). Он используется в:
+*   <strong>SLAM-алгоритмах</strong> для построения карт.
+*   <strong>Алгоритмах локализации</strong> (<code>amcl</code>) для определения положения робота на существующей карте.
+*   <strong>Планировщиках пути</strong> (<code>move_base</code>, <code>Nav2</code>) для построения глобальных и локальных маршрутов, избегая препятствий.
+*   <strong>Инструментах визуализации</strong>, в первую очередь в <strong>RViz</strong>, для отображения карты и положения робота.</p>
+<p><strong>Импорт и экспорт:</strong>
+Формат является и тем, и другим. Внутри ROS он передается между узлами как сообщение. С помощью утилиты <code>map_server</code> карту можно "экспортировать" в файлы <code>.pgm</code> и <code>.yaml</code> для хранения и "импортировать" обратно для использования в системе навигации.</p>
+<hr>
+<h4>5. Практический пример (наглядная демонстрация)</h4>
+<p>Примеры можно посмотреть по ссылке - https://github.com/ros-navigation/navigation2/tree/main/nav2_bringup/maps</p>
+<p><strong>Пример файла <code>warehouse.yaml</code> (текстовое представление):</strong>
+Этот файл используется <code>map_server</code> для загрузки карты.</p>
+<div class="code"><pre class="code literal-block"><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warehouse.pgm</span><span class="w">       </span><span class="c1"># Путь к файлу изображения карты</span>
+<span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">trinary</span><span class="w">              </span><span class="c1"># Каждый пиксель это свободно, занято или неизвестно </span>
+<span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.03</span><span class="w">           </span><span class="c1"># 3 сантиметра на пиксель</span>
+<span class="nt">origin</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">-15.1</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">-25</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">0</span><span class="p p-Indicator">]</span><span class="w">    </span><span class="c1"># Координаты левого нижнего угла</span>
+<span class="nt">negate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">                  </span><span class="c1"># Не инвертировать цвета</span>
+<span class="nt">occupied_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.65</span><span class="w">      </span><span class="c1"># Пиксели с яркостью &lt; 0.65 считаются занятыми</span>
+<span class="nt">free_thresh</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">           </span><span class="c1"># Пиксели с яркостью &gt; 0.1 считаются свободными    </span>
+</pre></div>
+
+<p><strong>Пример карты занятости:</strong></p>
+<p><img src="warehouse.png" width="50%" height="50%"></p>
+<hr>
+<h4>6. Место в современном конвейере обработки 3D-данных</h4>
+<p><code>nav_msgs/OccupancyGrid</code> является <strong>современным и широко распространенным стандартом</strong>, но строго <strong>нишевым</strong>. Его ниша — 2D-навигация роботов. Он не устарел и активно используется как в ROS1, так и в более современном ROS2.</p>
+<p><strong>Перспективы</strong> формата остаются высокими в своей области. Для огромного класса роботов (складские роботы, роботы-пылесосы), работающих на плоских поверхностях, 2D-сетка является наиболее эффективным и вычислительно дешевым решением.</p>
+<p>В то же время, для более сложных задач (дроны, роботы-манипуляторы, беспилотные автомобили) активно развиваются 3D-представления, такие как <strong>OctoMap</strong> (на основе октодеревьев), которые позволяют хранить трехмерную информацию о пространстве. Однако <code>OccupancyGrid</code> часто используется и здесь — как 2D-срез 3D-карты для быстрой навигации по поверхности. Таким образом, формат не столько конкурирует с 3D, сколько занимает свою незаменимую нишу в иерархии представлений окружающего мира.</p>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/cs231a/" rel="tag">cs231a</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../active-volumetric/" rel="prev" title="Активное стерео и объёмное стереовидение">Предыдущая запись</a>
+            </li>
+        </ul></nav></aside><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-3lJUsx1TJHt7BA4udB5KPnDrlkO8T6J6v/op7ui0BbCjvZ9WqV4Xm6DTP6kQ/iBH" crossorigin="anonymous"></script><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\\(","\\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\\[","\\\]"] ],
+        processEscapes: true
+    },
+    displayAlign: 'center', // Change this to 'left' if you want left-aligned equations.
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}}
+    }
+});
+</script></article><!--End of body content--><footer id="footer">
+            Contents © 2025         <a href="mailto:andrej.labintsev@yandex.ru">Андрей Лабинцев</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+            
+        </footer>
+</div>
+</div>
+
+
+        <script src="../../assets/js/all-nocdn.js"></script><script>
+    baguetteBox.run('div#content', {
+        ignoreClass: 'islink',
+        captions: function(element){var i=element.getElementsByTagName('img')[0];return i===undefined?'':i.alt;}});
+    </script>
+</body>
+</html>
