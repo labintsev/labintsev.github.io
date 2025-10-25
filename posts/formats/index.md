@@ -11,9 +11,7 @@
 .. author: Korotkova V.V.
 -->
 
-**Тема:** 8. Robot Operating System (ROS) сетки занятости (Occupancy Grids) nav_msgs/OccupancyGrid
-
----
+# 8. Robot Operating System (ROS) сетки занятости (Occupancy Grids)
 
 ### 1. История и происхождение формата
 
@@ -49,7 +47,7 @@ ROS (Robot Operating System) — это гибкий фреймворк с от�
 
 **Схематичное изображение структуры данных:**
 
-<img src="scheme.PNG" width="50%" height="50%">
+<img src="https://storage.yandexcloud.net/yahosting/formats/8-scheme.PNG" width="50%" height="50%">
 
 
 ### 3. Достоинства и недостатки
@@ -79,7 +77,7 @@ ROS (Robot Operating System) — это гибкий фреймворк с от�
 
 ### 5. Практический пример (наглядная демонстрация)
 
-Примеры можно посмотреть по ссылке - https://github.com/ros-navigation/navigation2/tree/main/nav2_bringup/maps
+Примеры можно посмотреть по ссылке - https://github.com/ros-navigation/navigation2/tree/main/nav2_bringup/maps 
 
 **Пример файла `warehouse.yaml` (текстовое представление):**
 Этот файл используется `map_server` для загрузки карты.
@@ -95,7 +93,7 @@ free_thresh: 0.1           # Пиксели с яркостью > 0.1 счита
 ```
 **Пример карты занятости:**
 
-<img src="warehouse.png" width="50%" height="50%">
+<img src="https://storage.yandexcloud.net/yahosting/formats/8-warehouse.png" width="50%" height="50%">
 
 ---
 
