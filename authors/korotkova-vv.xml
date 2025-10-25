@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Запись Korotkova V.V.)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/authors/korotkova-vv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Sat, 25 Oct 2025 09:44:36 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Форматы представления 3D изображений</title><link>https://mldl.ru/posts/formats/</link><dc:creator>Korotkova V.V.</dc:creator><description>&lt;h2&gt;8. Robot Operating System (ROS) сетки занятости (Occupancy Grids)&lt;/h2&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Заметки по ML, DL (Запись Korotkova V.V.)</title><link>https://mldl.ru/</link><description></description><atom:link href="https://mldl.ru/authors/korotkova-vv.xml" rel="self" type="application/rss+xml"></atom:link><language>ru</language><copyright>Contents © 2025 &lt;a href="mailto:andrej.labintsev@yandex.ru"&gt;Андрей Лабинцев&lt;/a&gt; </copyright><lastBuildDate>Sat, 25 Oct 2025 09:45:56 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Форматы представления 3D изображений</title><link>https://mldl.ru/posts/formats/</link><dc:creator>Korotkova V.V.</dc:creator><description>&lt;h2&gt;8. Robot Operating System (ROS) сетки занятости (Occupancy Grids)&lt;/h2&gt;
 &lt;h4&gt;1. История и происхождение формата&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;ROS (Robot Operating System)&lt;/strong&gt; — это гибкий фреймворк с открытым исходным кодом для разработки программного обеспечения роботов. Это набор инструментов, библиотек и соглашений, которые упрощают создание сложного поведения роботов. ROS был первоначально разработан в 2007 году в Лаборатории искусственного интеллекта Стэнфордского университета для своего проекта по созданию интеллектуального робота. Позже разработку продолжил исследовательский институт Willow Garage, который сделал ROS открытым и популярным во всем мире. &lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Создание и цели сеток занятости:&lt;/strong&gt;
@@ -16,20 +16,11 @@
 &lt;p&gt;&lt;code&gt;std_msgs/Header header&lt;/code&gt;: Это обязательный блок метаданных, который обеспечивает контекст для карты. Он содержит временную метку (timestamp): Фиксирует время создания или последнего обновления карты. Идентификатор системы координат (frame_id): Это текстовая метка (например, "map"), которая определяет, относительно какой базовой точки отсчета построена вся карта.  &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;nav_msgs/MapMetaData info&lt;/code&gt;: Информация о самой карте:&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;resolution&lt;/code&gt;: Разрешение карты в метрах на ячейку (например, 0.05 м/пиксель).  &lt;/li&gt;
-&lt;li&gt;&lt;code&gt;width&lt;/code&gt; и &lt;code&gt;height&lt;/code&gt;: Размеры карты в ячейках.  &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;geometry_msgs/Pose origin&lt;/code&gt;: Позиция и ориентация (вращение) левого нижнего угла карты в пространстве.   &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;nav_msgs/MapMetaData info&lt;/code&gt;: Информация о самой карте:  &lt;code&gt;resolution&lt;/code&gt;: Разрешение карты в метрах на ячейку (например, 0.05 м/пиксель).  &lt;code&gt;width&lt;/code&gt; и &lt;code&gt;height&lt;/code&gt;: Размеры карты в ячейках.     &lt;code&gt;geometry_msgs/Pose origin&lt;/code&gt;: Позиция и ориентация (вращение) левого нижнего угла карты в пространстве.   &lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;code&gt;int8[] data&lt;/code&gt;: Одномерный массив, хранящий данные о занятости всех ячеек в построчном порядке (row-major order). Значения в массиве интерпретируются следующим образом:  &lt;/p&gt;
+&lt;p&gt;&lt;code&gt;int8[] data&lt;/code&gt;: Одномерный массив, хранящий данные о занятости всех ячеек в построчном порядке (row-major order). Значения в массиве интерпретируются следующим образом:  &lt;strong&gt;0 – 100&lt;/strong&gt;: Вероятность того, что ячейка занята (является препятствием).  &lt;strong&gt;-1&lt;/strong&gt;: Неизвестная территория, еще не исследованная роботом.  &lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;0 – 100&lt;/strong&gt;: Вероятность того, что ячейка занята (является препятствием).  &lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-1&lt;/strong&gt;: Неизвестная территория, еще не исследованная роботом.  &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;Представление в файле:&lt;/strong&gt;
 Формат &lt;code&gt;nav_msgs/OccupancyGrid&lt;/code&gt; — это формат для обмена данными между нодами (программами) ROS в реальном времени. Для сохранения и загрузки карты используется пакет &lt;code&gt;map_server&lt;/code&gt;, который представляет сетку в виде двух файлов:&lt;br&gt;
